@@ -17,15 +17,18 @@
 1. Users
 
 ```
-- POST /register
-- POST /login
+- POST /users/register
+- POST /users/login
+- post /users/googleLogin
 ```
 
 2. Todos
 
 ```
 - POST /todos
-- GET /todos
+- GET /todos?status=completed
+- GET /todos?status=uncompleted
+- GET /todos?due_date=today
 - GET /todos/:id
 - DELETE /todos/:id
 - PUT /todos/:id
@@ -39,49 +42,51 @@
 - GET /projects
 - GET /projects/:id
 - DELETE /projects/:id
-- PUT /projects/:id
 - PATCH /projects/:id
+- PATCH /projects/:ProjectId/addUser
 
 ```
 
-### CRUD endpoints
+### Endpoints
 
-> Users
+USERS
 
-1. POST /register
+1. Register
 
 ```
-   | Create/Register new User
+Create/Register new User
+URL: /users/register
+Method: POST
+Required Auth: No
 ```
 
 - Request Body:
 
 ```
 {
- name: "<user name>",
  email: "<user email>",
  password: "<user password>",
- city: "<user city>",
 }
 ```
 
 - Success Response:
 
-* Status: 201
-* Response Body:
-
 ```
+Status: 201 Created
+Response Body:
+
 {
   message: "success create new user",
-  name: "<user name>",
-  email: "<user email>",
 }
 ```
 
-2. POST /login
+2. Login
 
 ```
-   | Login to get access_token
+Login with account that already register in database system
+URL: /users/login
+Method: POST
+Required Auth: No
 ```
 
 - Request Body:
@@ -95,21 +100,44 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 {
   access_token: "<user access_token>"
 }
 ```
 
-> Todos
-
-1. POST /todos
+3. Google Login
 
 ```
-   | Create new todo
+Login with account google
+URL: /users/googleLogin
+Method: POST
+Required Auth: No
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  access_token: "<google access_token>"
+}
+```
+
+TODOS
+
+1. Create Todo
+
+```
+Create new todo
+URL: /todos
+Method: POST
+Required Auth: Yes
 ```
 
 - Request Headers:
@@ -125,7 +153,6 @@
 ```
 {
   title: "<new todo title>",
-  description: "<new todo description>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
 }
@@ -133,24 +160,26 @@
 
 - Success Response:
 
-* Status: 201
-* Response Body:
-
 ```
+Status: 201 Created
+Response Body:
+
 {
   id: "<id todo from database system>"
   title: "<todo title>",
-  description: "<todo description>",
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
 }
 ```
 
-2. GET /todos
+2. Get Todos
 
 ```
-   | Get/Show all todos from database
+Get all todos with status completed
+URL: /todos?status=completed
+Method: GET
+Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -163,26 +192,28 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 [
   {
   id: "<id todo from database system>"
   title: "<todo title>",
-  description: "<todo description>",
-  status: "<todo status>",
+  status: "completed",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
   }
 ]
 ```
 
-3. GET /todos/:id
+3. Get Todos
 
 ```
-   | Get todo by specific id
+Get all todos with status uncompleted
+URL: /todos?status=uncompleted
+Method: GET
+Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -195,14 +226,81 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
+```
+Status: 200 OK
+Response Body:
+
+[
+  {
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "uncompleted",
+  due_date: "<todo due_date>",
+  UserId:  "<id from loggin user>",
+  }
+]
+```
+
+4. Get Todos
+
+```
+Get all todos with due_date is today
+URL: /todos?due_date=today
+Method: GET
+Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Request Headers:
 
 ```
 {
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+[
+  {
   id: "<id todo from database system>"
   title: "<todo title>",
-  description: "<todo description>",
+  status: "<todo status>",
+  due_date: "today",
+  UserId:  "<id from loggin user>",
+  }
+]
+```
+
+5. GET /todos/:id
+
+```
+Get todo by specific id
+URL: /todos/:id
+Method: GET
+Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  id: "<id todo from database system>"
+  title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
@@ -210,10 +308,13 @@
 
 ```
 
-4. DELETE /todos/:id
+6. DELETE Todo
 
 ```
-   | Delete todo by specific id
+Delete todo by specific id
+URL: /todos/:id
+Method: DELETE
+Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -226,20 +327,23 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 {
-  message: "Successfully delete a todo"
+  message: "Delete Todo Success"
 }
 
 ```
 
-5. PUT /todos/:id
+7. UPDATE Todo
 
 ```
-   | Update todo by specific id
+Update todo by specific id
+URL: /todos/:id
+Method: PUT
+Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -255,7 +359,6 @@
 ```
 {
   title: "<todo title>",
-  description: "<todo description>",
   status: "<todo status>",
   due_date: "<todo due_date>",
 }
@@ -263,14 +366,13 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 {
   id: "<id todo from database system>"
   title: "<todo title>",
-  description: "<todo description>",
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
@@ -278,10 +380,13 @@
 
 ```
 
-6. PATCH /todos/:id
+8. Update Status Todo
 
 ```
-   | Update status todo by specific id
+Update status todo by specific id
+URL: /todos/:id
+Method: PATCH
+Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -302,14 +407,13 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 {
   id: "<id todo from database system>"
   title: "<todo title>",
-  description: "<todo description>",
   status: "<new todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
@@ -317,12 +421,15 @@
 
 ```
 
-> Projects
+PROJECTS
 
-1. POST /projects
+1. Create Project
 
 ```
-   | Create new project
+Create new project
+URL: /projects
+Method: POST
+Required Auth: Yes
 ```
 
 - Request Headers:
@@ -337,32 +444,30 @@
 
 ```
 {
-  name: "<new project name>",
-  status: "<new project status>",
-  due_date: "<new project due_date>",
+  name: "<new project name>"
 }
-
 ```
 
 - Success Response:
 
-* Status: 201
-* Response Body:
-
 ```
+Status: 201 Created
+Response Body:
+
 {
   id: "<id project from database system>"
   name: "<project name>",
-  status: "<project status>",
-  due_date: "<project due_date>",
   UserId:  "<id from loggin user>",
 }
 ```
 
-2. GET /projects
+2. Get Projects
 
 ```
-   | Get all project from database
+Get all project from database
+URL: /projects
+Method: GET
+Required Auth: Yes (projects belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -375,16 +480,14 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 [
   {
     id: "<id project from database system>"
     name: "<project name>",
-    status: "<project status>",
-    due_date: "<project due_date>",
     UserId:  "<id user from database system>",
  }
 ]
@@ -393,7 +496,10 @@
 3. GET /projects/:id
 
 ```
-   | Get project by specific id
+Get project by specific id
+URL: /projects/:id
+Method: GET
+Required Auth: Yes (projects belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -406,23 +512,24 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200
+Response Body:
+
 {
   id: "<id project from database system>"
   name: "<project name>",
-  status: "<project status>",
-  due_date: "<project due_date>",
   UserId:  "<id user from database system>",
 }
 ```
 
-4. DELETE /projects/:id
+4. DELETE Project
 
 ```
-   | Delete project by specific id
+Delete project by specific id
+URL: /projects/:id
+Method: DELETE
+Required Auth: Yes (projects belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -435,58 +542,22 @@
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200 OK
+Response Body:
+
 {
-  message: "successfully delete project"
+  message: "Success delete project"
 }
 ```
 
-5. PUT /projects/:id
+5. Update Project
 
 ```
-   | Update project by specific id
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Response Body:
-
-```
-{
-  name: "<project name>",
-  status: "<project status>",
-  due_date: "<project due_date>",
-}
-```
-
-- Success Response:
-
-* Status: 200
-* Response Body:
-
-```
-{
-  id: "<id project from database system>"
-  name: "<project name>",
-  status: "<project status>",
-  due_date: "<project due_date>",
-  UserId:  "<id user from database system>",
-}
-```
-
-6. PATCH /projects/:id
-
-```
-   | Update status project by specific id
+Update project by specific id
+URL: /projects/:id
+Method: PATCH
+Required Auth: Yes (projects belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -501,22 +572,67 @@
 
 ```
 {
-  status: "<new project status>"
+  name: "<project name>",
 }
 ```
 
 - Success Response:
 
-* Status: 200
-* Response Body:
-
 ```
+Status: 200
+Response Body:
+
 {
   id: "<id project from database system>"
   name: "<project name>",
-  status: "<new project status>",
-  due_date: "<project due_date>",
   UserId:  "<id user from database system>",
+}
+```
+
+6. PATCH /projects/:ProjectId/addUser
+
+```
+Add user to specific project
+URL: /projects/:ProjectId/addUser
+Method: PATCH
+Required Auth: Yes (projects belongs to current user loggin only)
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Request Body:
+
+```
+{
+  email: "<user email>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200
+Response Body:
+
+{
+  id: "<id project from database system>"
+  name: "<project name>",
+  User:  [
+    {
+      id: "<user id>",
+      email: "<user email>"
+    },
+     {
+      id: "<user id>",
+      email: "<user email>"
+    }
+  ]
 }
 ```
 
@@ -595,3 +711,5 @@
   "message": "<Internal server errors>"
 }
 ```
+
+// perlukah membuat endpoint untuk jika semua todo di dalam project completed
