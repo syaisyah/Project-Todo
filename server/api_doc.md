@@ -11,11 +11,14 @@
 ```
 id: integer
 ```
+
 ### Query:
+
 ```
 status: string
 due_date: string of object date
 ```
+
 ### Methods:
 
 1. Users
@@ -30,9 +33,7 @@ due_date: string of object date
 
 ```
 - POST /todos
-- GET /todos?status=completed
-- GET /todos?status=uncompleted
-- GET /todos?due_date=today
+- GET /todos
 - GET /todos/:id
 - DELETE /todos/:id
 - PUT /todos/:id
@@ -179,9 +180,8 @@ Response Body:
 }
 ```
 
-
 ```
-Create new todo for specific project 
+Create new todo for specific project
 URL: /todos
 Method: POST
 Required Auth: Yes(for owner or member of project only, get detail Projects with specific id and check whether id from loggin user exist/not in junction tables UserProjects)
@@ -253,6 +253,20 @@ Response Body:
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
+  ProjectId: null
+  }
+]
+
+OR 
+
+[
+  {
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId: "<id from loggin user>",
+  ProjectId: "<id project from  database system>",
   }
 ]
 ```
@@ -286,6 +300,18 @@ Response Body:
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
+  ProjectId: null
+}
+
+OR 
+
+{
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId:  "<id from loggin user>",
+  ProjectId: "<id project from  database system>"
 }
 
 ```
@@ -358,6 +384,18 @@ Response Body:
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
+  ProjectId: null
+}
+
+OR 
+
+{
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId:  "<id from loggin user>",
+  ProjectId: "<id project from  database system>"
 }
 
 ```
@@ -399,8 +437,19 @@ Response Body:
   status: "<new todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
+  ProjectId: null
 }
 
+OR 
+
+{
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId:  "<id from loggin user>",
+  ProjectId: "<id project from  database system>"
+}
 ```
 
 PROJECTS
@@ -481,7 +530,7 @@ Response Body:
 Get project by specific id
 URL: /projects/:id
 Method: GET
-Required Auth: Yes (projects belongs to current user loggin only)
+Required Auth: Yes (project belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -511,7 +560,7 @@ Response Body:
 Delete project by specific id
 URL: /projects/:id
 Method: DELETE
-Required Auth: Yes (projects belongs to current user loggin only)
+Required Auth: Yes (project belongs to current user loggin only)
 ```
 
 - Request Headers:
@@ -577,7 +626,7 @@ Response Body:
 Add user to specific project
 URL: /projects/:ProjectId/addUser
 Method: PATCH
-Required Auth: Yes (projects belongs to current user loggin only)
+Required Auth: Yes (only if loggin user is the owner of the project)
 ```
 
 - Request Headers:
