@@ -79,6 +79,7 @@
 ```
 
 2. POST /login
+
 ```
    | Login to get access_token
 ```
@@ -106,9 +107,11 @@
 > Todos
 
 1. POST /todos
+
 ```
    | Create new todo
 ```
+
 - Request Headers:
 
 ```
@@ -125,7 +128,6 @@
   description: "<new todo description>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
-  UserId:  "<id from loggin user>",
 }
 ```
 
@@ -146,9 +148,11 @@
 ```
 
 2. GET /todos
+
 ```
    | Get/Show all todos from database
 ```
+
 - Request Headers:
 
 ```
@@ -176,6 +180,7 @@
 ```
 
 3. GET /todos/:id
+
 ```
    | Get todo by specific id
 ```
@@ -206,6 +211,7 @@
 ```
 
 4. DELETE /todos/:id
+
 ```
    | Delete todo by specific id
 ```
@@ -225,15 +231,17 @@
 
 ```
 {
-  message: "Successfully delate a todo"
+  message: "Successfully delete a todo"
 }
 
 ```
 
 5. PUT /todos/:id
+
 ```
    | Update todo by specific id
 ```
+
 - Request Headers:
 
 ```
@@ -246,7 +254,6 @@
 
 ```
 {
-  id: "<id todo from database system>"
   title: "<todo title>",
   description: "<todo description>",
   status: "<todo status>",
@@ -272,9 +279,11 @@
 ```
 
 6. PATCH /todos/:id
+
 ```
    | Update status todo by specific id
 ```
+
 - Request Headers:
 
 ```
@@ -311,9 +320,11 @@
 > Projects
 
 1. POST /projects
+
 ```
    | Create new project
 ```
+
 - Request Headers:
 
 ```
@@ -329,7 +340,6 @@
   name: "<new project name>",
   status: "<new project status>",
   due_date: "<new project due_date>",
-  UserId:  "<id from loggin user>",
 }
 
 ```
@@ -350,9 +360,11 @@
 ```
 
 2. GET /projects
+
 ```
    | Get all project from database
 ```
+
 - Request Headers:
 
 ```
@@ -379,9 +391,11 @@
 ```
 
 3. GET /projects/:id
+
 ```
    | Get project by specific id
 ```
+
 - Request Headers:
 
 ```
@@ -406,9 +420,11 @@
 ```
 
 4. DELETE /projects/:id
+
 ```
    | Delete project by specific id
 ```
+
 - Request Headers:
 
 ```
@@ -429,14 +445,26 @@
 ```
 
 5. PUT /projects/:id
+
 ```
    | Update project by specific id
 ```
+
 - Request Headers:
 
 ```
 {
   access_token: "<user access_token>"
+}
+```
+
+- Response Body:
+
+```
+{
+  name: "<project name>",
+  status: "<project status>",
+  due_date: "<project due_date>",
 }
 ```
 
@@ -456,9 +484,11 @@
 ```
 
 6. PATCH /projects/:id
+
 ```
    | Update status project by specific id
 ```
+
 - Request Headers:
 
 ```
@@ -490,7 +520,7 @@
 }
 ```
 
-# RESTful Error Response
+# RESTful Error Message
 
 1. Response Error (400) Bad Request - SequelizeValidationError
 
@@ -510,7 +540,7 @@
 
 ```
 {
-  "message": "<invalid email or password>"
+  "message": "<Invalid email or password>"
 }
 ```
 
@@ -521,7 +551,7 @@
 ```
 {
   status: "<code>",
-  name: "<SequelizeValidationError>",
+  name: "<SequelizeDatabaseError>",
   details: "[array of error message]"
 }
 ```
