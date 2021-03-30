@@ -9,9 +9,13 @@
 ### Params:
 
 ```
-| id: integer
+id: integer
 ```
-
+### Query:
+```
+status: string
+due_date: string of object date
+```
 ### Methods:
 
 1. Users
@@ -134,7 +138,7 @@ TODOS
 1. Create Todo
 
 ```
-Create new todo
+Create new todo for user
 URL: /todos
 Method: POST
 Required Auth: Yes
@@ -155,6 +159,7 @@ Required Auth: Yes
   title: "<new todo title>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
+  UserId: "<id from loggin user>"
 }
 ```
 
@@ -170,82 +175,59 @@ Response Body:
   status: "<todo status>",
   due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
+  ProjectId: null
+}
+```
+
+
+```
+Create new todo for specific project 
+URL: /todos
+Method: POST
+Required Auth: Yes(for owner or member of project only, get detail Projects with specific id and check whether id from loggin user exist/not in junction tables UserProjects)
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Request Body:
+
+```
+{
+  title: "<new todo title>",
+  status: "<new todo status>",
+  due_date: "<new todo due_date>",
+  UserId: "<id from loggin user>",
+  ProjectId: "<id project from database system>"
+}
+```
+
+- Success Response:
+
+```
+Status: 201 Created
+Response Body:
+
+{
+  id: "<id todo from database system>"
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId:  "<id from loggin user>",
+  ProjectId: "<id project from database system>"
 }
 ```
 
 2. Get Todos
 
 ```
-Get all todos with status completed
-URL: /todos?status=completed
-Method: GET
-Required Auth: Yes (todo belongs to current user loggin only)
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-[
-  {
-  id: "<id todo from database system>"
-  title: "<todo title>",
-  status: "completed",
-  due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
-  }
-]
-```
-
-3. Get Todos
-
-```
-Get all todos with status uncompleted
-URL: /todos?status=uncompleted
-Method: GET
-Required Auth: Yes (todo belongs to current user loggin only)
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-[
-  {
-  id: "<id todo from database system>"
-  title: "<todo title>",
-  status: "uncompleted",
-  due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
-  }
-]
-```
-
-4. Get Todos
-
-```
-Get all todos with due_date is today
-URL: /todos?due_date=today
+Get all todos from database
+URL: /todos
 Method: GET
 Required Auth: Yes (todo belongs to current user loggin only)
 ```
@@ -269,13 +251,13 @@ Response Body:
   id: "<id todo from database system>"
   title: "<todo title>",
   status: "<todo status>",
-  due_date: "today",
+  due_date: "<todo due_date>",
   UserId:  "<id from loggin user>",
   }
 ]
 ```
 
-5. GET /todos/:id
+3. GET /todos/:id
 
 ```
 Get todo by specific id
@@ -308,7 +290,7 @@ Response Body:
 
 ```
 
-6. DELETE Todo
+4. DELETE Todo
 
 ```
 Delete todo by specific id
@@ -337,7 +319,7 @@ Response Body:
 
 ```
 
-7. UPDATE Todo
+5. UPDATE Todo
 
 ```
 Update todo by specific id
@@ -380,7 +362,7 @@ Response Body:
 
 ```
 
-8. Update Status Todo
+6. Update Status Todo
 
 ```
 Update status todo by specific id
@@ -711,5 +693,3 @@ Response Body:
   "message": "<Internal server errors>"
 }
 ```
-
-// perlukah membuat endpoint untuk jika semua todo di dalam project completed
