@@ -202,7 +202,7 @@ Required Auth: Yes(for owner or member of project only, get detail Projects with
   title: "<new todo title>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
-  UserId: "<id from loggin user>",
+  UserId: null,
   ProjectId: "<id project from database system>"
 }
 ```
@@ -218,7 +218,7 @@ Response Body:
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
+  UserId:  null,
   ProjectId: "<id project from database system>"
 }
 ```
@@ -265,7 +265,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId: "<id from loggin user>",
+  UserId: null,
   ProjectId: "<id project from  database system>",
   }
 ]
@@ -310,7 +310,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
+  UserId:  null,
   ProjectId: "<id project from  database system>"
 }
 
@@ -394,7 +394,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
+  UserId: null,
   ProjectId: "<id project from  database system>"
 }
 
@@ -447,7 +447,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  "<id from loggin user>",
+  UserId: null,
   ProjectId: "<id project from  database system>"
 }
 ```
@@ -616,7 +616,7 @@ Response Body:
 {
   id: "<id project from database system>"
   name: "<project name>",
-  UserId:  "<id user from database system>",
+  UserId:  "<id from loggin user id>",
 }
 ```
 
