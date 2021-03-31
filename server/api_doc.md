@@ -72,6 +72,8 @@ Response Body:
 
 {
   message: "success create new user",
+  id: "<user id>",
+  email: "<user email>",
 }
 ```
 
