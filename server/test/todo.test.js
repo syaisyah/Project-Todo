@@ -38,7 +38,7 @@ describe('Todos Route Tests', () => {
     })
 
     describe('Error Cases', () => {
-      it('400 Bad Request - error because does not have access_token', (done) => {
+      it('400 UnAuthorized - error because does not have access_token', (done) => {
         request(app)
           .post('/todos')
           .send({
@@ -50,7 +50,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(401)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('object')
               expect(res.body).toHaveProperty('message', 'UnAuthorized')
               done()
@@ -71,7 +71,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(404)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
               expect(res.body).toHaveProperty('message', 'title is required')
               done()
@@ -92,7 +92,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(404)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
               expect(res.body).toHaveProperty('message', 'status is required')
               done()
@@ -133,7 +133,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(200)
+              expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
               expect(res.body).toHaveProperty('message', 'UnAuthorized')
               done()
@@ -273,7 +273,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(201)
+              expect(res.status).toBe(200)
               expect(typeof res.body).toEqual('object')
               expect(res.body).toHaveProperty('id', expect.any(Number))
               expect(res.body).toHaveProperty('title', 'Learn Design Update')
@@ -340,7 +340,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(404)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
               expect(res.body).toHaveProperty('message', 'title is required')
               done()
@@ -360,7 +360,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(404)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
               expect(res.body).toHaveProperty('message', 'status is required')
               done()
@@ -446,7 +446,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(404)
+              expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
               expect(res.body).toHaveProperty('message', 'status is required')
               done()
