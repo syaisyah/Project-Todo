@@ -942,7 +942,7 @@ Response Body:
 ```
 {
   status: 401,
-  message: "<Unauthorized User>"
+  message: "<Unauthorized>"
 }
 ```
 
