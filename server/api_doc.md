@@ -13,7 +13,7 @@
 ```
 - POST /users/register
 - POST /users/login
-- post /users/googleLogin
+- POST /users/googleLogin
 ```
 
 2. Todos
@@ -36,12 +36,15 @@
 - DELETE /projects/:id
 - PATCH /projects/:id
 - PATCH /projects/:ProjectId/addUser
-
+- GET /projects/:ProjectId/todos
+- POST /projects/:ProjectId/todos
+- PUT /projects/:ProjectId/TodoId
+- DELETE /projects/:ProjectId/TodoId
 ```
 
 ### Endpoints
 
-USERS
+# USERS
 
 1. Register
 
@@ -121,7 +124,7 @@ Response Body:
 }
 ```
 
-TODOS
+# TODOS
 
 1. Create Todo
 
@@ -470,7 +473,7 @@ OR
 }
 ```
 
-PROJECTS
+# PROJECTS
 
 1. Create Project
 
