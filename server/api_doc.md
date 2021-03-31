@@ -6,19 +6,6 @@
 
 - http://localhost:3001
 
-### Params:
-
-```
-id: integer
-```
-
-### Query:
-
-```
-status: string
-due_date: string of object date
-```
-
 ### Methods:
 
 1. Users
