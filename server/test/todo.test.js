@@ -38,7 +38,7 @@ describe('Todos Route Tests', () => {
     })
 
     describe('Error Cases', () => {
-      it('400 UnAuthorized - error because does not have access_token', (done) => {
+      it('401 UnAuthorized - error because does not have access_token', (done) => {
         request(app)
           .post('/todos')
           .send({
@@ -50,7 +50,7 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              expect(res.status).toBe(400)
+              expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
               expect(res.body).toHaveProperty('message', 'UnAuthorized')
               done()
