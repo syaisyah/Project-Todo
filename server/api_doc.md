@@ -232,6 +232,13 @@ Method: GET
 Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
+- Query:
+
+```
+status: string
+due_date: string of object date
+```
+
 - Request Headers:
 
 ```
@@ -257,7 +264,7 @@ Response Body:
   }
 ]
 
-OR 
+OR
 
 [
   {
@@ -280,6 +287,12 @@ Method: GET
 Required Auth: Yes (todo belongs to current user loggin only)
 ```
 
+- Params:
+
+```
+id: integer
+```
+
 - Request Headers:
 
 ```
@@ -303,7 +316,7 @@ Response Body:
   ProjectId: null
 }
 
-OR 
+OR
 
 {
   id: "<id todo from database system>"
@@ -323,6 +336,12 @@ Delete todo by specific id
 URL: /todos/:id
 Method: DELETE
 Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Params:
+
+```
+id: integer
 ```
 
 - Request Headers:
@@ -352,6 +371,12 @@ Update todo by specific id
 URL: /todos/:id
 Method: PUT
 Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Params:
+
+```
+id: integer
 ```
 
 - Request Headers:
@@ -387,7 +412,7 @@ Response Body:
   ProjectId: null
 }
 
-OR 
+OR
 
 {
   id: "<id todo from database system>"
@@ -407,6 +432,12 @@ Update status todo by specific id
 URL: /todos/:id
 Method: PATCH
 Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Params:
+
+```
+id: integer
 ```
 
 - Request Headers:
@@ -440,7 +471,7 @@ Response Body:
   ProjectId: null
 }
 
-OR 
+OR
 
 {
   id: "<id todo from database system>"
@@ -533,6 +564,12 @@ Method: GET
 Required Auth: Yes (project belongs to current user loggin only)
 ```
 
+- Params:
+
+```
+id: integer
+```
+
 - Request Headers:
 
 ```
@@ -544,7 +581,7 @@ Required Auth: Yes (project belongs to current user loggin only)
 - Success Response:
 
 ```
-Status: 200
+Status: 200 OK
 Response Body:
 
 {
@@ -561,6 +598,12 @@ Delete project by specific id
 URL: /projects/:id
 Method: DELETE
 Required Auth: Yes (project belongs to current user loggin only)
+```
+
+- Params:
+
+```
+id: integer
 ```
 
 - Request Headers:
@@ -591,6 +634,12 @@ Method: PATCH
 Required Auth: Yes (projects belongs to current user loggin only)
 ```
 
+- Params:
+
+```
+id: integer
+```
+
 - Request Headers:
 
 ```
@@ -610,7 +659,7 @@ Required Auth: Yes (projects belongs to current user loggin only)
 - Success Response:
 
 ```
-Status: 200
+Status: 200 OK
 Response Body:
 
 {
@@ -627,6 +676,12 @@ Add user to specific project
 URL: /projects/:ProjectId/addUser
 Method: PATCH
 Required Auth: Yes (only if loggin user is the owner of the project)
+```
+
+- Params:
+
+```
+ProjectId: integer
 ```
 
 - Request Headers:
@@ -648,7 +703,7 @@ Required Auth: Yes (only if loggin user is the owner of the project)
 - Success Response:
 
 ```
-Status: 200
+Status: 200 OK
 Response Body:
 
 {
@@ -667,6 +722,192 @@ Response Body:
 }
 ```
 
+7. Project - Get All Todos
+
+```
+Get all todos in specific project
+URL: /projects/:ProjectId/todos
+Method: GET
+Required Auth: Yes (only if loggin user is the owner/member of the project)
+```
+
+- Params:
+
+```
+ProjectId: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+[
+  {
+   id: "<id todo from database system>",
+   title: "<todo title>",
+   status: "<todo status>",
+   due_date: "<todo due_date>",
+   UserId: null,
+   ProjectId: ProjectId same as params that is defined
+  },
+  {
+   id: "<id todo from database system>",
+   title: "<todo title>",
+   status: "<todo status>",
+   due_date: "<todo due_date>",
+   UserId: null,
+   ProjectId: ProjectId same as params that is defined
+  }
+]
+```
+
+8. Create Todo in Project
+
+```
+Create todo in specific project
+URL: /projects/:ProjectId/todos
+Method: POST
+Required Auth: Yes (only if loggin user is the owner/member of the project)
+```
+
+- Params:
+
+```
+ProjectId: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Request Body:
+
+```
+{
+   title: "<new todo title>",
+   status: "<new todo status>",
+   due_date: "<new todo due_date>",
+   UserId: null,
+   ProjectId: ProjectId same as params that is defined
+}
+```
+
+- Success Response:
+
+```
+Status: 201 Created
+Response Body:
+
+{
+   title: "<todo title>",
+   status: "<todo status>",
+   due_date: "<todo due_date>",
+   UserId: null,
+   ProjectId: ProjectId same as params that is defined
+}
+```
+
+9. Update Todo in Project
+
+```
+Update todo in specific project
+URL: /projects/:ProjectId/:TodoId
+Method: PUT
+Required Auth: Yes (only if loggin user is the owner/member of the project)
+```
+
+- Params:
+
+```
+ProjectId: integer
+TodoId: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Request Body:
+
+```
+{
+   title: "<new todo title>",
+   status: "<new todo status>",
+   due_date: "<new todo due_date>",
+   UserId: null,
+   ProjectId: ProjectId same as params that is defined
+}
+```
+
+- Success Response:
+
+```
+Status: 201 Created
+Response Body:
+
+{
+  id: "<id todo from database system>",
+  title: "<todo title>",
+  status: "<todo status>",
+  due_date: "<todo due_date>",
+  UserId: null,
+  ProjectId: ProjectId same as params that is defined
+}
+```
+
+10. Delete Todo in Project
+
+```
+Delete todo in specific project
+URL: /projects/:ProjectId/:TodoId
+Method: DELETE
+Required Auth: Yes (only if loggin user is the owner/member of the project)
+```
+
+- Params:
+
+```
+ProjectId: integer
+TodoId: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  message: "Delete todo in project success"
+}
+```
+
 # RESTful Error Message
 
 1. Response Error (400) Bad Request - SequelizeValidationError
@@ -675,9 +916,8 @@ Response Body:
 
 ```
 {
-  status: "<code>",
-  name: "<SequelizeValidationError>",
-  details: "[array of error message]"
+  status: 400,
+  message: "[array of error message]"
 }
 ```
 
@@ -687,7 +927,8 @@ Response Body:
 
 ```
 {
-  "message": "<Invalid email or password>"
+  status: 400,
+  message: "<Invalid email or password>"
 }
 ```
 
@@ -697,9 +938,8 @@ Response Body:
 
 ```
 {
-  status: "<code>",
-  name: "<SequelizeDatabaseError>",
-  details: "[array of error message]"
+  status: 400,
+  message: "[array of error message]"
 }
 ```
 
@@ -709,7 +949,8 @@ Response Body:
 
 ```
 {
-  "message": "<Unauthorized User>"
+  status: 401,
+  message: "<Unauthorized User>"
 }
 ```
 
@@ -719,7 +960,8 @@ Response Body:
 
 ```
 {
-  "message": "<User not found>"
+  status: 404,
+  message: "<User not found>"
 }
 ```
 
@@ -729,7 +971,8 @@ Response Body:
 
 ```
 {
-  "message": "<Data not found>"
+  status: 404,
+  message: "<Data not found>"
 }
 ```
 
@@ -739,6 +982,7 @@ Response Body:
 
 ```
 {
-  "message": "<Internal server errors>"
+  status: 500,
+  message: "<Internal server errors>"
 }
 ```
