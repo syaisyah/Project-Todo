@@ -589,7 +589,7 @@ Response Body:
 Delete project by specific id
 URL: /projects/:id
 Method: DELETE
-Required Auth: Yes (project belongs to current user loggin only)
+Required Auth: Yes (only if loggin user is the owner of the project)
 ```
 
 - Params:
@@ -623,7 +623,7 @@ Response Body:
 Update project by specific id
 URL: /projects/:id
 Method: PATCH
-Required Auth: Yes (projects belongs to current user loggin only)
+Required Auth: Yes (only if loggin user is the owner of the project)
 ```
 
 - Params:
