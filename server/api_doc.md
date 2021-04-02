@@ -714,192 +714,6 @@ Response Body:
 }
 ```
 
-7. Project - Get All Todos
-
-```
-Get all todos in specific project
-URL: /projects/:ProjectId/todos
-Method: GET
-Required Auth: Yes (only if loggin user is the owner/member of the project)
-```
-
-- Params:
-
-```
-ProjectId: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-[
-  {
-   id: "<id todo from database system>",
-   title: "<todo title>",
-   status: "<todo status>",
-   due_date: "<todo due_date>",
-   UserId: null,
-   ProjectId: ProjectId same as params that is defined
-  },
-  {
-   id: "<id todo from database system>",
-   title: "<todo title>",
-   status: "<todo status>",
-   due_date: "<todo due_date>",
-   UserId: null,
-   ProjectId: ProjectId same as params that is defined
-  }
-]
-```
-
-8. Create Todo in Project
-
-```
-Create todo in specific project
-URL: /projects/:ProjectId/todos
-Method: POST
-Required Auth: Yes (only if loggin user is the owner/member of the project)
-```
-
-- Params:
-
-```
-ProjectId: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Request Body:
-
-```
-{
-   title: "<new todo title>",
-   status: "<new todo status>",
-   due_date: "<new todo due_date>",
-   UserId: null,
-   ProjectId: ProjectId same as params that is defined
-}
-```
-
-- Success Response:
-
-```
-Status: 201 Created
-Response Body:
-
-{
-   title: "<todo title>",
-   status: "<todo status>",
-   due_date: "<todo due_date>",
-   UserId: null,
-   ProjectId: ProjectId same as params that is defined
-}
-```
-
-9. Update Todo in Project
-
-```
-Update todo in specific project
-URL: /projects/:ProjectId/:TodoId
-Method: PUT
-Required Auth: Yes (only if loggin user is the owner/member of the project)
-```
-
-- Params:
-
-```
-ProjectId: integer
-TodoId: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Request Body:
-
-```
-{
-   title: "<new todo title>",
-   status: "<new todo status>",
-   due_date: "<new todo due_date>",
-   UserId: null,
-   ProjectId: ProjectId same as params that is defined
-}
-```
-
-- Success Response:
-
-```
-Status: 201 Created
-Response Body:
-
-{
-  id: "<id todo from database system>",
-  title: "<todo title>",
-  status: "<todo status>",
-  due_date: "<todo due_date>",
-  UserId: null,
-  ProjectId: ProjectId same as params that is defined
-}
-```
-
-10. Delete Todo in Project
-
-```
-Delete todo in specific project
-URL: /projects/:ProjectId/:TodoId
-Method: DELETE
-Required Auth: Yes (only if loggin user is the owner/member of the project)
-```
-
-- Params:
-
-```
-ProjectId: integer
-TodoId: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-{
-  message: "Delete todo in project success"
-}
-```
-
 # RESTful Error Message
 
 1. Response Error (400) Bad Request - SequelizeValidationError
@@ -909,7 +723,7 @@ Response Body:
 ```
 {
   status: 400,
-  message: "[array of error message]"
+  message: "<array of error message>"
 }
 ```
 
@@ -920,7 +734,7 @@ Response Body:
 ```
 {
   status: 400,
-  message: "<Invalid email or password>"
+  message: ['Invalid email or password']
 }
 ```
 
@@ -931,18 +745,18 @@ Response Body:
 ```
 {
   status: 400,
-  message: "[array of error message]"
+  message: "<array of error message>"
 }
 ```
 
-4. Status 401 UnAuthorized
+4. Status 401 UnAuthenticated
 
 - Response Body:
 
 ```
 {
   status: 401,
-  message: "<Unauthorized>"
+  message: ['UnAuthenticated']
 }
 ```
 
@@ -953,7 +767,7 @@ Response Body:
 ```
 {
   status: 404,
-  message: "<User not found>"
+  message: ['User not found']
 }
 ```
 
@@ -964,7 +778,7 @@ Response Body:
 ```
 {
   status: 404,
-  message: "<Data not found>"
+  message: ['Data not found']
 }
 ```
 
@@ -975,6 +789,28 @@ Response Body:
 ```
 {
   status: 500,
-  message: "<Internal server errors>"
+  message: ['Internal server errors']
+}
+```
+
+8. Status 400 Bad Request - SequelizeUniqueConstraintError
+
+- Response Body:
+
+```
+{
+  status: 400,
+  message: "<array of error message>"
+}
+```
+
+9. Status 403 UnAuthorized
+
+- Response Body:
+
+```
+{
+  status: 401,
+  message: ['UnAuthorized']
 }
 ```
