@@ -239,7 +239,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'title is required')
+              expect(res.body[0]).toHaveProperty('message', 'Title is required')
               done()
             }
           })
@@ -260,7 +260,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'status is required')
+              expect(res.body[0]).toHaveProperty('message', 'Status is required')
               done()
             }
           })
@@ -281,7 +281,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'due date is required')
+              expect(res.body[0]).toHaveProperty('message', 'Due date is required')
               done()
             }
           })
@@ -302,7 +302,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'title can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Title can not be empty')
               done()
             }
           })
@@ -322,7 +322,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'status can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Status can not be empty')
               done()
             }
           })
@@ -342,7 +342,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'due date can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Due date can not be empty')
               done()
             }
           })
@@ -777,7 +777,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'title is required')
+              expect(res.body[0]).toHaveProperty('message', 'Title is required')
               done()
             }
           })
@@ -796,7 +796,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body).toHaveProperty('message', 'status is required')
+              expect(res.body).toHaveProperty('message', 'Status is required')
               done()
             }
           })
@@ -814,7 +814,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'due date is required')
+              expect(res.body[0]).toHaveProperty('message', 'Due date is required')
               done()
             }
           })
@@ -833,12 +833,12 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'title can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Title can not be empty')
               done()
             }
           })
       })
-      it('400 Bad Request- error because sequelize validation error - status is null', (done) => {
+      it('400 Bad Request- error because sequelize validation error - Status is null', (done) => {
         request(app)
           .put(`/todos/${idTodo}`)
           .set('access_token', token)
@@ -851,7 +851,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body).toHaveProperty('message', 'status can not be empty')
+              expect(res.body).toHaveProperty('message', 'Status can not be empty')
               done()
             }
           })
@@ -869,7 +869,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'due date can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Due date can not be empty')
               done()
             }
           })
@@ -964,7 +964,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'status is required')
+              expect(res.body[0]).toHaveProperty('message', 'Status is required')
               done()
             }
           })
@@ -980,7 +980,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('array')
-              expect(res.body[0]).toHaveProperty('message', 'status can not be empty')
+              expect(res.body[0]).toHaveProperty('message', 'Status can not be empty')
               done()
             }
           })
