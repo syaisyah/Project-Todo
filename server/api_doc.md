@@ -699,18 +699,7 @@ Status: 200 OK
 Response Body:
 
 {
-  id: "<id project from database system>"
-  name: "<project name>",
-  User:  [
-    {
-      id: "<user id>",
-      email: "<user email>"
-    },
-     {
-      id: "<user id>",
-      email: "<user email>"
-    }
-  ]
+  message: "Success add user as member of project"
 }
 ```
 

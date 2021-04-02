@@ -56,6 +56,18 @@ beforeAll(done => {
 
 })
 
+afterAll(done => {
+  User.destroy({ where: {} })
+    .then(_ => {
+      return Todo.destroy({ where: {} })
+    })
+    .then(_ => {
+      return Project.destroy({ where: {} })
+    })
+    .then(_ => done())
+    .catch(err => done(err))
+})
+
 
 describe('Todos Route Tests', () => {
   beforeAll(done => {
