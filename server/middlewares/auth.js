@@ -47,6 +47,7 @@ const authOwnerProject = (req, res, next) => {
 
 const authOwnerTodo =  (req, res, next) => {
   let idTodo = +req.params.id
+  console.log(idTodo, 'idTodo???????????????????')
   Todo.findByPk(idTodo)
   .then(todo => {
     if (todo) {
@@ -56,7 +57,10 @@ const authOwnerTodo =  (req, res, next) => {
       next({ msg: 'Data not found' })
     }
   })
-  .catch(err => next(err))
+  .catch(err => {
+    console.log(err, '>>>>>>>>>>>>>>>>>>>>>>>>>')
+    next(err)
+  })
 }
 
 

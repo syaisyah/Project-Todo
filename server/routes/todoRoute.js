@@ -9,6 +9,6 @@ router.use(authentication)
 router.get('/', TodoController.findAll)
 router.post('/', authOwnerProject, TodoController.createTodo)
 router.get('/:id', authOwnerTodo, TodoController.getByIdTodo)
-
+router.delete('/:id', authOwnerTodo, TodoController.destroyByIdTodo)
 
 module.exports = router

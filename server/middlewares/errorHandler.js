@@ -1,4 +1,5 @@
 function errorHandler(err, req, res, next) {
+  console.log('masuk')
   console.log(err, 'errorHandler >>>>>>>>>>>')
   let statusCode = 500
   let message = "Internal server errors"
@@ -37,12 +38,12 @@ function errorHandler(err, req, res, next) {
       message = [`${err.msg}`]
       break;
     case 'User not found':
-      statusCode = 400
+      statusCode = 404
       message = [`${err.msg}`]
       break;
     case 'Data not found':
-      statusCode = 400
-      message = err.msg
+      statusCode = 404
+      message = [`${err.msg}`]
       break;
   }
 
