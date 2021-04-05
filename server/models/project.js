@@ -20,7 +20,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Project.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name can not be empty'
+        },
+        notEmpty: {
+          msg: 'Name is required'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

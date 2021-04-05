@@ -58,7 +58,6 @@ beforeAll(done => {
     })
     .then(project => {
       idProject = project.id;
-
       return UserProject.create({ ProjectId: idProject, UserId: idUserOwner })
     })
     .then(_ => {
@@ -96,7 +95,6 @@ describe('Todos Route Tests', () => {
 
   describe('POST /todos', () => {
     describe('Success Case', () => {
-      //untuk todo pribadi
       it('should return object of new todo with status 201 Created', (done) => {
         const todo1 = {
           title: 'Learn React js',
@@ -125,8 +123,6 @@ describe('Todos Route Tests', () => {
           })
       })
 
-      // todo project create by owner
-      // jangan lupa check table junction dulu dia terdaftar ga di project tersebut
       it('should return object of new todo with status 201 Created', (done) => {
         const todo2 = {
           title: 'Planning KOM',
@@ -148,7 +144,6 @@ describe('Todos Route Tests', () => {
               expect(res.body).toHaveProperty('title', todo2.title)
               expect(res.body).toHaveProperty('status', todo2.status)
               expect(res.body).toHaveProperty('due_date', todo2.due_date.toISOString())
-              //aku tau kenapa ini  ga jadi idUser karena kan pas create disini UserId nya beda 1
               expect(res.body).toHaveProperty('UserId', expect.any(Number))
               expect(res.body).toHaveProperty('ProjectId', idProject)
               done()
@@ -156,8 +151,6 @@ describe('Todos Route Tests', () => {
           })
       })
 
-      // todo project create by member
-      // jangan lupa check table junction dulu dia terdaftar ga di project tersebut
       it('should return object of new todo with status 201 Created', (done) => {
         const todo3 = {
           title: 'Mapping tor',
@@ -265,8 +258,7 @@ describe('Todos Route Tests', () => {
             }
           })
       })
-
-      //   // null 
+      
       it('400 Bad Request - error because title is null', (done) => {
         request(app)
           .post('/todos')
