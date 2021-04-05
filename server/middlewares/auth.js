@@ -47,20 +47,21 @@ const authOwnerProject = (req, res, next) => {
 
 const authOwnerTodo = (req, res, next) => {
   let idTodo = +req.params.id
+  console.log(idTodo, +req.logginUser.id, 'console.log logginUser')
+  
   Todo.findByPk(idTodo)
     .then(todo => {
       if (todo) {
-        console.log(todo, 'masukkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-        console.log(+req.logginUser.id, 'console.log logginUser')
         let isAuthorized = todo.UserId === +req.logginUser.id
-        console.log(isAuthorized, '???????????????????????????')
         isAuthorized ? next() : next({ msg: 'UnAuthorized' })
       } else {
 
         next({ msg: 'Data not found' })
       }
     })
-    .catch(err => next(err))
+    .catch(err => {
+      console.log(err, 'catch auhor')
+      next(err)})
 }
 
 

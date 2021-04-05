@@ -1,6 +1,5 @@
 function errorHandler(err, req, res, next) {
-  console.log('masuk')
-  console.log(err, 'errorHandler >>>>>>>>>>>')
+  // console.log(err, 'errorHandler >>>>>>>>>>>')
   let statusCode = 500
   let message = "Internal server errors"
 

@@ -32,11 +32,28 @@ class TodoController {
   }
 
   static destroyByIdTodo(req, res, next) {
-    Todo.destroy({ where: {id: + req.params.id }})
+    Todo.destroy({ where: { id: + req.params.id } })
       .then(todo => {
-      res.status(200).json({ message: 'Delete Todo Success' })
+        res.status(200).json({ message: 'Delete Todo Success' })
       })
-      .catch (err => next(err))
+      .catch(err => next(err))
+  }
+
+  static updateTodo(req, res, next) {
+    console.log('mausk>>>>>>>>>>>>>>>>>>>>.updateTodo')
+    const { title, status, due_date } = req.body;
+    const newTodo = { title, status, due_date }
+    Todo.update(newTodo, {
+      where: { id: +req.params.id },
+      returning: true
+    })
+    .then(todo => {
+      res.status(200).json(todo[1][0])
+    })
+    .catch(err => {
+      console.log(err, 'controler yupdate >>>>>>>>>>>')
+      next(err)
+    })
   }
 }
 
