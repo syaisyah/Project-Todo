@@ -16,12 +16,17 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
-
     Todo.findAll({ where: { UserId: +req.logginUser.id } })
       .then(todos => {
-        console.log(todos, 'getAll >>>>>>>>')
         res.status(200).json(todos)
-          // (todos.length) ? res.status(200).json(todos) : next({ msg: 'Data not found' })
+      })
+      .catch(err => next(err))
+  }
+
+  static getByIdTodo(req, res, next) {
+    Todo.findByPk(+req.params.id)
+      .then(todo => {
+        todo ? res.status(200).json(todo) : next({ msg: 'Data not found' })
       })
       .catch(err => next(err))
   }

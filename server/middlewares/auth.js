@@ -25,7 +25,6 @@ const authentication = (req, res, next) => {
 }
 
 const authOwnerProject = (req, res, next) => {
-  
   if (!req.body.ProjectId) {
     next()
   } else {
@@ -38,7 +37,6 @@ const authOwnerProject = (req, res, next) => {
         } else {
           next({ msg: 'Data not found' })
         }
-
       })
       .catch(err => {
         console.log(err, 'catch authOwnerProject>>>>>>')
@@ -47,5 +45,19 @@ const authOwnerProject = (req, res, next) => {
   }
 }
 
+const authOwnerTodo =  (req, res, next) => {
+  let idTodo = +req.params.id
+  Todo.findByPk(idTodo)
+  .then(todo => {
+    if (todo) {
+      let isAuthorized = todo.UserId === +req.logginUser.id  
+      isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+    } else {
+      next({ msg: 'Data not found' })
+    }
+  })
+  .catch(err => next(err))
+}
 
-module.exports = { authentication, authOwnerProject }
+
+module.exports = { authentication, authOwnerProject, authOwnerTodo}
