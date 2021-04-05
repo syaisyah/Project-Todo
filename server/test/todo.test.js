@@ -44,7 +44,6 @@ beforeAll(done => {
     .then(user1 => {
       token = generateToken({ id: user1.id, email: user1.email })
       idUser = user1.id;
-      console.log(idUser, 'token reguler user')
       return User.create(user2)
     })
     .then(user2 => {
@@ -71,11 +70,9 @@ beforeAll(done => {
       return UserProject.create({ ProjectId: idProject, UserId: idUserMember })
     })
     .then(_ => {
-
       return User.create(user4)
     })
     .then(user4 => {
-      // console.log(user4.id, 'forbidden user')
       forbiddenToken = generateToken({ id: user4.id, email: user4.email })
       done()
     })
@@ -331,7 +328,6 @@ describe('Todos Route Tests', () => {
 
   describe('GET /todos', () => {
     describe('Success Case', () => {
-      //get all todos pribadi
       it('200 OK - should return array of object todo', (done) => {
         request(app)
           .get('/todos')
