@@ -1,4 +1,3 @@
-const { beforeAll, afterAll } = require('@jest/globals')
 const request = require('supertest')
 const app = require('../app.js')
 const { User } = require('../models')

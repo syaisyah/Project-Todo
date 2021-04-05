@@ -1,4 +1,5 @@
 function errorHandler(err, req, res, next) {
+  console.log(err, 'errorHandler >>>>>>>>>>>')
   let statusCode = 500
   let message = "Internal server errors"
 
@@ -20,7 +21,7 @@ function errorHandler(err, req, res, next) {
 
     case 'JsonWebTokenError':
       statusCode = 401
-      message = 'UnAuthenticated';
+      message = [`UnAuthenticated`]
       break;
   }
 
@@ -31,21 +32,21 @@ function errorHandler(err, req, res, next) {
       statusCode = 400
       message = [`${err.msg}`]
       break;
-    //   case 'UnAuthorized':
-    //     statusCode = 403
-    //     message = err.msg
-    //     break;
-    //   case 'User not found':
-    //     statusCode = 400
-    //     message = err.msg
-    //     break;
-    //   case 'Data not found':
-    //     statusCode = 400
-    //     message = err.msg
-    //     break;
+    case 'UnAuthorized':
+      statusCode = 403
+      message = [`${err.msg}`]
+      break;
+    case 'User not found':
+      statusCode = 400
+      message = [`${err.msg}`]
+      break;
+    case 'Data not found':
+      statusCode = 400
+      message = err.msg
+      break;
   }
 
-  res.status(statusCode).json({ message })
+  res.status(statusCode).json({ status: statusCode, message })
 }
 
 
