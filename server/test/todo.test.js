@@ -120,7 +120,7 @@ describe('Todos Route Tests', () => {
               expect(res.body).toHaveProperty('title', todo1.title)
               expect(res.body).toHaveProperty('status', todo1.status)
               expect(res.body).toHaveProperty('due_date', todo1.due_date.toISOString())
-              //expect(res.body).toHaveProperty('UserId', todo1.UserId)
+              expect(res.body).toHaveProperty('UserId', expect.any(Number))
               expect(res.body).toHaveProperty('ProjectId', null)
               done()
             }
@@ -150,7 +150,7 @@ describe('Todos Route Tests', () => {
               expect(res.body).toHaveProperty('title', todo2.title)
               expect(res.body).toHaveProperty('status', todo2.status)
               expect(res.body).toHaveProperty('due_date', todo2.due_date.toISOString())
-              // expect(res.body).toHaveProperty('UserId', todo2.UserId)
+              expect(res.body).toHaveProperty('UserId', expect.any(Number))
               expect(res.body).toHaveProperty('ProjectId', idProject)
               done()
             }
@@ -179,7 +179,7 @@ describe('Todos Route Tests', () => {
               expect(res.body).toHaveProperty('title', todo3.title)
               expect(res.body).toHaveProperty('status', todo3.status)
               expect(res.body).toHaveProperty('due_date', todo3.due_date.toISOString())
-              // expect(res.body).toHaveProperty('UserId', todo3.UserId)
+              expect(res.body).toHaveProperty('UserId', expect.any(Number))
               expect(res.body).toHaveProperty('ProjectId', idProject)
               done()
             }
@@ -261,7 +261,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toHaveProperty('Due date is required')
+              expect(res.body.message[0]).toEqual('Due date is required')
               done()
             }
           })
@@ -280,8 +280,8 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             else {
               expect(res.status).toBe(400)
-              expect(typeof res.body).toEqual('array')
-              expect(res.body.message[0]).toHaveProperty('Title can not be empty')
+              expect(typeof res.body).toEqual('object')
+              expect(res.body.message[0]).toEqual('Title can not be empty')
               done()
             }
           })
@@ -300,7 +300,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(400)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toHaveProperty('Status can not be empty')
+              expect(res.body.message[0]).toEqual('Status can not be empty')
               done()
             }
           })
@@ -963,7 +963,7 @@ describe('Todos Route Tests', () => {
   //         })
   //     })
   //   })
-  })
+  // })
 })
 
 
