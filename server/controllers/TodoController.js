@@ -32,11 +32,11 @@ class TodoController {
   }
 
   static destroyByIdTodo(req, res, next) {
-    Todo.destroy(+req.params.id)
+    Todo.destroy({ where: {id: + req.params.id }})
       .then(todo => {
-        res.status(200).json({ message: 'Delete Todo Success' })
+      res.status(200).json({ message: 'Delete Todo Success' })
       })
-      .catch(err => next(err))
+      .catch (err => next(err))
   }
 }
 
