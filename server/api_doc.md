@@ -194,7 +194,7 @@ Required Auth: Yes(for owner or member of project only, get detail Projects with
   title: "<new todo title>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
-  UserId: null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from database system>"
 }
 ```
@@ -264,7 +264,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId: null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from  database system>",
   }
 ]
@@ -315,7 +315,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from  database system>"
 }
 
@@ -411,7 +411,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId: null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from  database system>"
 }
 
@@ -470,7 +470,7 @@ OR
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId: null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from  database system>"
 }
 ```

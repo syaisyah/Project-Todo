@@ -7,5 +7,5 @@ const { authentication, authOwnerProject } = require('../middlewares/auth')
 
 router.use(authentication)
 router.post('/', authOwnerProject, TodoController.createTodo)
-
+router.get('/', TodoController.findAll)
 module.exports = router
