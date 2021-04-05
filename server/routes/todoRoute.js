@@ -11,7 +11,7 @@ router.post('/', authOwnerProject, TodoController.createTodo)
 router.get('/:id', authOwnerTodo, TodoController.getByIdTodo)
 router.delete('/:id', authOwnerTodo, TodoController.destroyByIdTodo)
 router.put('/:id', authOwnerTodo, TodoController.updateTodo)
-
+router.patch('/:id', authOwnerTodo, TodoController.updateStatusTodo)
 
 
 module.exports = router

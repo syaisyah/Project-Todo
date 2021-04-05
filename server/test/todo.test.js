@@ -115,7 +115,6 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             else {
               idTodo = res.body.id;
-              console.log(idTodo, 'idTodo >>>>>>>>>>>>>>>>>>>>>')
               expect(res.status).toBe(201)
               expect(typeof res.body).toEqual('object')
               expect(res.body).toHaveProperty('id', expect.any(Number))
@@ -640,188 +639,170 @@ describe('Todos Route Tests', () => {
       })
     })
 
-    // describe('PATCH /todos/:id', () => {
-    //   describe('Success Case', () => {
-    //     it('200 OK - should return object of todo', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${idTodo}`)
-    //         .set('access_token', token)
-    //         .send({
-    //           status: 'Completed',
-    //         })
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           else {
-    //             expect(res.status).toBe(200)
-    //             expect(typeof res.body).toEqual('object')
-    //             expect(res.body).toHaveProperty('id', expect.any(Number))
-    //             expect(res.body).toHaveProperty('title', todo1.title)
-    //             expect(res.body).toHaveProperty('status', 'Completed')
-    //             expect(res.body).toHaveProperty('due_date', todo1.due_date)
-    //             expect(res.body).toHaveProperty('UserId', idUser)
-    //             expect(res.body).toHaveProperty('ProjectId', null)
-    //             done()
-    //           }
-    //         })
-    //     })
-    //   })
+    describe('PATCH /todos/:id', () => {
+      describe('Success Case', () => {
+        it('200 OK - should return object of todo', (done) => {
+          request(app)
+            .patch(`/todos/${idTodo}`)
+            .set('access_token', token)
+            .send({
+              status: 'Completed',
+            })
+            .end(function (err, res) {
+              if (err) done(err)
+              else {
+                expect(res.status).toBe(200)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('id', expect.any(Number))
+                expect(res.body).toHaveProperty('title')
+                expect(res.body).toHaveProperty('status', 'Completed')
+                expect(res.body).toHaveProperty('due_date')
+                expect(res.body).toHaveProperty('UserId', idUser)
+                expect(res.body).toHaveProperty('ProjectId', null)
+                done()
+              }
+            })
+        })
+      })
 
-    //   describe('Error Cases', () => {
-    //     it('401 UnAuthenticated - error because user has not yet loggin', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${idTodo}`)
-    //         .send({
-    //           status: 'Completed',
-    //         })
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           expect(res.status).toBe(401)
-    //           expect(typeof res.body).toEqual('array')
-    //           expect(res.body[0]).toHaveProperty('message', 'UnAuthenticated')
-    //           done()
-    //         })
-    //     })
-    //     it('403 UnAuthorized - error because user has loggin but notAuthorized to access data todo', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${idTodo}`)
-    //         .set('access_token', forbiddenToken)
-    //         .send({
-    //           status: 'Completed',
-    //         })
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           expect(res.status).toBe(403)
-    //           expect(typeof res.body).toEqual('array')
-    //           expect(res.body[0]).toHaveProperty('message', 'UnAuthorized')
-    //           done()
-    //         })
-    //     })
-    //     it('404 Data not found - error because data not found', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${todoIdNotFound}`)
-    //         .set('access_token', token)
-    //         .send({
-    //           status: 'Completed',
-    //         })
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           else {
-    //             expect(res.status).toBe(404)
-    //             expect(typeof res.body).toEqual('array')
-    //             expect(res.body[0]).toHaveProperty('message', 'Data not found')
-    //             done()
-    //           }
-    //         })
-    //     })
+      describe('Error Cases', () => {
+        it('401 UnAuthenticated - error because user has not yet loggin', (done) => {
+          request(app)
+            .patch(`/todos/${idTodo}`)
+            .send({
+              status: 'Completed',
+            })
+            .end(function (err, res) {
+              if (err) done(err)
+              expect(res.status).toBe(401)
+              expect(typeof res.body).toEqual('object')
+              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              done()
+            })
+        })
+        it('403 UnAuthorized - error because user has loggin but notAuthorized to access data todo', (done) => {
+          request(app)
+            .patch(`/todos/${idTodo}`)
+            .set('access_token', forbiddenToken)
+            .send({
+              status: 'Completed',
+            })
+            .end(function (err, res) {
+              if (err) done(err)
+              expect(res.status).toBe(403)
+              expect(typeof res.body).toEqual('object')
+              expect(res.body.message[0]).toEqual('UnAuthorized')
+              done()
+            })
+        })
+        it('404 Data not found - error because data not found', (done) => {
+          request(app)
+            .patch(`/todos/${idTodoNotFound}`)
+            .set('access_token', token)
+            .send({
+              status: 'Completed',
+            })
+            .end(function (err, res) {
+              if (err) done(err)
+              else {
+                expect(res.status).toBe(404)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body.message[0]).toEqual('Data not found')
+                done()
+              }
+            })
+        })
 
-    //     it('400 Bad Request- error because sequelize validation error - status is empty', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${idTodo}`)
-    //         .set('access_token', token)
-    //         .send({
-    //           status: '',
-    //         })
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           else {
-    //             expect(res.status).toBe(400)
-    //             expect(typeof res.body).toEqual('array')
-    //             expect(res.body[0]).toHaveProperty('message', 'Status is required')
-    //             done()
-    //           }
-    //         })
-    //     })
+        it('400 Bad Request- error because sequelize validation error - status is empty', (done) => {
+          request(app)
+            .patch(`/todos/${idTodo}`)
+            .set('access_token', token)
+            .send({
+              status: '',
+            })
+            .end(function (err, res) {
+              if (err) done(err)
+              else {
+                expect(res.status).toBe(400)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body.message[0]).toEqual('Status is required')
+                done()
+              }
+            })
+        })
+      })
+    })
 
-    //     it('400 Bad Request- error because sequelize validation error - status is null', (done) => {
-    //       request(app)
-    //         .patch(`/todos/${idTodo}`)
-    //         .set('access_token', token)
-    //         .send()
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           else {
-    //             expect(res.status).toBe(400)
-    //             expect(typeof res.body).toEqual('array')
-    //             expect(res.body[0]).toHaveProperty('message', 'Status can not be empty')
-    //             done()
-    //           }
-    //         })
-    //     })
-    //   })
-    // })
+    describe('DELETE /todos/:id', () => {
+      describe('Success Case', () => {
+        it('200 OK - should return object of message success', (done) => {
+          request(app)
+            .delete(`/todos/${idTodo}`)
+            .set('access_token', token)
+            .end(function (err, res) {
+              if (err) done(err)
+              expect(res.status).toBe(200)
+              expect(typeof res.body).toEqual('object')
+              expect(res.body).toHaveProperty('message', 'Delete Todo Success')
+              done()
+            })
+        })
 
-    // describe('DELETE /todos/:id', () => {
-    //   // untuk authorization harsnya cek dulu ini todo pribadi apa project -> pembeda bisa ProjectId atau UserId null atau tidak
-    //   describe('Success Case', () => {
-    //     it('200 OK - should return object of message success', (done) => {
-    //       request(app)
-    //         .delete(`/todos/${idTodo}`)
-    //         .set('access_token', token)
-    //         .end(function (err, res) {
-    //           if (err) done(err)
-    //           expect(res.status).toBe(200)
-    //           expect(typeof res.body).toEqual('object')
-    //           expect(res.body).toHaveProperty('message', 'Delete Todo Success')
-    //           done()
-    //         })
-    //     })
+        describe('Error Cases', () => {
+          it('401 UnAuthenticated - error because user have not loggin yet or does not have any access_token', (done) => {
+            request(app)
+              .delete(`/todos/${idTodo}`)
+              .end(function (err, res) {
+                if (err) done(err)
+                expect(res.status).toBe(401)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body.message[0]).toEqual('UnAuthenticated')
+                done()
+              })
+          })
 
-    //     describe('Error Cases', () => {
-    //       it('401 UnAuthenticated - error because user have not loggin yet or does not have any access_token', (done) => {
-    //         request(app)
-    //           .delete(`/todos/${idTodo}`)
-    //           .end(function (err, res) {
-    //             if (err) done(err)
-    //             expect(res.status).toBe(401)
-    //             expect(typeof res.body).toEqual('object')
-    //             expect(res.body.message[0]).toEqual('UnAuthenticated')
-    //             done()
-    //           })
-    //       })
+          it('403 Forbidden UnAuthorized - error because user have access_token but UnAuthorized', (done) => {
+            request(app)
+              .delete(`/todos/${idTodoInProject}`)
+              .set('access_token', token)
+              .end(function (err, res) {
+                if (err) done(err)
+                expect(res.status).toBe(403)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body.message[0]).toEqual('UnAuthorized')
+                done()
+              })
+          })
+          it('403 Forbidden UnAuthorized - error because user have access_token but UnAuthorized in project', (done) => {
+            request(app)
+              .delete(`/todos/${idTodoInProject}`)
+              .set('access_token', forbiddenToken)
+              .end(function (err, res) {
+                if (err) done(err)
+                expect(res.status).toBe(403)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body.message[0]).toEqual('UnAuthorized')
+                done()
+              })
+          })
 
-    //       it('403 Forbidden UnAuthorized - error because user have access_token but UnAuthorized', (done) => {
-    //         request(app)
-    //           .delete(`/todos/${idTodoInProject}`)
-    //           .set('access_token', token)
-    //           .end(function (err, res) {
-    //             if (err) done(err)
-    //             expect(res.status).toBe(403)
-    //             expect(typeof res.body).toEqual('object')
-    //             expect(res.body.message[0]).toEqual('UnAuthorized')
-    //             done()
-    //           })
-    //       })
-    //       it('403 Forbidden UnAuthorized - error because user have access_token but UnAuthorized in project', (done) => {
-    //         request(app)
-    //           .delete(`/todos/${idTodoInProject}`)
-    //           .set('access_token', forbiddenToken)
-    //           .end(function (err, res) {
-    //             if (err) done(err)
-    //             expect(res.status).toBe(403)
-    //             expect(typeof res.body).toEqual('object')
-    //             expect(res.body.message[0]).toEqual('UnAuthorized')
-    //             done()
-    //           })
-    //       })
-
-    //       it('404 Data not found - error because data not found', (done) => {
-    //         request(app)
-    //           .delete(`/todos/${idTodoNotFound}`)
-    //           .set('access_token', token)
-    //           .end(function (err, res) {
-    //             if (err) done(err)
-    //             else {
-    //               expect(res.status).toBe(404)
-    //               expect(typeof res.body).toEqual('object')
-    //               expect(res.body.message[0]).toEqual('Data not found')
-    //               done()
-    //             }
-    //           })
-    //       })
-    //     })
-    //     })
-    // })
-
+          it('404 Data not found - error because data not found', (done) => {
+            request(app)
+              .delete(`/todos/${idTodoNotFound}`)
+              .set('access_token', token)
+              .end(function (err, res) {
+                if (err) done(err)
+                else {
+                  expect(res.status).toBe(404)
+                  expect(typeof res.body).toEqual('object')
+                  expect(res.body.message[0]).toEqual('Data not found')
+                  done()
+                }
+              })
+          })
+        })
+      })
+    })
   })
 })
 

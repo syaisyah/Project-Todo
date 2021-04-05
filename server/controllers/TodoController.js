@@ -40,20 +40,28 @@ class TodoController {
   }
 
   static updateTodo(req, res, next) {
-    console.log('mausk>>>>>>>>>>>>>>>>>>>>.updateTodo')
     const { title, status, due_date } = req.body;
     const newTodo = { title, status, due_date }
     Todo.update(newTodo, {
       where: { id: +req.params.id },
       returning: true
     })
-    .then(todo => {
-      res.status(200).json(todo[1][0])
-    })
-    .catch(err => {
-      console.log(err, 'controler yupdate >>>>>>>>>>>')
-      next(err)
-    })
+      .then(todo => {
+        res.status(200).json(todo[1][0])
+      })
+      .catch(err => next(err))
+  }
+
+  static updateStatusTodo(req, res, next) {
+    const { status } = req.body;
+    Todo.update({ status }, { where: { id: +req.params.id }, returning: true })
+      .then(todo => {
+        res.status(200).json(todo[1][0])
+
+      }).catch(err => {
+        console.log(err)
+        next(err)
+      })
   }
 }
 
