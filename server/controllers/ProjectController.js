@@ -21,9 +21,11 @@ class ProjectController {
       }).catch(err => {
         next(err)
       })
-
   }
 
+  static findAll(req, res, next) {
+
+  }
 }
 
 module.exports = ProjectController
