@@ -4,9 +4,9 @@ const { generateToken } = require('../helpers/token-helper')
 const errorHandler = require('../middlewares/errorHandler')
 
 
+
 class UserController {
   static register(req, res, next) {
-
     const { email, password } = req.body
     const newUser = { email, password }
     User.create(newUser)
@@ -26,7 +26,6 @@ class UserController {
           next({ msg: 'Invalid email or password' })
         }
       })
-
       .catch(err => {
         next(err)
       })

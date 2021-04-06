@@ -5,7 +5,6 @@ const errorHandler = require('./errorHandler')
 
 //jadi: kalo gada access_token, dia gakan masuk ke tr -> tapi langsung di larikan ke catch(err)
 const authentication = (req, res, next) => {
-
   try {
     let decode = verifyToken(req.headers.access_token)
     User.findByPk(+decode.id)
@@ -24,7 +23,8 @@ const authentication = (req, res, next) => {
   }
 }
 
-const authOwnerProject = (req, res, next) => {
+
+const authOwnerMemberProject = (req, res, next) => {
   if (!req.body.ProjectId) {
     next()
   } else {
@@ -33,36 +33,45 @@ const authOwnerProject = (req, res, next) => {
         if (projects.length) {
           let isAuthorized = projects.find(el => el.UserId === +req.logginUser.id)
           isAuthorized ? next() : next({ msg: 'UnAuthorized' })
-
         } else {
           next({ msg: 'Data not found' })
         }
       })
-      .catch(err => {
-        console.log(err, 'catch authOwnerProject>>>>>>')
-        next(err)
-      })
+      .catch(err => next(err))
   }
 }
 
+
 const authOwnerTodo = (req, res, next) => {
   let idTodo = +req.params.id
-  console.log(idTodo, +req.logginUser.id, 'console.log logginUser')
-  
   Todo.findByPk(idTodo)
     .then(todo => {
       if (todo) {
         let isAuthorized = todo.UserId === +req.logginUser.id
         isAuthorized ? next() : next({ msg: 'UnAuthorized' })
       } else {
-
         next({ msg: 'Data not found' })
       }
     })
-    .catch(err => {
-      console.log(err, 'catch auhor')
-      next(err)})
+    .catch(err => next(err))
 }
 
 
-module.exports = { authentication, authOwnerProject, authOwnerTodo }
+const authProject = (req, res, next) => {
+  let idProject = +req.params.id
+  Project.findByPk(idProject)
+    .then(project => {
+      if (project) {
+        let isAuthorized = project.UserId === +req.logginUser.id
+        isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+      } else {
+        next({ msg: 'Data not found' })
+      }
+    })
+    .catch(err => next(err))
+}
+
+
+
+
+module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject}

@@ -3,7 +3,6 @@ const app = require('../app.js')
 const { User } = require('../models')
 
 
-
 describe('User Routes Test', () => {
   const user = {
     email: "edwin@mail.com",
@@ -35,7 +34,6 @@ describe('User Routes Test', () => {
             }
           })
       })
-
     })
 
     describe('Error Case', () => {
@@ -57,7 +55,6 @@ describe('User Routes Test', () => {
           })
       })
 
-      //invalid email format
       it('400 Bad Request- error because invalid format email', (done) => {
         request(app)
           .post('/users/register')
@@ -110,7 +107,7 @@ describe('User Routes Test', () => {
             }
           })
       })
-      // email null
+  
       it('400 Bad Request- error because email is null', (done) => {
         request(app)
           .post('/users/register')
@@ -127,7 +124,7 @@ describe('User Routes Test', () => {
             }
           })
       })
-      //password null
+
       it('400 Bad Request- error because password is null', (done) => {
         request(app)
           .post('/users/register')

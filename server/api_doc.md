@@ -1,6 +1,6 @@
 ### Title:
 
-- Dragon Todo
+- Advanced Todo
 
 ### URL:
 
@@ -22,9 +22,9 @@
 - POST /todos
 - GET /todos
 - GET /todos/:id
-- DELETE /todos/:id
 - PUT /todos/:id
 - PATCH /todos/:id
+- DELETE /todos/:id
 ```
 
 3. Projects
@@ -33,13 +33,10 @@
 - POST /projects
 - GET /projects
 - GET /projects/:id
-- DELETE /projects/:id
 - PATCH /projects/:id
-- PATCH /projects/:ProjectId/addUser
-- GET /projects/:ProjectId/todos
-- POST /projects/:ProjectId/todos
-- PUT /projects/:ProjectId/TodoId
-- DELETE /projects/:ProjectId/TodoId
+- PATCH /projects/:id/addUser
+- PATCH /projects/:id/deleteUser/:idUser
+- DELETE /projects/:id
 ```
 
 ### Endpoints
@@ -152,7 +149,7 @@ Required Auth: Yes
   title: "<new todo title>",
   status: "<new todo status>",
   due_date: "<new todo due_date>",
-  UserId: "<id from loggin user>"
+  ProjectId: null
 }
 ```
 
@@ -176,7 +173,7 @@ Response Body:
 Create new todo for specific project
 URL: /todos
 Method: POST
-Required Auth: Yes(for owner or member of project only, get detail Projects with specific id and check whether id from loggin user exist/not in junction tables UserProjects)
+Required Auth: Yes(for owner or member of project only)
 ```
 
 - Request Headers:
@@ -210,7 +207,7 @@ Response Body:
   title: "<todo title>",
   status: "<todo status>",
   due_date: "<todo due_date>",
-  UserId:  null,
+  UserId:  "<id from loggin user>",
   ProjectId: "<id project from database system>"
 }
 ```
@@ -321,42 +318,7 @@ OR
 
 ```
 
-4. DELETE Todo
-
-```
-Delete todo by specific id
-URL: /todos/:id
-Method: DELETE
-Required Auth: Yes (todo belongs to current user loggin only)
-```
-
-- Params:
-
-```
-id: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-{
-  message: "Delete Todo Success"
-}
-
-```
-
-5. UPDATE Todo
+4. UPDATE Todo
 
 ```
 Update todo by specific id
@@ -417,7 +379,7 @@ OR
 
 ```
 
-6. Update Status Todo
+5. Update Status Todo
 
 ```
 Update status todo by specific id
@@ -475,6 +437,41 @@ OR
 }
 ```
 
+6. DELETE Todo
+
+```
+Delete todo by specific id
+URL: /todos/:id
+Method: DELETE
+Required Auth: Yes (todo belongs to current user loggin only)
+```
+
+- Params:
+
+```
+id: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  message: "Delete Todo Success"
+}
+
+```
+
 # PROJECTS
 
 1. Create Project
@@ -499,6 +496,7 @@ Required Auth: Yes
 ```
 {
   name: "<new project name>"
+  UserId:  "<id from loggin user>",
 }
 ```
 
@@ -578,46 +576,12 @@ Response Body:
 
 {
   id: "<id project from database system>"
-  name: "<project name>",
-  UserId:  "<id user from database system>",
+  dataTodos: "<array of todos in project>"
+  dataProjects:  "<array of detail project including users that participated(owner and member)>",
 }
 ```
 
-4. DELETE Project
-
-```
-Delete project by specific id
-URL: /projects/:id
-Method: DELETE
-Required Auth: Yes (only if loggin user is the owner of the project)
-```
-
-- Params:
-
-```
-id: integer
-```
-
-- Request Headers:
-
-```
-{
-  access_token: "<user access_token>"
-}
-```
-
-- Success Response:
-
-```
-Status: 200 OK
-Response Body:
-
-{
-  message: "Success delete project"
-}
-```
-
-5. Update Project
+4. Update Project
 
 ```
 Update project by specific id
@@ -661,11 +625,11 @@ Response Body:
 }
 ```
 
-6. PATCH /projects/:ProjectId/addUser
+5. PATCH /projects/:id/addUser
 
 ```
 Add user to specific project
-URL: /projects/:ProjectId/addUser
+URL: /projects/:id/addUser
 Method: PATCH
 Required Auth: Yes (only if loggin user is the owner of the project)
 ```
@@ -673,7 +637,7 @@ Required Auth: Yes (only if loggin user is the owner of the project)
 - Params:
 
 ```
-ProjectId: integer
+id: integer
 ```
 
 - Request Headers:
@@ -703,6 +667,76 @@ Response Body:
 }
 ```
 
+6. PATCH /projects/:id/deleteUser/:idUser
+
+```
+delete user to specific project
+URL: /projects/:id/deleteUser/:idUser
+Method: PATCH
+Required Auth: Yes (only if loggin user is the owner of the project)
+```
+
+- Params:
+
+```
+idUser: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  message: "Success delete user in project"
+}
+```
+
+
+7. DELETE Project
+
+```
+Delete project by specific id
+URL: /projects/:id
+Method: DELETE
+Required Auth: Yes (only if loggin user is the owner of the project)
+```
+
+- Params:
+
+```
+id: integer
+```
+
+- Request Headers:
+
+```
+{
+  access_token: "<user access_token>"
+}
+```
+
+- Success Response:
+
+```
+Status: 200 OK
+Response Body:
+
+{
+  message: "Success delete project"
+}
+```
+
+
 # RESTful Error Message
 
 1. Response Error (400) Bad Request - SequelizeValidationError
@@ -716,7 +750,7 @@ Response Body:
 }
 ```
 
-2. Response Error (400) Bad Request - invalid email or password
+2. Response Error (400) Bad Request - Invalid email or password
 
 - Response Body:
 

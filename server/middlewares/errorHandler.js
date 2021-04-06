@@ -1,5 +1,4 @@
 function errorHandler(err, req, res, next) {
-  // console.log(err, 'errorHandler >>>>>>>>>>>')
   let statusCode = 500
   let message = "Internal server errors"
 
@@ -18,7 +17,6 @@ function errorHandler(err, req, res, next) {
         message = err.errors[0].message
       }
       break;
-
     case 'JsonWebTokenError':
       statusCode = 401
       message = [`UnAuthenticated`]
@@ -27,7 +25,6 @@ function errorHandler(err, req, res, next) {
 
 
   switch (err.msg) {
-
     case 'Invalid email or password':
       statusCode = 400
       message = [`${err.msg}`]
@@ -45,6 +42,7 @@ function errorHandler(err, req, res, next) {
       message = [`${err.msg}`]
       break;
   }
+  
 
   res.status(statusCode).json({ status: statusCode, message })
 }
