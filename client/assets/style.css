@@ -1,0 +1,7 @@
+body {
+  background-image: url('./bg-image-shore.jpeg');
+  /* background-image: url('./2.jpeg'); */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
