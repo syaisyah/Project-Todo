@@ -322,7 +322,27 @@ describe('Todos Route Tests', () => {
     describe('Success Case', () => {
       it('200 OK - should return array of object todo', (done) => {
         request(app)
-          .get('/todos')
+          .get(`/todos?${status}=Completed`)
+          .set('access_token', token)
+          .end(function (err, res) {
+            if (err) done(err)
+            else {
+              // console.log(JSON.stringify(res.body, null, 3))
+              expect(res.status).toBe(200)
+              expect(typeof res.body).toEqual('object')
+              expect(res.body[0]).toHaveProperty('id', expect.any(Number))
+              expect(res.body[0]).toHaveProperty('title', expect.any(String))
+              expect(res.body[0]).toHaveProperty('status', expect.any(String))
+              expect(res.body[0]).toHaveProperty('due_date', expect.any(String))
+              expect(res.body[0]).toHaveProperty('UserId', idUser)
+              expect(res.body[0]).toHaveProperty('ProjectId', null)
+              done()
+            }
+          })
+      })
+      it('200 OK - should return array of object todo', (done) => {
+        request(app)
+          .get(`/todos?${status}=Uncompleted`)
           .set('access_token', token)
           .end(function (err, res) {
             if (err) done(err)

@@ -1,14 +1,25 @@
 let today = new Date()
-// const todayString = today.toISOString().split('T')[0]
-// console.log(todayString)
-console.log(today,'before')
+let todayString = today.toISOString().split('T')[0]
+let cekDB = new Date("2021-04-05T01:59:58.000Z")
+let ceDBString = cekDB.toISOString().split('T')[0]
 
-let a = today
+  //2021-04-08T09:35:52.698Z >>>>> 2021-04-05T01:59:58.000Z
 
-a.date= a.getDate() + 4
-let getYear =  a.getFullYear()
-let getMonth = a.getMonth()
+  console.log( todayString, '>>>>>',  ceDBString)
 
-console.log(a, 'after')
+let todayYear = today.getFullYear()
+let todayMonth = today.getMonth()
+let todayDate = today.getDate()
+
+let dbDate = cekDB.getDate()
+let dbMonth = cekDB.getMonth()
+let dbYear = cekDB.getFullYear()
 
 
+console.log(`${todayYear}-${todayMonth}-${todayDate}`," >>>>>>today")
+console.log(dbYear, dbMonth, dbDate, '>>>>>>>>>>DB')
+
+
+let a = 'completed'
+let b = a[0].toUpperCase() + a.slice(1)
+console.log(b)

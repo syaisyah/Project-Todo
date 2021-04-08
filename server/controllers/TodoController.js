@@ -1,9 +1,10 @@
-const errorHandler = require('../middlewares/errorHandler');
 const { Todo, Project } = require('../models')
-
+const { Op } = require("sequelize");
+const errorHandler = require('../middlewares/errorHandler');
 
 
 class TodoController {
+
   static createTodo(req, res, next) {
     let { title, status, due_date, ProjectId } = req.body;
     let UserId = +req.logginUser.id
@@ -17,12 +18,31 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
-    Todo.findAll({ where: { UserId: +req.logginUser.id } })
+    const todayStart = new Date().setHours(0, 0, 0, 0);
+    const now = new Date();
+    let where = { UserId: +req.logginUser.id }
+
+    if (req.query.status) {
+      let queryStatus = req.query.status[0].toUpperCase() + req.query.status.slice(1).toLowerCase()
+      where.status = queryStatus
+    }
+    
+    if (req.params.due_date && req.params.due_date.lowerCase() === 'today') {
+      where.due_date = {
+        [Op.gt]: todayStart,
+        [Op.lt]: now
+      }
+    }
+
+    Todo.findAll({
+      where
+    })
       .then(todos => {
         res.status(200).json(todos)
       })
       .catch(err => next(err))
   }
+
 
   static getByIdTodo(req, res, next) {
     Todo.findByPk(+req.params.id)

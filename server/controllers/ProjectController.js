@@ -27,8 +27,14 @@ class ProjectController {
   static findAll(req, res, next) {
     UserProject.findAll({
       where: { UserId: +req.logginUser.id },
-      include: [Project, User]
-    })
+      include: [
+        { model: Project }, 
+        { model: User, 
+        attributes: {
+          exclude: ['password']
+        }
+       }],
+      })
       .then(data => {
         res.status(200).json(data)
       })
@@ -46,7 +52,14 @@ class ProjectController {
         dataTodos = todos;
         return UserProject.findAll({
           where: { ProjectId: idProject },
-          include: [Project, User]
+          include: [
+            { model: Project },
+            {
+              model: User,
+              attributes: {
+                exclude: ['password']
+              }
+            }],
         })
       })
       .then(dataProjects => {
