@@ -3,58 +3,61 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
-    <!-- <link rel="stylesheet" href="./assets/style.css" /> -->
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Todo</title>
   </head>
   <body>
     <!--Login register page-->
     <section id="login-register-page">
-      <div class="bg-light" style="padding: 100px">
-        <div class="d-flex justify-content-center" style="border: 5px solid rgb(207, 140, 174); border-radius: 50px; box-shadow: 10px 10px 8px 10px rgb(207, 140, 174)">
-          <div class="col-6 w-50 bg-white" style="border-radius: 50px 0px 0px 50px">
-            <div class="row p-5" style="margin-top: 50px">
-              <div class="col-12">
-                <h1>Todo App!</h1>
-                <p>Please log in to your account</p>
-              </div>
-              <div class="col-12" style="margin-top: 50px">
-                <form>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input id="email" type="email" class="form-control w-75" id="email" aria-describedby="emailHelp" />
+      <div class="container-fluid bg-light"></div>
+        <div class="d-flex justify-content-center" style="padding: 150px 0px">
+          <div class="d-flex bg-white p-0" style="height: 100%; width: 60%; border-radius: 50px; box-shadow: 7px 7px 9px 10px rgb(209, 179, 194)">
+            <div class="col-6 w-50 bg-white" style="border-radius: 50px 0px 0px 50px;">
+              <div class="container">
+                <div class="row p-5 " style="height: 100%;">
+                  <div class="col-12 pt-3">
+                    <h1>Todo App!</h1>
+                    <p>Please log in to your account</p>
                   </div>
-                  <div class="mb-5">
-                    <label for="password" class="form-label">Password</label>
-                    <input id="password" type="password" class="form-control w-75" id="password" />
+                  <div class="col-12" style="margin-top: 30px">
+                    <form>
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input id="email" type="email" class="form-control w-75" id="email" aria-describedby="emailHelp" />
+                      </div>
+                      <div class="mb-5">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" type="password" class="form-control w-75" id="password" />
+                      </div>
+                      <div class="d-flex justify-content-center my-5 w-75">
+                        <div class="col-6">
+                          <button id="btn-login" type="submit" class="btn btn w-100 rounded-pill p-2" style="background-color: rgb(183, 180, 224)">Log in</button>
+                        </div>
+                        <div class="col-6">
+                          <button id="btn-register" type="submit" class="btn btn w-100 rounded-pill p-2" style="background-color: rgb(218, 166, 164)">Create Account</button>
+                        </div>
+                      </div>
+                      <div class="mb-5 w-75 text-center">
+                        <div class="col-12">
+                          <p>OR</p>
+                        </div>
+                      </div>
+                      <div class="mb-3 border border-danger w-75">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                      </div>
+                      <div class="my-3 w-75 text-center">
+                        <div id="error-message"></div>
+                      </div>
+                    </form>
                   </div>
-                  <div class="d-flex justify-content-center my-5 w-75">
-                    <div class="col-6">
-                      <button id="btn-login" type="submit" class="btn btn w-100 rounded-pill p-2" style="background-color: rgb(183, 180, 224)">Log in</button>
-                    </div>
-                    <div class="col-6">
-                      <button id="btn-register" type="submit" class="btn btn w-100 rounded-pill p-2" style="background-color: rgb(218, 166, 164)">Create Account</button>
-                    </div>
-                  </div>
-                  <div class="mb-3 w-75 text-center">
-                    <div class="col-12">
-                      <h6>OR</h6>
-                    </div>
-                  </div>
-                  <div class="mb-3 w-75 text-center">
-                    <div class="col-12">
-                      <button type="submit" class="btn btn w-100 bg-light rounded-pill">Sign in with Google</button>
-                    </div>
-                  </div>
-                  <div class="my-3 w-75 text-center">
-                    <div id="error-message"></div>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-6 w-50">
-            <img src="./assets/bike.webp" style="height: 100vh; width: 100%; border-radius: 0px 50px 50px 0px" />
+            <div class="col-6 w-50">
+              <img src="./assets/bike.webp" style=" height: 100%; width: 100%; border-radius: 0px 50px 50px 0px" />
+            </div> 
           </div>
         </div>
       </div>
@@ -62,18 +65,17 @@
     <!--End login register page-->
     <!--Home-->
     <section id="home-page">
-      <div>
-        <div class="row">
+        <div class="d-flex bg-warning" style="height: 100vh"> 
           <!-- kiri-->
           <div class="col-2 border">
-            <div class="row p-5 text-start">
-              <div class="col-12 p-2" style="height: 80vh">
+            <div class="row p-5 text-start bg-white">
+              <div class="col-12" style="height: 80vh; ">
                 <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-todo"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
                 <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project"><i class="fas fa-folder-plus"></i></button> Create Project<br />
                 <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#get-all-project"><i class="far fa-folder-open"></i></button> Project<br />
               </div>
-              <div class="col-12 border p-2" style="margin-top: 100px">
-                <i class="fas fa-sign-out-alt"> Log out </i>
+              <div class="col-12" style="margin-top: 100px">
+                <button id="btn-logout" type="button" class="btn btn-light rounded"><i class="fas fa-sign-out-alt"> Log out </i></button>
               </div>
             </div>
           </div>
@@ -91,9 +93,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 border border">
-                <div class="row border m-5">
-                  <div class="col-6 border text-center p-3" style="height: 80vh">
+              <div class="col-12">
+                <div class="row border m-2">
+                  <div class="col-6 border text-center p-3">
                     <h5>T O D A Y ' S T A S K S</h5>
                   </div>
                   <div class="col-6 border" style="height: 80vh">
@@ -114,12 +116,12 @@
           </div>
           <!--end kanan-->
         </div>
-      </div>
     </section>
     <!-- End Home-->
     <script src="https://kit.fontawesome.com/3adeed8aed.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="./codes/main.js"></script>
   </body>

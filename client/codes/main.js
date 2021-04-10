@@ -11,6 +11,11 @@ $(document).ready(function () {
     e.preventDefault()
     register()
   })
+
+  $("#btn-logout").on("click", (e) => {
+    e.preventDefault()
+    logout()
+  })
 });
 
 function checkLocalStorage() {
@@ -69,14 +74,20 @@ function register() {
 
     })
     .fail(err => {
-      err.responseJSON.message.forEach(el => {
-        $("#error-message").append(`
-    <div class="alert alert-danger" role="alert">
-    ${el}
-  </div>
-    `)
+      let message = err.responseJSON.message.map(el => el.toLowerCase())
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
       })
-      setTimeout(() => { $("#error-message").empty() }, 500)
+      //     err.responseJSON.message.forEach(el => {
+      //       $("#error-message").append(`
+      //   <div class="alert alert-danger" role="alert">
+      //   ${el}
+      // </div>
+      //   `)
+      //     })
+      //     setTimeout(() => { $("#error-message").empty() }, 3000)
     })
     .always(el => {
       $("#email").val("")
@@ -85,3 +96,7 @@ function register() {
 }
 
 
+function logout() {
+  localStorage.removeItem('access_token')
+  checkLocalStorage()
+}

@@ -1,6 +1,4 @@
-/* body {
-  background-image: url('./bg-image-shore.jpeg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-} */
+body {
+  height: 100%;
+  /* background-color: beige; */
+}
