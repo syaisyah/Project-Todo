@@ -10,6 +10,7 @@ $(document).ready(function () {
   $("#btn-register").on("click", (e) => {
     e.preventDefault()
     register()
+    findAllTodo()
   })
 
   $("btn-google").on("click", (e) => {
@@ -21,6 +22,11 @@ $(document).ready(function () {
     e.preventDefault()
     logout()
   })
+
+  $("#list-todo-today").on("click", (e) => {
+    e.preventDefault()
+
+  })
 });
 
 function checkLocalStorage() {
@@ -31,6 +37,7 @@ function checkLocalStorage() {
   } else {
     $("#home-page").show()
     $("#login-register-page").hide()
+    findAllTodo()
   }
 }
 
@@ -44,6 +51,11 @@ function login() {
     data: { email, password }
   })
     .done(response => {
+      Swal.fire(
+        'Login Success!',
+        'You clicked the button!',
+        'success'
+      )
       localStorage.setItem('access_token', response.access_token)
       checkLocalStorage()
     })
@@ -96,16 +108,15 @@ function register() {
 function logout() {
   localStorage.clear()
   const auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
 
   checkLocalStorage()
 }
 
 function onSignIn(googleUser) {
   const id_token = googleUser.getAuthResponse().id_token;
-  console.log(id_token)
   $.ajax({
     url: baseUrl + '/users/googleLogin',
     method: "POST",
@@ -120,4 +131,57 @@ function onSignIn(googleUser) {
     .fail(err => {
       console.log(err)
     })
+}
+
+function findAllTodo() {
+  $.ajax({
+    url: baseUrl + `/todos?due_date=today`,
+    method: "GET",
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .then(todos => {
+      $("#list-todo-today").empty();
+      todos.forEach((el, i) => {
+
+        $("#list-todo-today").append(`
+        <div class="col-6 border">
+          <p>${i + 1}. ${el.title}</p> 
+          </div>
+          <div class="col-6 text-end pl-2 border d-flex justify-content-end">
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#getByIdTodo" onclick="getByIdTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+          <button type="button" class="trans" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+        </div>
+        `)
+      });
+
+    })
+    .catch(err => {
+      console.log(err.responseJSON)
+    })
+  }
+  
+  
+  function getByIdTodo(id) {
+    $.ajax({
+      url: baseUrl + '/todos/' + id,
+      method: "GET",
+      headers: { access_token: localStorage.getItem('access_token') }
+    })
+    .done(todo => {
+      console.log(todo, 'detail>>>')
+      $("#getByIdTodo").show();
+      $("#title-todo").val(todo.title)
+      $("#due_date-todo").val(todo.due_date.split('T')[0])
+      $("#status-todo").val(todo.status)
+      $("#user-id-todo").val(todo.UserId)
+      $("#project-id-todo").val(todo.ProjectId)
+
+      
+    })
+    .fail(err => console.log(err.responseJSON))
+
+
 }

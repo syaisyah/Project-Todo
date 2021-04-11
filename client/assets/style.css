@@ -2,3 +2,19 @@ body {
   height: 100%;
   /* background-color: beige; */
 }
+
+/* .today-todo {
+  border: 1px solid rgb(221, 194, 201);
+  border-radius: 100px;
+  background-color: rgb(233, 227, 227);
+
+} */
+
+
+.trans {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  overflow: hidden;
+  outline: none;
+}
