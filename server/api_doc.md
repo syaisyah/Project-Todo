@@ -102,6 +102,7 @@ Status: 200 OK
 Response Body:
 
 {
+  "<user email>",
   access_token: "<user access_token>"
 }
 ```
@@ -122,6 +123,7 @@ Status: 200 OK
 Response Body:
 
 {
+  email: "<user email>",
   access_token: "<google access_token>"
 }
 ```

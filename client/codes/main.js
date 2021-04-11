@@ -57,7 +57,9 @@ function login() {
         'success'
       )
       localStorage.setItem('access_token', response.access_token)
+      $("#email-user").text(response.email)
       checkLocalStorage()
+
     })
     .fail(err => {
       let message = err.responseJSON.message.map(el => el)
@@ -126,10 +128,11 @@ function onSignIn(googleUser) {
   })
     .done(response => {
       localStorage.setItem("access_token", response.access_token);
+      $("#email-user").text(response.email)
       checkLocalStorage();
     })
     .fail(err => {
-      console.log(err)
+      console.log(err.responseJSON)
     })
 }
 
@@ -143,33 +146,35 @@ function findAllTodo() {
   })
     .then(todos => {
       $("#list-todo-today").empty();
-      todos.forEach((el, i) => {
-
-        $("#list-todo-today").append(`
-        <div class="col-6 border">
-          <p>${i + 1}. ${el.title}</p> 
+      if (todos.length) {
+        todos.forEach((el, i) => {
+          $("#list-todo-today").append(`
+          <div class="col-6 border w-75">
+            <p><input type="checkbox"> ${i + 1}. ${el.title}</p> 
           </div>
-          <div class="col-6 text-end pl-2 border d-flex justify-content-end">
-          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#getByIdTodo" onclick="getByIdTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-          <button type="button" class="trans" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
-          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
-        </div>
-        `)
-      });
+          <div class="w-25 col-6 text-end pl-2 border d-flex justify-content-end">
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#getByIdTodo" onclick="getByIdTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+            <button type="button" class="trans" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+          </div>
+          `)
+        });
+      }
+
 
     })
     .catch(err => {
       console.log(err.responseJSON)
     })
-  }
-  
-  
-  function getByIdTodo(id) {
-    $.ajax({
-      url: baseUrl + '/todos/' + id,
-      method: "GET",
-      headers: { access_token: localStorage.getItem('access_token') }
-    })
+}
+
+
+function getByIdTodo(id) {
+  $.ajax({
+    url: baseUrl + '/todos/' + id,
+    method: "GET",
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
     .done(todo => {
       console.log(todo, 'detail>>>')
       $("#getByIdTodo").show();
@@ -178,8 +183,6 @@ function findAllTodo() {
       $("#status-todo").val(todo.status)
       $("#user-id-todo").val(todo.UserId)
       $("#project-id-todo").val(todo.ProjectId)
-
-      
     })
     .fail(err => console.log(err.responseJSON))
 

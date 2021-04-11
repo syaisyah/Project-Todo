@@ -155,6 +155,7 @@ describe('User Routes Test', () => {
             else {
               expect(res.status).toBe(200)
               expect(typeof res.body).toEqual('object')
+              expect(res.body).toHaveProperty('email', user.email)
               expect(res.body).toHaveProperty('access_token', expect.any(String))
               done()
             }

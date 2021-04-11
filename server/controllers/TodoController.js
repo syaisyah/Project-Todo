@@ -18,6 +18,7 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
+    console.log('masuk todo controller server')
     const todayStart = new Date().setHours(0, 0, 0, 0);
     const now = new Date();
     let where = { UserId: +req.logginUser.id }
