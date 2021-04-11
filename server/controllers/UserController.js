@@ -2,7 +2,7 @@ const { User } = require('../models')
 const { comparedPassword } = require('../helpers/password-helper')
 const { generateToken } = require('../helpers/token-helper')
 const errorHandler = require('../middlewares/errorHandler')
-
+const { OAuth2Client } = require('google-auth-library');
 
 
 class UserController {
@@ -15,6 +15,7 @@ class UserController {
       })
       .catch(err => next(err))
   }
+
   static login(req, res, next) {
     const { email, password } = req.body;
     User.findOne({ where: { email } })
@@ -30,6 +31,34 @@ class UserController {
         next(err)
       })
   }
+
+  static googleLogin(req, res, next) {
+    const client = new OAuth2Client(process.env.CLIENT_ID);
+    async function verify() {
+      const ticket = await client.verifyIdToken({
+        idToken: req.body.googleToken,
+        audience: process.env.CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      
+      User.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          email: payload.email,
+          password: process.env.USER_PASSWORD_GOOGLE_SIGIN
+        }
+      })
+        .then(user => {
+          let payload = { id: user.id, email: user.email }
+          let access_token = generateToken(payload)
+          res.status(200).json({ access_token })
+        })
+        .catch(err => next(err))
+    }
+    verify().catch(console.error);
+  }
+
+
 }
 
 module.exports = UserController

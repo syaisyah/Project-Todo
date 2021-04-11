@@ -1,10 +1,12 @@
 ### Title:
 
-- Advanced Todo
+- Project Todo
 
 ### URL:
 
-- http://localhost:3001
+- server : http://localhost:3001
+
+
 
 ### Methods:
 
@@ -58,6 +60,7 @@ Required Auth: No
 {
  email: "<user email>",
  password: "<user password>",
+ city: "<user city>"
 }
 ```
 

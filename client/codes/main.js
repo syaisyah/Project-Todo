@@ -12,6 +12,11 @@ $(document).ready(function () {
     register()
   })
 
+  $("btn-google").on("click", (e) => {
+    e.preventDefault()
+    onSignIn()
+  })
+
   $("#btn-logout").on("click", (e) => {
     e.preventDefault()
     logout()
@@ -80,14 +85,6 @@ function register() {
         title: 'Oops...',
         text: message
       })
-      //     err.responseJSON.message.forEach(el => {
-      //       $("#error-message").append(`
-      //   <div class="alert alert-danger" role="alert">
-      //   ${el}
-      // </div>
-      //   `)
-      //     })
-      //     setTimeout(() => { $("#error-message").empty() }, 3000)
     })
     .always(el => {
       $("#email").val("")
@@ -97,6 +94,30 @@ function register() {
 
 
 function logout() {
-  localStorage.removeItem('access_token')
+  localStorage.clear()
+  const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+
   checkLocalStorage()
+}
+
+function onSignIn(googleUser) {
+  const id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token)
+  $.ajax({
+    url: baseUrl + '/users/googleLogin',
+    method: "POST",
+    data: {
+      googleToken: id_token
+    }
+  })
+    .done(response => {
+      localStorage.setItem("access_token", response.access_token);
+      checkLocalStorage();
+    })
+    .fail(err => {
+      console.log(err)
+    })
 }
