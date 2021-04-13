@@ -64,6 +64,7 @@ class TodoController {
   static updateTodo(req, res, next) {
     const { title, status, due_date } = req.body;
     const newTodo = { title, due_date, status }
+    console.log(newTodo, 'newTodo>>>>>>>>>>>')
     Todo.update(newTodo, {
       where: { id: +req.params.id },
       returning: true

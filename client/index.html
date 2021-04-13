@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <title>Todo</title>
   </head>
-  <body class="bg-light">
+  <body style="background-color: burlywood;">
     <!--Login register page-->
     <section id="login-register-page">
       <div class="container-fluid bg-light"></div>
@@ -44,7 +44,7 @@
                           <p>OR</p>
                         </div>
                       </div>
-                      <div class="mb-5 w-75 border border-danger d-flex justify-content-center">
+                      <div class="mb-5 w-75  d-flex justify-content-center">
                         <div id="btn-google" class="g-signin2" data-onsuccess="onSignIn"></div>
                       </div>
                     </form>
@@ -62,11 +62,11 @@
     <!--End login register page-->
     <!--After Login-->
     <section id="home-page">
-      <div class="container-fluid p-0 m-0 border-border-dark" style="height: 100vh;">
+      <div class="container-fluid p-0 m-0" style="height: 100vh;">
         <div class="row" style="height: 100%">
           <!-- kiri-->
-          <div class="col-2 p-5 border border-danger" style="height: 100%">
-              <div class="d-flex align-content-between flex-wrap border border-dark" style="height: 100%">
+          <div class="col-2 p-5 bg-light" style="height: 100%">
+              <div class="d-flex align-content-between flex-wrap " style="height: 100%">
                 <div class="col-12 p-2">
                   <button onclick="createTodo()" type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-todo"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project"><i class="fas fa-folder-plus"></i></button> Create Project<br />
@@ -79,14 +79,14 @@
             </div>
           <!--end kiri-->
           <!--kanan-->
-          <div class="col-10 border border-warning" style="height: 100%">
-            <div class="row">
-              <div class="col-12">
-                <div class="row border m-5 p-3">
-                  <div class="col-6">
+          <div class="col-10 p-0 bg-warning" style="height: 100%">
+            <div class="d-flex align-content-between flex-wrap" >
+              <div class="col-12 " style="height: 10%">
+                <div class="row  m-5 p-3" style="height: 100%">
+                  <div class="col-6" style="height: 20%">
                     <h3>My Schedule Board</h3>
                   </div>
-                  <div class="col-6">
+                  <div class="col-6" style="height: 80%">
                     <div class="d-flex justify-content-end align-content-center">
                       <p id="email-user" class="px-4"></p>
                       <i class="fas fa-user-circle fs-3 text-center"></i>
@@ -94,17 +94,17 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <div class="row border mx-5 my-0">
+              <div class="col-12 bg-success" style="height: 90%">
+                <div class="row  mx-5 my-0 justify-content-center">
                   <div class="col-6 p-3 today-todo">
-                    <div class="text-center border" style="margin-bottom: 20px">
+                    <div class="text-center mx-auto ">
                       <h5>T O D A Y ' S T A S K S</h5>
                     </div>
-                    <div id="list-todo-today" class="row border px-3 py-2">
+                    <div id="list-todo-today" class="row bg-light border px-3 py-2"> 
                         <!-- buat append list all todos -->
-                    </div>
+                   </div>
                   </div>
-                  <div class="col-6 today-todo">
+                 <div class="col-6 today-todo">
                     <div class="row justify-content-end">
                       <div class="m-2 rounded w-25">
                         <select class="form-select" aria-label="Default select example">
@@ -134,7 +134,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form >
+              <form id="form-todo">
                 <fieldset id="fieldset-form">
                   <div class="row mb-3">
                     <label for="title-todo" class="col-sm-2 col-form-label">Title</label>
