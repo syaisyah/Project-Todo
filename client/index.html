@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <title>Todo</title>
   </head>
-  <body>
+  <body class="bg-light">
     <!--Login register page-->
     <section id="login-register-page">
       <div class="container-fluid bg-light"></div>
@@ -68,7 +68,7 @@
           <div class="col-2 p-5 border border-danger" style="height: 100%">
               <div class="d-flex align-content-between flex-wrap border border-dark" style="height: 100%">
                 <div class="col-12 p-2">
-                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-todo"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
+                  <button onclick="createTodo()" type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-todo"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project"><i class="fas fa-folder-plus"></i></button> Create Project<br />
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#get-all-project"><i class="far fa-folder-open"></i></button> Project<br />
                 </div>
@@ -124,56 +124,76 @@
         </div>
       </div>
     </section>
-    <section>
-        <div class="modal fade" id="getByIdTodo" tabindex="-1" aria-labelledby="getByIdTodo" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Detail Todo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form >
-                  <fieldset disabled>
-                    <div class="row mb-3">
-                      <label for="title-todo" class="col-sm-2 col-form-label">Title</label>
-                      <div class="col-sm-10">
-                        <input id="title-todo" type="input" class="form-control" id="title-todo">
+    <!-- detail todo modal -->
+    <section id="form-modal">
+      <div class="modal fade" id="modal-todo" tabindex="-1" aria-labelledby="modal-todo" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title-modal"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form >
+                <fieldset id="fieldset-form">
+                  <div class="row mb-3">
+                    <label for="title-todo" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                      <input id="title-todo" type="input" class="form-control" id="title-todo">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="due_date-todo" class="col-sm-2 col-form-label">Due Date</label>
+                    <div class="col-sm-10">
+                      <input id="due_date-todo" type="date" class="form-control" id="due_date-todo">
+                    </div>
+                  </div>
+                  <div id="user-id-div" class="row mb-3">
+                    <label for="user-id-todo" class="col-sm-2 col-form-label">UserId</label>
+                    <div class="col-sm-10">
+                      <input id="user-id-todo" type="number" class="form-control" id="user-id-todo">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="project-id-todo" class="col-sm-2 col-form-label">ProjectId</label>
+                    <div class="col-sm-10">
+                      <input id="project-id-todo" type="number" class="form-control" id="project-id-todo">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="completed" value="Completed">
+                        <label class="form-check-label" for="completed">
+                          Completed
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="uncompleted" value="Uncompleted">
+                        <label class="form-check-label" for="uncompleted">
+                         Uncompleted
+                        </label>
                       </div>
                     </div>
-                    <div class="row mb-3">
-                      <label for="due_date-todo" class="col-sm-2 col-form-label">Due Date</label>
-                      <div class="col-sm-10">
-                        <input id="due_date-todo" type="date" class="form-control" id="due_date-todo">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="status-todo" class="col-sm-2 col-form-label">Status</label>
-                      <div class="col-sm-10">
-                        <input id="status-todo" type="text" class="form-control" id="status-todo">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="user-id-todo" class="col-sm-2 col-form-label">UserId</label>
-                      <div class="col-sm-10">
-                        <input id="user-id-todo" type="number" class="form-control" id="user-id-todo">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="project-id-todo" class="col-sm-2 col-form-label ">ProjectId</label>
-                      <div class="col-sm-10">
-                        <input id="project-id-todo" type="number" class="form-control" id="project-id-todo">
-                      </div>
-                    </div>
+                  </div>
 
-                  </fieldset>
-                </form>
-              </div>
-              
+                </fieldset>
+              </form>
+             <div class="d-flex justify-content-center">
+              <div class="error-message w-50 text-center"></div>
+             </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+              <button id="btn-save" type="button" class="btn btn-light">Save</button>
             </div>
           </div>
         </div>
+      </div>
+  
     </section>
+    <!-- End detail todo modal -->
     <!-- End After Login-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

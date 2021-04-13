@@ -18,3 +18,8 @@ body {
   overflow: hidden;
   outline: none;
 }
+
+.completed {
+  text-decoration: line-through;
+}
+

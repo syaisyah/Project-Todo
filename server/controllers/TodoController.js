@@ -18,7 +18,6 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
-    console.log('masuk todo controller server')
     const todayStart = new Date().setHours(0, 0, 0, 0);
     const now = new Date();
     let where = { UserId: +req.logginUser.id }
@@ -27,7 +26,7 @@ class TodoController {
       let queryStatus = req.query.status[0].toUpperCase() + req.query.status.slice(1).toLowerCase()
       where.status = queryStatus
     }
-    
+
     if (req.params.due_date && req.params.due_date.lowerCase() === 'today') {
       where.due_date = {
         [Op.gt]: todayStart,
@@ -36,7 +35,8 @@ class TodoController {
     }
 
     Todo.findAll({
-      where
+      where,
+      order: [['status', 'DESC']]
     })
       .then(todos => {
         res.status(200).json(todos)
@@ -63,12 +63,13 @@ class TodoController {
 
   static updateTodo(req, res, next) {
     const { title, status, due_date } = req.body;
-    const newTodo = { title, status, due_date }
+    const newTodo = { title, due_date, status }
     Todo.update(newTodo, {
       where: { id: +req.params.id },
       returning: true
     })
       .then(todo => {
+
         res.status(200).json(todo[1][0])
       })
       .catch(err => next(err))

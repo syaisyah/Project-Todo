@@ -35,6 +35,7 @@ function checkLocalStorage() {
     $("#login-register-page").show()
 
   } else {
+    $("#email-user").text(localStorage.email)
     $("#home-page").show()
     $("#login-register-page").hide()
     findAllTodo()
@@ -57,6 +58,7 @@ function login() {
         'success'
       )
       localStorage.setItem('access_token', response.access_token)
+      localStorage.setItem('email', response.email)
       $("#email-user").text(response.email)
       checkLocalStorage()
 
@@ -128,6 +130,7 @@ function onSignIn(googleUser) {
   })
     .done(response => {
       localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem('email', response.email)
       $("#email-user").text(response.email)
       checkLocalStorage();
     })
@@ -148,16 +151,29 @@ function findAllTodo() {
       $("#list-todo-today").empty();
       if (todos.length) {
         todos.forEach((el, i) => {
-          $("#list-todo-today").append(`
-          <div class="col-6 border w-75">
-            <p><input type="checkbox"> ${i + 1}. ${el.title}</p> 
+          if (el.status.toLowerCase() === 'uncompleted') {
+            $("#list-todo-today").append(`
+          <div class="col-6 border border-danger py-2 w-75 align-baseline">
+          <p><button type="button" class="trans" id="btn-completed" onclick="updateStatusToCompleted(${el.id})"><i class="far fa-circle"></i> </button>${el.title}</p> 
           </div>
-          <div class="w-25 col-6 text-end pl-2 border d-flex justify-content-end">
-            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#getByIdTodo" onclick="getByIdTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-            <button type="button" class="trans" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
-            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+          <div class="w-25 col-6 text-end border border-success d-flex justify-content-end ps-2 ">
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
           </div>
           `)
+          } else {
+            $("#list-todo-today").append(`
+          <div class="col-6 border border-danger py-2 w-75 align-baseline">
+          <p><button type="button" class="trans completed" id="btn-uncompleted" onclick="updateStatusToUncompleted(${el.id})"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
+          </div>
+          <div class="w-25 col-6 text-end border border-success d-flex justify-content-end ps-2 ">
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+          </div>
+          `)
+          }
         });
       }
 
@@ -169,6 +185,7 @@ function findAllTodo() {
 }
 
 
+
 function getByIdTodo(id) {
   $.ajax({
     url: baseUrl + '/todos/' + id,
@@ -176,15 +193,90 @@ function getByIdTodo(id) {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(todo => {
-      console.log(todo, 'detail>>>')
-      $("#getByIdTodo").show();
       $("#title-todo").val(todo.title)
       $("#due_date-todo").val(todo.due_date.split('T')[0])
-      $("#status-todo").val(todo.status)
       $("#user-id-todo").val(todo.UserId)
       $("#project-id-todo").val(todo.ProjectId)
+
+      if (todo.status === $("#completed").val()) {
+        $("#completed").attr('checked', true)
+      } else {
+        $("#uncompleted").attr('checked', true)
+      }
     })
     .fail(err => console.log(err.responseJSON))
+}
 
+function detailTodo(id) {
+  getByIdTodo(id);
+  $("#title-modal").text('Detail Todo')
+  $("#fieldset-form").attr('disabled', true)
+  $("#btn-save").hide()
+}
+
+
+function updateTodo(id) {
+  getByIdTodo(id);
+  $("#title-modal").text('Update Todo')
+  $("#fieldset-form").attr('disabled', false)
+  $("#user-id-todo").prop('disabled', true);
+  $("#project-id-todo").prop('disabled', true);
+  $("#btn-save").show()
+  // $(".modal-footer").empty()
+  // $(".modal-footer").append(
+  //   `
+  //     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+  //     <button id="btn-save" type="button" class="btn btn-light">Save</button>
+  // `)
+
+  $("#btn-save").on("click", (e) => {
+    e.preventDefault();
+    $.ajax({
+      url: baseUrl + '/todos/' + id,
+      method: "PUT",
+      data: {
+        title: $("#title-todo").val(),
+        due_date: $("#due_date-todo").val(),
+        status: $("input:checked").val()
+      },
+      headers: { access_token: localStorage.getItem('access_token') },
+    })
+      .then(response => {
+        findAllTodo()
+      })
+      .fail(err => {
+        err.responseJSON.message.forEach(el => {
+          $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+        })
+        setTimeout(() => { $(".error-message").empty() }, 3000)
+      })
+  })
 
 }
+
+function destroyByIdTodo(id) {
+  $.ajax({
+    url: baseUrl + '/todos/' + id,
+    method: "DELETE",
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .then(response => {
+      Swal.fire(
+        'Delete Success!',
+        'You clicked the button!',
+        'success'
+      )
+    })
+  findAllTodo()
+    .fail(err => {
+      let message = err.responseJSON.message.map(el => el)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+    })
+}
+
+
+//https://www.geeksforgeeks.org/jquery-ui-switchclass-method/
