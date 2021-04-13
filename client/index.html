@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <title>Todo</title>
   </head>
-  <body style="background-color: burlywood;">
+  <body class="bg-light">
     <!--Login register page-->
+    <!-- style="background-color: burlywood;"-->
     <section id="login-register-page">
-      <div class="container-fluid bg-light"></div>
+      <div class="container-fluid"></div>
         <div class="d-flex justify-content-center" style="padding: 150px 0px">
-          <div class="d-flex bg-white p-0" style="height: 100%; width: 60%; border-radius: 50px; box-shadow: 7px 7px 8px 7px rgb(209, 179, 194)">
-            <div class="col-6 w-50 bg-white" style="border-radius: 50px 0px 0px 50px;">
+          <div class="d-flex p-0" style="height: 100%; width: 60%; border-radius: 50px; box-shadow: 7px 7px 8px 7px rgb(209, 179, 194)">
+            <div class="col-6 w-50 " style="border-radius: 50px 0px 0px 50px;">
               <div class="container">
                 <div class="row p-5 " style="height: 100%;">
                   <div class="col-12 pt-3">
@@ -65,7 +66,7 @@
       <div class="container-fluid p-0 m-0" style="height: 100vh;">
         <div class="row" style="height: 100%">
           <!-- kiri-->
-          <div class="col-2 p-5 bg-light" style="height: 100%">
+          <div class="col-2 p-5 border" style="height: 100%; background-color: rgb(190, 223, 229)">
               <div class="d-flex align-content-between flex-wrap " style="height: 100%">
                 <div class="col-12 p-2">
                   <button onclick="createTodo()" type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-todo"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
@@ -79,7 +80,7 @@
             </div>
           <!--end kiri-->
           <!--kanan-->
-          <div class="col-10 p-0 bg-warning" style="height: 100%">
+          <div class="col-10 p-0 " style="height: 100%">
             <div class="d-flex align-content-between flex-wrap" >
               <div class="col-12 " style="height: 10%">
                 <div class="row  m-5 p-3" style="height: 100%">
@@ -94,18 +95,18 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 bg-success" style="height: 90%">
-                <div class="row  mx-5 my-0 justify-content-center">
+              <div class="col-12" style="height: 90%">
+                <div class="row mx-5 my-0 w-100">
                   <div class="col-6 p-3 today-todo">
-                    <div class="text-center mx-auto ">
+                    <div class="text-center mb-4">
                       <h5>T O D A Y ' S T A S K S</h5>
                     </div>
-                    <div id="list-todo-today" class="row bg-light border px-3 py-2"> 
+                    <div id="list-todo-today" class="row shadow-lg border px-3 py-2"> 
                         <!-- buat append list all todos -->
                    </div>
                   </div>
                  <div class="col-6 today-todo">
-                    <div class="row justify-content-end">
+                    <div class="row justify-content-end w-75">
                       <div class="m-2 rounded w-25">
                         <select class="form-select" aria-label="Default select example">
                           <option>Filter todo</option>
@@ -114,6 +115,65 @@
                           <option value="Uncompleted">Uncompleted</option>
                         </select>
                       </div>
+                      <!--Data boongan-->
+                      <div id="list-filter-todo" class="row shadow-lg border px-3 py-2 mt-2"> 
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Data seedaing boongan</p>
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
+                          
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
+                          
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
+                          
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
+                          
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                        <div class="col-6  py-2 w-75 align-baseline">
+                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
+                          
+                        </div>
+                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
+                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
+                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
+                        </div>
+                       
+                   </div>
+                     
+                      <!--end Data boongan-->
                     </div>
                   </div>
                 </div>

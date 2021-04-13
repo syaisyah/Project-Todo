@@ -153,10 +153,11 @@ function findAllTodo() {
         todos.forEach((el, i) => {
           if (el.status.toLowerCase() === 'uncompleted') {
             $("#list-todo-today").append(`
-            <div class="col-6 border border-danger py-2 w-75 align-baseline">
-              <p><button type="button" class="trans"><i class="far fa-circle"></i> </button>${el.title}</p> 
+            <div class="col-6  py-2 w-75 align-baseline">
+              <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
+              
             </div>
-            <div class="w-25 col-6 text-end border border-success d-flex justify-content-end ps-2 ">
+            <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
               <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
               <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
               <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
@@ -164,10 +165,10 @@ function findAllTodo() {
             `)
           } else {
             $("#list-todo-today").append(`
-            <div class="col-6 border border-danger py-2 w-75 align-baseline">
+            <div class="col-6  py-2 w-75 align-baseline">
               <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
             </div>
-            <div class="w-25 col-6 text-end border border-success d-flex justify-content-end ps-2 ">
+            <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
               <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
               <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
               <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />

@@ -10,7 +10,6 @@ body {
 
 } */
 
-
 .trans {
   background-color: Transparent;
   background-repeat: no-repeat;
@@ -23,3 +22,7 @@ body {
   text-decoration: line-through;
 }
 
+#list-todo-today,
+#list-filter-todo {
+  border-radius: 30px;
+}

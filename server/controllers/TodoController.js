@@ -18,8 +18,11 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
+    console.log(req.query, 'query>>>>>>')
     const todayStart = new Date().setHours(0, 0, 0, 0);
+    console.log(todayStart, 'todayStart>>>')
     const now = new Date();
+    console.log(now, 'now>>>')
     let where = { UserId: +req.logginUser.id }
 
     if (req.query.status) {
