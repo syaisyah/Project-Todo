@@ -142,6 +142,7 @@ function onSignIn(googleUser) {
 }
 
 function findAllTodo() {
+
   $.ajax({
     url: baseUrl + `/todos?due_date=today`,
     method: "GET",
@@ -150,6 +151,7 @@ function findAllTodo() {
     }
   })
     .then(todos => {
+      console.log(todos, 'findAll')
       $("#list-todo-today").empty();
       if (todos.length) {
         todos.forEach((el, i) => {
@@ -279,6 +281,8 @@ function destroyByIdTodo(id) {
 
 
 
+function createTodo() {
 
+}
 
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/

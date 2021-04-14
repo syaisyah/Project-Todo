@@ -35,13 +35,13 @@ class TodoController {
       where.status = queryStatus
     }
 
-    if (req.query.due_date && req.query.due_date.toLowerCase() === 'today') {
-      console.log('masuk >>>>>>>>>>>>>>>>>>')
-      where.due_date = {
-        [Op.gt]: startDay,
-        [Op.lt]: endDay
-      }
-    }
+    // if (req.query.due_date && req.query.due_date.toLowerCase() === 'today') {
+    //   console.log('masuk >>>>>>>>>>>>>>>>>>')
+    //   where.due_date = {
+    //     [Op.gt]: startDay,
+    //     [Op.lt]: endDay
+    //   }
+    // }
 
     Todo.findAll({
       where,
