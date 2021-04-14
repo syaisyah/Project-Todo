@@ -1,5 +1,3 @@
-
-
 const baseUrl = `http://localhost:3001`
 let idTodo;
 
@@ -28,6 +26,26 @@ $(document).ready(function () {
   $("#btn-save").on("click", (e) => {
     e.preventDefault()
     updateTodo(idTodo)
+  })
+
+  $("#btn-create-todo").on('click', (e) => {
+    e.preventDefault()
+    createTodo()
+  })
+
+  $(".btn-close").on('click', (e) => {
+    e.preventDefault()
+    $("#form-todo").trigger('reset')
+    $("#completed").attr('checked', false)
+    $("#uncompleted").attr('checked', false)
+  })
+
+  $("#btn-close-end").on('click', (e) => {
+    e.preventDefault()
+    console.log('masuk btn-close-end')
+    $("#form-todo").trigger('reset')
+    $("#completed").attr('checked', false)
+    $("#uncompleted").attr('checked', false)
   })
 });
 
@@ -142,7 +160,6 @@ function onSignIn(googleUser) {
 }
 
 function findAllTodo() {
-
   $.ajax({
     url: baseUrl + `/todos?due_date=today`,
     method: "GET",
@@ -150,8 +167,8 @@ function findAllTodo() {
       access_token: localStorage.getItem('access_token')
     }
   })
-    .then(todos => {
-      console.log(todos, 'findAll')
+    .done(todos => {
+      // console.log(todos, 'findAll')
       $("#list-todo-today").empty();
       if (todos.length) {
         todos.forEach((el, i) => {
@@ -215,6 +232,9 @@ function showFormDetail(id) {
   $("#title-modal").text('Detail Todo')
   $("#fieldset-form").attr('disabled', true)
   $("#btn-save").hide()
+  $("#btn-create-todo").hide()
+  $("#user-id-div").show()
+  $("#project-id-div").show()
 }
 
 
@@ -222,9 +242,12 @@ function showFormUpdate(id) {
   getByIdTodo(id);
   $("#title-modal").text('Update Todo')
   $("#fieldset-form").attr('disabled', false)
-  $("#user-id-todo").prop('disabled', true);
-  $("#project-id-todo").prop('disabled', true);
+  // $("#user-id-todo").prop('disabled', true);
+  // $("#project-id-todo").prop('disabled', true);
   $("#btn-save").show()
+  $("#btn-create-todo").hide()
+  $("#user-id-div").hide()
+  $("#project-id-div").hide()
   idTodo = id;
 }
 
@@ -239,12 +262,11 @@ function updateTodo(id) {
     },
     headers: { access_token: localStorage.getItem('access_token') },
   })
-    .then(response => {
+    .done(response => {
       console.log(response, 'response updateTodo >>>>>>>')
       findAllTodo()
     })
     .fail(err => {
-      
       err.responseJSON.message.forEach(el => {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
       })
@@ -261,7 +283,7 @@ function destroyByIdTodo(id) {
     method: "DELETE",
     headers: { access_token: localStorage.getItem('access_token') }
   })
-    .then(response => {
+    .done(response => {
       findAllTodo()
       Swal.fire(
         'Delete Success!',
@@ -280,8 +302,42 @@ function destroyByIdTodo(id) {
 }
 
 
+function showFormCreate() {
+  $("#title-modal").text('Create Todo')
+  $("#fieldset-form").attr('disabled', false)
+  $("#user-id-todo").prop('disabled', true);
+  $("#project-id-todo").prop('disabled', false);
+  $("#btn-save").hide()
+  $("#btn-create-todo").show()
+  $("#user-id-div").hide()
+  $("#project-id-div").show()
+}
 
 function createTodo() {
+  const newTodo = {
+    title: $("#title-todo").val(),
+    due_date: $("#due_date-todo").val(),
+    status: $("input:checked").val(),
+    ProjectId: $("#project-id-todo").val() || null,
+  }
+  
+    console.log(newTodo.ProjectId)
+  $.ajax({
+    url: baseUrl + '/todos',
+    method: "POST",
+    data: newTodo,
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+  .done(response => {
+    console.log(response)
+    findAllTodo()
+  })
+  .fail(err => {
+    err.responseJSON.message.forEach(el => {
+      $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+    })
+    setTimeout(() => { $(".error-message").empty() }, 3000)
+  })
 
 }
 

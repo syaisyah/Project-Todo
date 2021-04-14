@@ -443,7 +443,7 @@ describe('Todos Route Tests', () => {
             }
           })
       })
-      it('404 Data not found - error because data not found', (done) => {
+      it('404 Todo not found - error because todo not found', (done) => {
         request(app)
           .get(`/todos/${idTodoNotFound}`)
           .set('access_token', token)
@@ -452,7 +452,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Todo not found')
               done()
             }
           })
@@ -570,7 +570,7 @@ describe('Todos Route Tests', () => {
           })
       })
 
-      it('404 Data not found - error because data not found', (done) => {
+      it('404 Todo not found - error because todo not found', (done) => {
         request(app)
           .put(`/todos/${idTodoNotFound}`)
           .set('access_token', token)
@@ -584,7 +584,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Todo not found')
               done()
             }
           })
@@ -706,7 +706,7 @@ describe('Todos Route Tests', () => {
             done()
           })
       })
-      it('404 Data not found - error because data not found', (done) => {
+      it('404 Todo not found - error because todo not found', (done) => {
         request(app)
           .patch(`/todos/${idTodoNotFound}`)
           .set('access_token', token)
@@ -718,7 +718,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Todo not found')
               done()
             }
           })
@@ -797,7 +797,7 @@ describe('Todos Route Tests', () => {
           })
       })
 
-      it('404 Data not found - error because data not found', (done) => {
+      it('404 Todo not found - error because todo not found', (done) => {
         request(app)
           .delete(`/todos/${idTodoNotFound}`)
           .set('access_token', token)
@@ -806,7 +806,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Todo not found')
               done()
             }
           })

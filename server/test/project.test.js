@@ -236,7 +236,7 @@ describe('Projects route test', () => {
           })
       })
 
-      it('404 Data not found - error because project with the specific id does not exist in database', (done) => {
+      it('404 Project not found - error because project with the specific id does not exist in database', (done) => {
         request(app)
           .get(`/projects/${idProjectNotFound}`)
           .set('access_token', ownerToken)
@@ -245,7 +245,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Project not found')
               done()
             }
           })
@@ -322,7 +322,7 @@ describe('Projects route test', () => {
             })
         })
 
-        it('404 Data not found - error because project with the specific id does not exist in database', (done) => {
+        it('404 Project not found - error because project with the specific id does not exist in database', (done) => {
           request(app)
             .patch(`/projects/${idProjectNotFound}`)
             .set('access_token', ownerToken)
@@ -331,7 +331,7 @@ describe('Projects route test', () => {
               else {
                 expect(res.status).toBe(404)
                 expect(typeof res.body).toEqual('object')
-                expect(res.body.message[0]).toEqual('Data not found')
+                expect(res.body.message[0]).toEqual('Project not found')
                 done()
               }
             })
@@ -432,7 +432,7 @@ describe('Projects route test', () => {
           })
       })
 
-      it('404 Data not found - error because new user does not exist in database system', (done) => {
+      it('404 User not found - error because new user does not exist in database system', (done) => {
         request(app)
           .patch(`/projects/${idProject}/addUser`)
           .set('access_token', ownerToken)
@@ -450,7 +450,7 @@ describe('Projects route test', () => {
           })
       })
 
-      it('404 Data not found - error because project with the specific id does not exist in database', (done) => {
+      it('404 Project not found - error because project with the specific id does not exist in database', (done) => {
         request(app)
           .patch(`/projects/${idProjectNotFound}/addUser`)
           .set('access_token', ownerToken)
@@ -462,7 +462,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('Data not found')
+              expect(res.body.message[0]).toEqual('Project not found')
               done()
             }
           })
@@ -570,7 +570,7 @@ describe('Projects route test', () => {
           })
       })
 
-      it('404 Not Found - error because data project not found', (done) => {
+      it('404 Project Not Found - error because data project not found', (done) => {
         request(app)
           .delete(`/projects/${idProjectNotFound}`)
           .set('access_token', ownerToken)
@@ -578,7 +578,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('Data not found')
+            expect(res.body.message[0]).toEqual('Project not found')
             done()
           })
       })

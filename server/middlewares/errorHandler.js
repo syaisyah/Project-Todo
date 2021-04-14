@@ -38,10 +38,15 @@ function errorHandler(err, req, res, next) {
       statusCode = 404
       message = [`${err.msg}`]
       break;
-    case 'Data not found':
+    case 'Todo not found':
       statusCode = 404
       message = [`${err.msg}`]
       break;
+    case 'Project not found':
+      statusCode = 404
+      message = [`${err.msg}`]
+      break;
+      
   }
   
 

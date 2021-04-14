@@ -26,6 +26,7 @@ const authentication = (req, res, next) => {
 
 const authOwnerMemberProject = (req, res, next) => {
   if (!req.body.ProjectId) {
+    console.log('masuk !req.body.ProjectId')
     next()
   } else {
     UserProject.findAll({ where: { ProjectId: +req.body.ProjectId } })
@@ -34,7 +35,7 @@ const authOwnerMemberProject = (req, res, next) => {
           let isAuthorized = projects.find(el => el.UserId === +req.logginUser.id)
           isAuthorized ? next() : next({ msg: 'UnAuthorized' })
         } else {
-          next({ msg: 'Data not found' })
+          next({ msg: 'Project not found' })
         }
       })
       .catch(err => next(err))
@@ -50,7 +51,7 @@ const authOwnerTodo = (req, res, next) => {
         let isAuthorized = todo.UserId === +req.logginUser.id
         isAuthorized ? next() : next({ msg: 'UnAuthorized' })
       } else {
-        next({ msg: 'Data not found' })
+        next({ msg: 'Todo not found' })
       }
     })
     .catch(err => next(err))
@@ -65,7 +66,7 @@ const authProject = (req, res, next) => {
         let isAuthorized = project.UserId === +req.logginUser.id
         isAuthorized ? next() : next({ msg: 'UnAuthorized' })
       } else {
-        next({ msg: 'Data not found' })
+        next({ msg: 'Project not found' })
       }
     })
     .catch(err => next(err))
