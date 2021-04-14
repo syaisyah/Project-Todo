@@ -1,5 +1,7 @@
-const baseUrl = `http://localhost:3001`
 
+
+const baseUrl = `http://localhost:3001`
+let idTodo;
 
 $(document).ready(function () {
   checkLocalStorage()
@@ -23,9 +25,9 @@ $(document).ready(function () {
     logout()
   })
 
-  $("#list-todo-today").on("click", (e) => {
+  $("#btn-save").on("click", (e) => {
     e.preventDefault()
-
+    updateTodo(idTodo)
   })
 });
 
@@ -158,8 +160,8 @@ function findAllTodo() {
               
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
               <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
             </div>
             `)
@@ -169,16 +171,14 @@ function findAllTodo() {
               <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="detailTodo(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="updateTodo(${el.id})"> <i class="fas fa-edit"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
               <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
             </div>
             `)
           }
         });
       }
-
-
     })
     .catch(err => {
       console.log(err.responseJSON)
@@ -194,7 +194,6 @@ function getByIdTodo(id) {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(todo => {
-      console.log(todo, '>>>>>>>>>>>gteTodoById')
       $("#title-todo").val(todo.title)
       $("#due_date-todo").val(todo.due_date.split('T')[0])
       $("#user-id-todo").val(todo.UserId)
@@ -209,8 +208,7 @@ function getByIdTodo(id) {
     .fail(err => console.log(err.responseJSON))
 }
 
-function detailTodo(id) {
-  console.log(id, '>>>>>>detailTdodo')
+function showFormDetail(id) {
   getByIdTodo(id);
   $("#title-modal").text('Detail Todo')
   $("#fieldset-form").attr('disabled', true)
@@ -218,41 +216,42 @@ function detailTodo(id) {
 }
 
 
-// function updateTodo(id) {
-//   console.log(id, 'updateTodo ID>>>>')
-//   getByIdTodo(id);
-//   $("#title-modal").text('Update Todo')
-//   $("#fieldset-form").attr('disabled', false)
-//   $("#user-id-todo").prop('disabled', true);
-//   $("#project-id-todo").prop('disabled', true);
-//   $("#btn-save").show()
+function showFormUpdate(id) {
+  getByIdTodo(id);
+  $("#title-modal").text('Update Todo')
+  $("#fieldset-form").attr('disabled', false)
+  $("#user-id-todo").prop('disabled', true);
+  $("#project-id-todo").prop('disabled', true);
+  $("#btn-save").show()
+  idTodo = id;
+}
+
+function updateTodo(id) {
+  $.ajax({
+    url: baseUrl + '/todos/' + id,
+    method: "PUT",
+    data: {
+      title: $("#title-todo").val(),
+      due_date: $("#due_date-todo").val(),
+      status: $("input:checked").val()
+    },
+    headers: { access_token: localStorage.getItem('access_token') },
+  })
+    .then(response => {
+      console.log(response, 'response updateTodo >>>>>>>')
+      findAllTodo()
+    })
+    .fail(err => {
+      
+      err.responseJSON.message.forEach(el => {
+        $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+      })
+      setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
+
+}
 
 
-//   $("#btn-save").on("click", (e) => {
-//    e.preventDefault();
-//     console.log(id, 'id>>>>>>>>>>updateTodo')
-//     $.ajax({
-//       url: baseUrl + '/todos/' + id,
-//       method: "PUT",
-//       data: {
-//         title: $("#title-todo").val(),
-//         due_date: $("#due_date-todo").val(),
-//         status: $("input:checked").val()
-//       },
-//       headers: { access_token: localStorage.getItem('access_token') },
-//     })
-//       .then(response => {
-//         console.log(response, 'response updateTodo >>>>>>>')
-//         findAllTodo()
-//       })
-//       .fail(err => {
-//         err.responseJSON.message.forEach(el => {
-//           $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
-//         })
-//         setTimeout(() => { $(".error-message").empty() }, 3000)
-//       })
-//   })
-// }
 
 function destroyByIdTodo(id) {
   $.ajax({

@@ -19,21 +19,27 @@ class TodoController {
 
   static findAll(req, res, next) {
     console.log(req.query, 'query>>>>>>')
-    const todayStart = new Date().setHours(0, 0, 0, 0);
-    console.log(todayStart, 'todayStart>>>')
-    const now = new Date();
-    console.log(now, 'now>>>')
     let where = { UserId: +req.logginUser.id }
+
+    let today = new Date();
+    let startDay = new Date(today);
+    startDay.setDate(startDay.getDate() + 1);
+    startDay.setHours(0, 0, 0, 0);
+
+    let endDay = new Date(today)
+    endDay.setHours(23, 59, 59, 999);
+    console.log(startDay, 'star', endDay, 'endDay')
 
     if (req.query.status) {
       let queryStatus = req.query.status[0].toUpperCase() + req.query.status.slice(1).toLowerCase()
       where.status = queryStatus
     }
 
-    if (req.params.due_date && req.params.due_date.lowerCase() === 'today') {
+    if (req.query.due_date && req.query.due_date.toLowerCase() === 'today') {
+      console.log('masuk >>>>>>>>>>>>>>>>>>')
       where.due_date = {
-        [Op.gt]: todayStart,
-        [Op.lt]: now
+        [Op.gt]: startDay,
+        [Op.lt]: endDay
       }
     }
 
@@ -65,15 +71,15 @@ class TodoController {
   }
 
   static updateTodo(req, res, next) {
-    const { title, status, due_date } = req.body;
-    const newTodo = { title, due_date, status }
-    console.log(newTodo, 'newTodo>>>>>>>>>>>')
-    Todo.update(newTodo, {
-      where: { id: +req.params.id },
+    let idTodo = +req.params.id
+    const { title, due_date, status } = req.body;
+    const updateTodo = { title, due_date, status }
+  
+    Todo.update(updateTodo, {
+      where: { id: idTodo },
       returning: true
     })
       .then(todo => {
-
         res.status(200).json(todo[1][0])
       })
       .catch(err => next(err))
