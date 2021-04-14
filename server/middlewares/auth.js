@@ -75,4 +75,4 @@ const authProject = (req, res, next) => {
 
 
 
-module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject}
+module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject }

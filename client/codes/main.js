@@ -318,10 +318,8 @@ function createTodo() {
     title: $("#title-todo").val(),
     due_date: $("#due_date-todo").val(),
     status: $("input:checked").val(),
-    ProjectId: $("#project-id-todo").val() || null,
+    ProjectId: $("#project-id-todo").val()
   }
-  
-    console.log(newTodo.ProjectId)
   $.ajax({
     url: baseUrl + '/todos',
     method: "POST",
@@ -329,10 +327,10 @@ function createTodo() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
   .done(response => {
-    console.log(response)
     findAllTodo()
   })
   .fail(err => {
+    console.log(err.responseJSON)
     err.responseJSON.message.forEach(el => {
       $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
     })

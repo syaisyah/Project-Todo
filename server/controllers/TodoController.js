@@ -7,9 +7,12 @@ class TodoController {
 
   static createTodo(req, res, next) {
     let { title, status, due_date, ProjectId } = req.body;
+    if (!ProjectId) {
+      ProjectId = null
+    }
+
     let UserId = +req.logginUser.id
     let newTodo = { title, status, due_date, UserId, ProjectId }
-
     Todo.create(newTodo)
       .then(todo => {
         res.status(201).json(todo)
@@ -74,7 +77,7 @@ class TodoController {
     let idTodo = +req.params.id
     const { title, due_date, status } = req.body;
     const updateTodo = { title, due_date, status }
-  
+
     Todo.update(updateTodo, {
       where: { id: idTodo },
       returning: true
