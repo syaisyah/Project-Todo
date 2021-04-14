@@ -38,14 +38,25 @@ $(document).ready(function () {
     $("#form-todo").trigger('reset')
     $("#completed").attr('checked', false)
     $("#uncompleted").attr('checked', false)
+    $("#form-add-project").trigger('reset')
   })
 
   $("#btn-close-end").on('click', (e) => {
     e.preventDefault()
-    console.log('masuk btn-close-end')
     $("#form-todo").trigger('reset')
     $("#completed").attr('checked', false)
     $("#uncompleted").attr('checked', false)
+  })
+
+  $("#btn-close-project").on('click', (e) => {
+    e.preventDefault();
+    $("#form-add-project").trigger('reset')
+
+  })
+
+  $("#btn-add-project").on('click', (e) => {
+    e.preventDefault()
+    createProject()
   })
 });
 
@@ -326,17 +337,35 @@ function createTodo() {
     data: newTodo,
     headers: { access_token: localStorage.getItem('access_token') }
   })
-  .done(response => {
-    findAllTodo()
-  })
-  .fail(err => {
-    console.log(err.responseJSON)
-    err.responseJSON.message.forEach(el => {
-      $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+    .done(response => {
+      findAllTodo()
     })
-    setTimeout(() => { $(".error-message").empty() }, 3000)
-  })
-
+    .fail(err => {
+      err.responseJSON.message.forEach(el => {
+        $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+      })
+      setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
 }
 
+function createProject() {
+  console.log('masuk cretaeProject')
+  $.ajax({
+    url: baseUrl + '/projects',
+    method: "POST",
+    data: {
+      name: $("#project-name").val()
+    },
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(response => {
+      console.log(response)
+      findAllTodo()
+    }).fail(err => {
+      err.responseJSON.message.forEach(el => {
+        $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+      })
+      setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
+}
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/

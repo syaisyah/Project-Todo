@@ -5,7 +5,7 @@ const errorHandler = require('../middlewares/errorHandler');
 
 class ProjectController {
   static create(req, res, next) {
-    const { name, ProjectId } = req.body;
+    const { name } = req.body;
     let UserId = +req.logginUser.id
     let newProject = { name, UserId };
     let detailProject;
@@ -14,9 +14,7 @@ class ProjectController {
         detailProject = project
         return UserProject.create(
           { ProjectId: project.id, UserId },
-          {
-            include: [Project, User],
-          })
+          )
       }).then(data => {
         res.status(201).json(detailProject)
       }).catch(err => {
