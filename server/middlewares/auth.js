@@ -75,4 +75,40 @@ const authProject = (req, res, next) => {
 
 
 
-module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject }
+const isMemberOrOwner = (req, res, next) => {
+  let idProject = +req.params.id
+  UserProject.findAll({
+    where: { ProjectId: idProject },
+    include:
+    {
+      model: User,
+      attributes: {
+        exclude: ['password']
+      }
+    },
+  })
+    .then(data => {
+
+      if (data.length) {
+        // let isAuthorized = project.UserId === +req.logginUser.id
+        // isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+        let users = data.map(el => el.User)
+        let isExist = false;
+        for (let el of users) {
+          if (el.email === req.logginUser.email) {
+            isExist = true
+          }
+        }
+     
+        (isExist) ? next() :  next({ msg: 'UnAuthorized' })
+      } else {
+        next({ msg: 'Project not found' })
+      }
+    })
+    .catch(err => next(err))
+}
+
+
+
+
+module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject, isMemberOrOwner}

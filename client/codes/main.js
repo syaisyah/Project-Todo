@@ -69,6 +69,7 @@ $(document).ready(function () {
     getFilterTodos()
   })
 
+ 
 });
 
 function checkLocalStorage() {
@@ -472,17 +473,19 @@ function findAllProjects() {
 
 function detailProject(idProject) {
   //  $("#detail-project").empty()
+  $("#detail-project").show()
   $.ajax({
     url: baseUrl + '/projects/' + idProject,
     method: "GET",
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(project => {
-      console.log(idProject, 'idProject>>>>>>>>>')
       // let dataTodos = project.dataTodos;
       let dataProjects = project.dataProjects;;
       let projectName = dataProjects[0].Project.name;
       let ownerEmail = project.ownerProject.email
+      console.log(idProject, ownerEmail, 'idProject>>>>>>>>>')
+  
       $("#detail-project").append(
         `
         <div class="d-flex justify-content-center m-0 p-0">
@@ -531,8 +534,9 @@ function detailProject(idProject) {
            <!--end Members-->
           </div>
             <div class="d-flex justify-content-center">
-             <button type="button" class=" btn btn-warning w-100"> Add User </button>
-
+            
+             <button type="button" class=" btn btn-light w-25 m-3"> Add User </button>
+             <button id="btn-close-detail-project" type="button" class=" btn btn-light border w-25 m-3">Close</button>
            </div>
        </div>
         `
