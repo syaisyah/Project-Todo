@@ -391,11 +391,11 @@ function getFilterTodos() {
   $("#list-filter-todo").empty()
   let str = $("select option:selected").text();
   let url;
-  if (str === 'Completed' || str === 'Uncompleted') {
+  if (str.toLowerCase() === 'completed' || str.toLowerCase() === 'uncompleted') {
     url = baseUrl + `/todos?status=${str}`
-  } else if (str === 'Today') {
+  } else if (str.toLowerCase() === 'today') {
     url = baseUrl + `/todos?due_date=today`
-  } else if (str === 'All') {
+  } else if (str.toLowerCase() === 'all') {
     url = baseUrl + '/todos'
   } 
 
@@ -405,31 +405,34 @@ function getFilterTodos() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(todos => {
-      todos.forEach((el, i) => {
-        if (el.status.toLowerCase() === 'uncompleted') {
-          $("#list-filter-todo").append(`
-        <div class="col-6  py-2 w-75 align-baseline">
-          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
-        </div>
-        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
-        </div>
-        `)
-        } else {
-          $("#list-filter-todo").append(`
-        <div class="col-6  py-2 w-75 align-baseline">
-          <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
-        </div>
-        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
-        </div>
-        `)
-        }
-      })
+      console.log(todos, '>>>>>>>>>>>>')
+      if (todos.length && str.toLowerCase() !== 'filter todo') {
+        todos.forEach(el => {
+          if (el.status.toLowerCase() === 'uncompleted') {
+            $("#list-filter-todo").append(`
+          <div class="col-6  py-2 w-75 align-baseline">
+            <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
+          </div>
+          <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+          </div>
+          `)
+          } else {
+            $("#list-filter-todo").append(`
+          <div class="col-6  py-2 w-75 align-baseline">
+            <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
+          </div>
+          <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+          </div>
+          `)
+          }
+        })
+      } 
 
     })
     .fail(err => {

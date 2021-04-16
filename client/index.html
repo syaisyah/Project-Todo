@@ -66,7 +66,7 @@
       <div class="container-fluid p-0 m-0" style="height: 100vh;">
         <div class="row" style="height: 100%">
           <!-- kiri-->
-          <div class="col-2 p-5 border" style="height: 100%; background-color: rgb(190, 223, 229)">
+          <div class="col-2 p-5 border" style="width: 15%; height: 100vh; background-color: rgb(190, 223, 229)">
               <div class="d-flex align-content-between flex-wrap " style="height: 100%">
                 <div class="col-12 p-2">
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-todo"  onclick="showFormCreate()"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
@@ -81,10 +81,10 @@
             </div>
           <!--end kiri-->
           <!--kanan-->
-          <div class="col-10 p-0 " style="height: 100%">
-            <div class="d-flex align-content-between flex-wrap" >
-              <div class="col-12 " style="height: 10%">
-                <div class="row  m-5 p-3" style="height: 100%">
+          <div class="col-10 m-0 p-0" style="width: 85%; height: 100vh">
+            <div class="d-flex align-content-between flex-wrap border border-primary" >
+              <div class="col-12" style="height: 10%">
+                <div class="d-flex align-content-between flex-wrap bg-light p-5" >
                   <div class="col-6" style="height: 20%">
                     <h3>My Schedule Board</h3>
                   </div>
@@ -96,9 +96,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12" style="height: 90%">
-                <div class="row mx-5 my-0 w-100 justify-content-between">
-                  <div class="col-6 p-3 today-todo">
+                <div class="d-flex align-content-between w-100" ></div>
+                  <div class="col-6 today-todo py-5 ps-5" style="width: 60%;  padding-right: 100px;" >
                     <div class="text-center mb-4">
                       <h5>T O D A Y ' S T A S K S</h5>
                     </div>
@@ -106,37 +105,103 @@
                         <!-- buat append list all todos -->
                    </div>
                   </div>
-                 <div class="col-6 today-todo">
-                    <div class="row justify-content-end w-75">
+                 <div class="col-6" style="width: 40%;">
+                    <!-- <div class="row justify-content-end bg-warning w-100" >
                         <div id="select-todo" class="m-2 rounded w-25">
                           <select class="form-select" aria-label="Default select example">
-                            <option selected>Filter Todo</option>
                             <option id="all-todos">All</option>
                             <option id="uncompleted-filter" value="Uncompleted">Uncompleted</option>
                             <option id="completed-filter" value="Completed">Completed</option>
                             <option id="today-filter" value="Today">Today</option>
                           </select>
                         </div>
-                      <div id="list-filter-todo" class="row shadow-lg border px-3 py-2 mt-2"> 
+                      <div id="list-filter-todo" class="row shadow-lg border px-3 py-2 mt-2">  -->
                         <!-- append data todos by filter -->
+                      <!-- </div>
+
+                    </div> -->
+                    <div class="row w-100 p-0 m-0 just" style="height: 100%">
+                      <div class="col-6 p-5 today-todo w-100" >
+                        <div class="row text-center mb-3 justify-content-end">
+                          <div id="select-todo " class="rounded w-25">
+                            <select class="form-select border" aria-label="Default select example">
+                              <option id="all-todos">All</option>
+                              <option id="uncompleted-filter" value="Uncompleted">Uncompleted</option>
+                              <option id="completed-filter" value="Completed">Completed</option>
+                              <option id="today-filter" value="Today">Today</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div id="list-filter-todo" class="row shadow-lg border">  -->
+                          <!-- append data todos by filter -->
+                        </div>
                       </div>
 
                     </div>
+
                   </div>
                 </div>
                 <!--all projects-->
-                <!-- <div class="row mx-5 my-0 w-100">
-                  <div class="col-6 p-3 today-todo">
-                    <div class="text-center mb-4">
-                      <h5>MY PROJECTS</h5>
+                <div class="d-flex align-content-between" style="width: 100%;" >
+                  <div class="col-6 bg-primary text-center p-3" style="width: 60%">
+                    <h5 class="my-4">MY PROJECTS</h5>
+                    <div class="row justify-content-start w-100 p-0 m-0">
+                      <div class="col-4">
+                        <div class="card w-100 my-3" style="width: 18rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">Isi Name</h5>
+                              <div class="m-3">
+                                <button class="btn btn-warning w-100 my-3"><i class="fas fa-user-plus"></i> Add Member</button>
+                                <button class="btn btn-warning w-100" >Detai Project</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!---->
+                      <div class="col-4">
+                        <div class="card w-100 my-3" style="width: 18rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">Isi Name</h5>
+                              <div class="m-3">
+                                <button class="btn btn-warning w-100 my-3"><i class="fas fa-user-plus"></i> Add Member</button>
+                                <button class="btn btn-warning w-100" >Detai Project</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-4">
+                        <div class="card w-100 my-3" style="width: 18rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">Isi Name</h5>
+                              <div class="m-3">
+                                <button class="btn btn-warning w-100 my-3"><i class="fas fa-user-plus"></i> Add Member</button>
+                                <button class="btn btn-warning w-100" >Detai Project</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!---->
                     </div>
-                    <div class="row shadow-lg border px-3 py-2">  -->
-                        <!-- buat append list all todos -->
-                   <!-- </div>
                   </div>
-                </div> -->
+                  <!-- detail board-->
+                  <div class="col-6 border border-danger text-center p-5" style="width: 40%">
+                    <h5 class="my-4 border">DETAIL PROJECT</h5>
+                   <div class="d-flex justify-content-center text-start">
+                    <div class="bg-warning">
+                      <p>hahhaa</p>
+                    </div>
+                   </div>
+                  </div>
+                  
+                  <!--end detail board -->
+            
+                </div>
+                
+                
                 <!-- end all projects-->
-              </div>
+              <!-- </div> -->
             </div>
           </div>
           <!--end kanan-->
