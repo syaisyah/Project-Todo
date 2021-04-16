@@ -14,7 +14,7 @@ class ProjectController {
         detailProject = project
         return UserProject.create(
           { ProjectId: project.id, UserId },
-          )
+        )
       }).then(data => {
         res.status(201).json(detailProject)
       }).catch(err => {
@@ -26,13 +26,14 @@ class ProjectController {
     UserProject.findAll({
       where: { UserId: +req.logginUser.id },
       include: [
-        { model: Project }, 
-        { model: User, 
-        attributes: {
-          exclude: ['password']
-        }
-       }],
-      })
+        { model: Project },
+        {
+          model: User,
+          attributes: {
+            exclude: ['password']
+          }
+        }],
+    })
       .then(data => {
         res.status(200).json(data)
       })
@@ -43,6 +44,8 @@ class ProjectController {
   static getDetailProject(req, res, next) {
     let idProject = +req.params.id
     let dataTodos;
+    let dataProjects;
+    let ownerProject;
     Todo.findAll({
       where: { ProjectId: idProject }
     })
@@ -60,8 +63,22 @@ class ProjectController {
             }],
         })
       })
-      .then(dataProjects => {
-        res.status(200).json({ dataTodos, dataProjects })
+      .then(projects => {
+        dataProjects = projects;
+        return Project.findByPk(idProject, {
+
+        })
+      })
+      .then(data => {
+        let idOwner = data.UserId
+        console.log(idOwner, 'idOwner>>')
+        return User.findByPk(idOwner, {attributes: {
+          exclude: ['password']
+        }})
+      })
+      .then(user => {
+        ownerProject = user
+        res.status(200).json({ ownerProject, dataTodos, dataProjects })
       })
       .catch(err => next(err))
   }

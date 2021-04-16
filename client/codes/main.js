@@ -82,7 +82,7 @@ function checkLocalStorage() {
     $("#login-register-page").hide()
     findAllTodo()
     getFilterTodos()
-
+    findAllProjects()
   }
 }
 
@@ -383,9 +383,6 @@ function createProject() {
     })
 }
 
-function fetchProjects() {
-  // $("#div-projects").show()
-}
 
 function getFilterTodos() {
   $("#list-filter-todo").empty()
@@ -446,12 +443,113 @@ function findAllProjects() {
     method: "GET",
     headers: { access_token: localStorage.getItem('access_token') }
   })
-  .done(projects => {
-    console.log(projects, '>>>>>>>>projects')
+    .done(projects => {
+      // console.log(projects, '>>>>>>>>projects')
+      $("#my-project").empty()
+      projects.forEach(el => {
+        $("#my-project").append(
+          `
+          <div class="col-4">
+            <div class="card w-100 my-3" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">${el.Project.name}</h5>
+                <div class="d-flex justify-content-center w-100">
+                  <button type="button" class=" btn btn-warning m-2"data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
+                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Edit Project"  style="width: 30%"> Edit </button>
+                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%"> Delete </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+        )
+      })
+    })
+    .fail(err => {
+      console.log(err)
+    })
+}
+
+function detailProject(idProject) {
+  //  $("#detail-project").empty()
+  $.ajax({
+    url: baseUrl + '/projects/' + idProject,
+    method: "GET",
+    headers: { access_token: localStorage.getItem('access_token') }
   })
-  .fail(err => {
-    console.log(err)
-  })
+    .done(project => {
+      console.log(idProject, 'idProject>>>>>>>>>')
+      // let dataTodos = project.dataTodos;
+      let dataProjects = project.dataProjects;;
+      let projectName = dataProjects[0].Project.name;
+      let ownerEmail = project.ownerProject.email
+      $("#detail-project").append(
+        `
+        <div class="d-flex justify-content-center m-0 p-0">
+        <!---->
+        <div id="card-detail-project" class="card w-100 mx-5 p-4  mb-5">
+         <h5 class="mt-0 pt-0">DETAIL PROJECT</h5>
+         <div class="card-body text-start">
+           <h5 class="card-title">${projectName}</h5>
+           <h6 class="card-subtitle mb-2 text-muted">Id : ${idProject}</h6>
+           <h6 class="card-subtitle mb-2 text-muted">Owner: ${ownerEmail}</h6>
+           
+          <div class="my-3">
+           <!--todos in project-->
+           <h6 class="card-text text-center pb-2" >Todo List</h6>
+           <table class="mb-3" >
+             <tr>
+               <th>Title</th>
+               <th>Deadline</th>
+               <th>Status</th>
+             </tr>
+             <tr id="row-table-todo-list">
+               <!-- <td>1</td>
+               <td>dinda@mail.com</td>
+               <td class="d-flex justify-content-end"> 
+                 <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
+               </td> -->
+             </tr>
+           </table>
+           <!--end todos in projects-->
+           <!--Members-->
+           <h6 class="card-text text-center pb-2" >Members</h6>
+           <table>
+             <tr>
+               <th>Id</th>
+               <th>Email</th>
+               <th>Action</th>
+             </tr>
+             <tr id="row-table-members">
+               <!-- <td>1</td>
+               <td>dinda@mail.com</td>
+               <td class="d-flex justify-content-end"> 
+                 <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
+               </td> -->
+             </tr>
+           </table>
+           <!--end Members-->
+          </div>
+            <div class="d-flex justify-content-center">
+             <button type="button" class=" btn btn-warning w-100"> Add User </button>
+
+           </div>
+       </div>
+        `
+      )
+
+      $("#row-table-todo-list").empty()
+      // console.log(dataTodos, 'dataTodos>>>>>>')
+      let dataTodos = project.dataTodos;
+      dataTodos.forEach(el => {
+        console.log('masuk')
+      })
+
+
+    })
+    .fail(err => {
+      console.log(err)
+    })
 }
 
 

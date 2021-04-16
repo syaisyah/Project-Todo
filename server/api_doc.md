@@ -580,7 +580,7 @@ Status: 200 OK
 Response Body:
 
 {
-  id: "<id project from database system>"
+  ownerProject: "<object of detail owner information>"
   dataTodos: "<array of todos in project>"
   dataProjects:  "<array of detail project including users that participated(owner and member)>",
 }

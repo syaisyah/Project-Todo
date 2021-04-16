@@ -197,6 +197,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(200)
               expect(typeof res.body).toEqual('object')
+              expect(res.body).toHaveProperty('ownerProject', expect.any(Object))
               expect(res.body).toHaveProperty('dataTodos', expect.any(Array))
               expect(res.body).toHaveProperty('dataProjects', expect.any(Array))
               done()
