@@ -1,3 +1,4 @@
+
 const baseUrl = `http://localhost:3001`
 let idTodo;
 
@@ -58,6 +59,16 @@ $(document).ready(function () {
     e.preventDefault()
     createProject()
   })
+
+  $("#get-all-projects").on('click', (e) => {
+    e.preventDefault()
+    fetchProjects()
+  })
+
+  $('select').on('change', (e) => {
+    getFilterTodos()
+  })
+
 });
 
 function checkLocalStorage() {
@@ -70,6 +81,8 @@ function checkLocalStorage() {
     $("#home-page").show()
     $("#login-register-page").hide()
     findAllTodo()
+    getFilterTodos()
+
   }
 }
 
@@ -179,7 +192,6 @@ function findAllTodo() {
     }
   })
     .done(todos => {
-      // console.log(todos, 'findAll')
       $("#list-todo-today").empty();
       if (todos.length) {
         todos.forEach((el, i) => {
@@ -253,8 +265,6 @@ function showFormUpdate(id) {
   getByIdTodo(id);
   $("#title-modal").text('Update Todo')
   $("#fieldset-form").attr('disabled', false)
-  // $("#user-id-todo").prop('disabled', true);
-  // $("#project-id-todo").prop('disabled', true);
   $("#btn-save").show()
   $("#btn-create-todo").hide()
   $("#user-id-div").hide()
@@ -276,6 +286,7 @@ function updateTodo(id) {
     .done(response => {
       console.log(response, 'response updateTodo >>>>>>>')
       findAllTodo()
+      getFilterTodos()
     })
     .fail(err => {
       err.responseJSON.message.forEach(el => {
@@ -296,6 +307,7 @@ function destroyByIdTodo(id) {
   })
     .done(response => {
       findAllTodo()
+      getFilterTodos()
       Swal.fire(
         'Delete Success!',
         'You clicked the button!',
@@ -339,6 +351,7 @@ function createTodo() {
   })
     .done(response => {
       findAllTodo()
+      getFilterTodos()
     })
     .fail(err => {
       err.responseJSON.message.forEach(el => {
@@ -361,6 +374,7 @@ function createProject() {
     .done(response => {
       console.log(response)
       findAllTodo()
+      getFilterTodos()
     }).fail(err => {
       err.responseJSON.message.forEach(el => {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
@@ -368,4 +382,61 @@ function createProject() {
       setTimeout(() => { $(".error-message").empty() }, 3000)
     })
 }
+
+function fetchProjects() {
+  // $("#div-projects").show()
+}
+
+function getFilterTodos() {
+  $("#list-filter-todo").empty()
+  let str = $("select option:selected").text();
+  let url;
+  if (str === 'Completed' || str === 'Uncompleted') {
+    url = baseUrl + `/todos?status=${str}`
+  } else if (str === 'Today') {
+    url = baseUrl + `/todos?due_date=today`
+  } else if (str === 'All') {
+    url = baseUrl + '/todos'
+  } 
+
+  $.ajax({
+    url: url,
+    method: 'GET',
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(todos => {
+      todos.forEach((el, i) => {
+        if (el.status.toLowerCase() === 'uncompleted') {
+          $("#list-filter-todo").append(`
+        <div class="col-6  py-2 w-75 align-baseline">
+          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
+        </div>
+        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+        </div>
+        `)
+        } else {
+          $("#list-filter-todo").append(`
+        <div class="col-6  py-2 w-75 align-baseline">
+          <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
+        </div>
+        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+          <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+        </div>
+        `)
+        }
+      })
+
+    })
+    .fail(err => {
+      console.log(err.responseJSON)
+    })
+  
+}
+
+
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/

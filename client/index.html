@@ -71,7 +71,8 @@
                 <div class="col-12 p-2">
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-todo"  onclick="showFormCreate()"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project"><i class="fas fa-folder-plus"></i></button> Create Project<br />
-                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#get-all-project"><i class="far fa-folder-open"></i></button> Project<br />
+                  <button type="button" class="btn btn"  id="get-all-project"><i class="far fa-folder-open"></i></button> Project<br />
+                  <!-- <button type="button" class="btn btn"  id="get-all-project"><i class="far fa-folder-open"></i></button> Detail Projects<br /> -->
                 </div>
                 <div class="col-12 p-2">
                   <button id="btn-logout" type="button" class="btn btn trans"><i class="fas fa-sign-out-alt"></i></button>Log out<br />
@@ -96,7 +97,7 @@
                 </div>
               </div>
               <div class="col-12" style="height: 90%">
-                <div class="row mx-5 my-0 w-100">
+                <div class="row mx-5 my-0 w-100 justify-content-between">
                   <div class="col-6 p-3 today-todo">
                     <div class="text-center mb-4">
                       <h5>T O D A Y ' S T A S K S</h5>
@@ -107,76 +108,34 @@
                   </div>
                  <div class="col-6 today-todo">
                     <div class="row justify-content-end w-75">
-                      <div class="m-2 rounded w-25">
-                        <select class="form-select" aria-label="Default select example">
-                          <option>Filter todo</option>
-                          <option value="Today">Today</option>
-                          <option value="Completed">Completed</option>
-                          <option value="Uncompleted">Uncompleted</option>
-                        </select>
-                      </div>
-                      <!--Data boongan-->
+                        <div id="select-todo" class="m-2 rounded w-25">
+                          <select class="form-select" aria-label="Default select example">
+                            <option selected>Filter Todo</option>
+                            <option id="all-todos">All</option>
+                            <option id="uncompleted-filter" value="Uncompleted">Uncompleted</option>
+                            <option id="completed-filter" value="Completed">Completed</option>
+                            <option id="today-filter" value="Today">Today</option>
+                          </select>
+                        </div>
                       <div id="list-filter-todo" class="row shadow-lg border px-3 py-2 mt-2"> 
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Data seedaing boongan</p>
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
-                          
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
-                          
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
-                          
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
-                          
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                        <div class="col-6  py-2 w-75 align-baseline">
-                          <p><button type="button" class="trans"><i class="far fa-circle"></i></button>Learn </p>
-                          
-                        </div>
-                        <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-info-circle"></i></button><br />
-                          <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo"> <i class="fas fa-edit"></i></button><br />
-                          <button type="button" class="trans" > <i class="fas fa-trash"></i></button><br />
-                        </div>
-                       
-                   </div>
-                     
-                      <!--end Data boongan-->
+                        <!-- append data todos by filter -->
+                      </div>
+
                     </div>
                   </div>
                 </div>
+                <!--all projects-->
+                <!-- <div class="row mx-5 my-0 w-100">
+                  <div class="col-6 p-3 today-todo">
+                    <div class="text-center mb-4">
+                      <h5>MY PROJECTS</h5>
+                    </div>
+                    <div class="row shadow-lg border px-3 py-2">  -->
+                        <!-- buat append list all todos -->
+                   <!-- </div>
+                  </div>
+                </div> -->
+                <!-- end all projects-->
               </div>
             </div>
           </div>
@@ -237,7 +196,6 @@
                       </div>
                     </div>
                   </div>
-
                 </fieldset>
               </form>
              <div class="d-flex justify-content-center">
