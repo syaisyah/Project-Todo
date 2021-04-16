@@ -202,9 +202,9 @@ function findAllTodo() {
               
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-              <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+              <button type="button" class="trans"  data-bs-toggle="tooltip" title="Delete" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
             </div>
             `)
           } else {
@@ -213,9 +213,9 @@ function findAllTodo() {
               <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-              <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+              <button type="button" class="trans"  data-bs-toggle="tooltip" title="Delete" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
             </div>
             `)
           }
@@ -397,7 +397,7 @@ function getFilterTodos() {
     url = baseUrl + `/todos?due_date=today`
   } else if (str.toLowerCase() === 'all') {
     url = baseUrl + '/todos'
-  } 
+  }
 
   $.ajax({
     url: url,
@@ -405,7 +405,6 @@ function getFilterTodos() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(todos => {
-      console.log(todos, '>>>>>>>>>>>>')
       if (todos.length && str.toLowerCase() !== 'filter todo') {
         todos.forEach(el => {
           if (el.status.toLowerCase() === 'uncompleted') {
@@ -414,9 +413,9 @@ function getFilterTodos() {
             <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
           </div>
           <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="tooltip" title="Delete" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
           </div>
           `)
           } else {
@@ -425,20 +424,34 @@ function getFilterTodos() {
             <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
           </div>
           <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-            <button type="button" class="trans" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+            <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+            <button type="button" class="trans"  data-bs-toggle="tooltip" title="Delete" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
           </div>
           `)
           }
         })
-      } 
+      }
 
     })
     .fail(err => {
       console.log(err.responseJSON)
     })
-  
+
+}
+
+function findAllProjects() {
+  $.ajax({
+    url: baseUrl + '/projects',
+    method: "GET",
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+  .done(projects => {
+    console.log(projects, '>>>>>>>>projects')
+  })
+  .fail(err => {
+    console.log(err)
+  })
 }
 
 
