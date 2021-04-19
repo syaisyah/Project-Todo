@@ -21,31 +21,28 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
-    console.log(req.query, 'query>>>>>>')
     let where = { UserId: +req.logginUser.id }
 
     let today = new Date();
     let startDay = new Date(today);
-    startDay.setDate(startDay.getDate() + 1);
+    startDay.setDate(startDay.getDate());
     startDay.setHours(0, 0, 0, 0);
 
     let endDay = new Date(today)
     endDay.setHours(23, 59, 59, 999);
-    console.log(startDay, 'star', endDay, 'endDay')
-
+    
     if (req.query.status) {
       let queryStatus = req.query.status[0].toUpperCase() + req.query.status.slice(1).toLowerCase()
       where.status = queryStatus
     }
 
-    // if (req.query.due_date && req.query.due_date.toLowerCase() === 'today') {
-    //   console.log('masuk >>>>>>>>>>>>>>>>>>')
-    //   where.due_date = {
-    //     [Op.gt]: startDay,
-    //     [Op.lt]: endDay
-    //   }
-    // }
-
+    if (req.query.due_date && req.query.due_date.toLowerCase() === 'today') {
+      where.due_date = {
+        [Op.gt]: startDay,
+        [Op.lt]: endDay
+      }
+    }
+   
     Todo.findAll({
       where,
       order: [['status', 'DESC']]
