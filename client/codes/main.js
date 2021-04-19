@@ -40,7 +40,7 @@ $(document).ready(function () {
     $("#form-todo").trigger('reset')
     $("#completed").attr('checked', false)
     $("#uncompleted").attr('checked', false)
-    $("#form-add-project").trigger('reset')
+    $("#form-project").trigger('reset')
     $("#form-add-user").trigger('reset')
   })
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
   $("#btn-close-project").on('click', (e) => {
     e.preventDefault();
-    $("#form-add-project").trigger('reset')
+    $("#form-project").trigger('reset')
 
   })
 
@@ -380,11 +380,12 @@ function createTodo() {
     })
 }
 
-// function formAddProject() {
-//   $("#btn-add-project").show()
-//   $("#btn-edit-project").hide()
-//   $("#modal-title").val('Create Project')
-// }
+function showFormCreateProject() {
+  console.log('masuk form')
+  $("#btn-add-project").show()
+  $("#btn-edit-project").hide()
+  $("#modal-title-project").text('Create Project')
+}
 
 function createProject() {
   console.log('masuk cretaeProject')
@@ -400,6 +401,7 @@ function createProject() {
       console.log(response)
       findAllTodo()
       getFilterTodos()
+      findAllProjects()
     }).fail(err => {
       err.responseJSON.message.forEach(el => {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
@@ -411,8 +413,6 @@ function createProject() {
 
 function getFilterTodos() {
   $("#list-filter-todo").empty()
-
-
   let str = $("select option:selected").text();
   let url;
   if (str.toLowerCase() === 'completed' || str.toLowerCase() === 'uncompleted') {
@@ -484,7 +484,7 @@ function findAllProjects() {
                 <h5 class="card-title">${el.Project.name}</h5>
                 <div class="d-flex justify-content-center w-100">
                   <button type="button" class=" btn btn-warning m-2"data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
-                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Edit Project"  style="width: 30%"> Edit </button>
+                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Edit Project"  style="width: 30%" data-bs-toggle="modal" data-bs-target="#modal-project" onclick="showFormEditProject(${el.ProjectId}, ${el.Project.name})"> Edit </button>
                   <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%"> Delete </button>
                 </div>
               </div>
@@ -646,6 +646,13 @@ function destroyUser(idProject, idUser) {
     })
 }
 
+
+function showFormEditProject(id, name) {
+  console.log(id, name,'masuk showFormEditProject')
+  $("#btn-add-project").hide()
+  $("#btn-edit-project").show()
+  $("#modal-title-project").text('Edit Project')
+}
 
 
 

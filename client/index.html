@@ -70,7 +70,7 @@
               <div class="d-flex align-content-between flex-wrap">
                 <div class="col-12 p-2">
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-todo"  onclick="showFormCreate()"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
-                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project" ><i class="fas fa-folder-plus"></i></button> Create Project<br />
+                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-project" onclick="showFormCreateProject()"><i class="fas fa-folder-plus"></i></button> Create Project<br />
                 </div>
                 <div class="col-12 p-2">
                   <button id="btn-logout" type="button" class="btn btn trans"><i class="fas fa-sign-out-alt"></i></button>Log out<br />
@@ -215,15 +215,15 @@
     <!-- End detail todo modal -->
     <!-- modal add project -->
     <section>
-      <div class="modal fade" id="add-project" tabindex="-1" aria-labelledby="add-project" aria-hidden="true">
+      <div class="modal fade" id="modal-project" tabindex="-1" aria-labelledby="modal-project" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" >Create Project</h5>
+              <h5 class="modal-title" id="modal-title-project"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="form-add-project">
+              <form id="form-project">
                 <div class="row mb-3">
                   <label for="project-name" class="col-sm-2 col-form-label">Name</label>
                   <div class="col-sm-10">
@@ -238,12 +238,13 @@
             <div class="modal-footer">
               <button id="btn-close-project" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button id="btn-add-project" type="button" class="btn btn-light">Create</button>
+              <button id="btn-edit-project" type="button" class="btn btn-light">Edit</button>
             </div>
           </div>
         </div>
       </div>
      </section>
-    <!-- <button id="btn-edit-project" type="button" class="btn btn-light">Edit</button> -->
+   
     <!--End modal add project -->
     <!-- modal add User -->
     <section>
