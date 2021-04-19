@@ -72,12 +72,6 @@ $(document).ready(function () {
     getFilterTodos()
   })
 
-  // $("#btn-close-detail-project").on('click', (e) => {
-  //   e.preventDefault();
-  //   console.log('masuk end ')
-  //   $("#detail-project").hide()
-  // })
-
   $("#btn-close-add-user").on('click', (e) => {
     e.preventDefault()
     $("#form-add-user").trigger('reset')
@@ -222,19 +216,19 @@ function findAllTodo() {
           if (el.status.toLowerCase() === 'uncompleted') {
             $("#list-todo-today").append(`
             <div class="col-6  py-2 w-75 align-baseline">
-              <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
+              <p class="uncompleted-unstrike" ><button type="button" class="trans" onclick="updateStatusTodo(${el.id}, '${el.status}')"><i class="far fa-circle"></i></button>${el.title}</p>
               
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
-              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
-              <button type="button" class="trans"  data-bs-toggle="tooltip" title="Delete" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail Todo" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
+              <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Edit Todo" onclick="showFormUpdate(${el.id})"> <i class="fas fa-edit"></i></button><br />
+              <button type="button" class="trans"  data-bs-toggle="tooltip" title="Delete Todo" onclick="destroyByIdTodo(${el.id})"> <i class="fas fa-trash"></i></button><br />
             </div>
             `)
           } else {
             $("#list-todo-today").append(`
             <div class="col-6  py-2 w-75 align-baseline">
-              <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
+              <p class="completed-strike"><button type="button" class="trans"><i class="fas fa-check-circle" onclick="updateStatusTodo(${el.id}, '${el.status}')"></i> </button>${el.title}</p> 
             </div>
             <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
               <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
@@ -253,6 +247,33 @@ function findAllTodo() {
     })
 }
 
+function updateStatusTodo(idTodo, statusTodo) {
+  if (statusTodo.toLowerCase() === 'completed') {
+    $(".completed-strike").removeClass('completed-strike').addClass('uncompleted-unstrike');
+    statusTodo = 'Uncompleted'
+  } else {
+    $(".uncompleted-unstrike").removeClass('uncompleted-unstrike').addClass('completed-strike');
+    statusTodo = 'Completed'
+  }
+
+  $.ajax({
+    url: baseUrl + '/todos/' + idTodo,
+    method: 'PATCH',
+    data: { status: statusTodo },
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(response => {
+      checkLocalStorage()
+    })
+    .fail(err => {
+      let message = err.responseJSON.message.map(el => el)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+    })
+}
 
 
 function getByIdTodo(id) {
@@ -402,7 +423,7 @@ function createProject() {
   })
     .done(response => {
       console.log(response)
-     checkLocalStorage()
+      checkLocalStorage()
     }).fail(err => {
       err.responseJSON.message.forEach(el => {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
@@ -436,7 +457,7 @@ function getFilterTodos() {
           if (el.status.toLowerCase() === 'uncompleted') {
             $("#list-filter-todo").append(`
           <div class="col-6  py-2 w-75 align-baseline">
-            <p><button type="button" class="trans"><i class="far fa-circle"></i></button>${el.title}</p>
+          <p class="uncompleted-unstrike" ><button type="button" class="trans" onclick="updateStatusTodo(${el.id}, '${el.status}')"><i class="far fa-circle"></i></button>${el.title}</p>
           </div>
           <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
             <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
@@ -447,7 +468,7 @@ function getFilterTodos() {
           } else {
             $("#list-filter-todo").append(`
           <div class="col-6  py-2 w-75 align-baseline">
-            <p class="completed"><button type="button" class="trans"><i class="fas fa-check-circle"></i> </button>${el.title}</p> 
+          <p class="completed-strike"><button type="button" class="trans"><i class="fas fa-check-circle" onclick="updateStatusTodo(${el.id}, '${el.status}')"></i></button>${el.title}</p> 
           </div>
           <div class="w-25 col-6 text-end d-flex justify-content-end ps-2 ">
             <button type="button" class="trans" data-bs-toggle="modal" data-bs-target="#modal-todo" data-bs-toggle="tooltip" title="Detail" onclick="showFormDetail(${el.id})"> <i class="fas fa-info-circle"></i></button><br />
@@ -534,7 +555,6 @@ function detailProject(idProject) {
              <tbody id="detail-todo-project">
              </tbody>
            </table>
-           <!--Members-->
            <h6 class="card-text text-center pb-2" >Members</h6>
            <table >
              <thead>
@@ -545,7 +565,6 @@ function detailProject(idProject) {
              <tbody id="detail-members-project" >
              </tbody>
            </table>
-           <!--end Members-->
           </div>
             <div class="d-flex justify-content-center">
              <button type="button" class=" btn btn-light w-25 m-3" data-bs-toggle="modal" data-bs-target="#add-user" onclick="showFormAddUser(${idProject})"> Add User </button>
@@ -679,28 +698,28 @@ function updateProject(idProject) {
 
 
 function destroyProject(idProject) {
-   console.log(idProject, 'delete')
-   $.ajax({
-     url: baseUrl + '/projects/' + idProject,
-     method: 'DELETE',
-     headers: { access_token: localStorage.getItem('access_token') }
-   })
-   .done(response => {
-    checkLocalStorage()
-    Swal.fire(
-      'Delete Success!',
-      'You clicked the button!',
-      'success'
-    )
+  console.log(idProject, 'delete')
+  $.ajax({
+    url: baseUrl + '/projects/' + idProject,
+    method: 'DELETE',
+    headers: { access_token: localStorage.getItem('access_token') }
   })
-  .fail(err => {
-    let message = err.responseJSON.message.map(el => el)
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: message
+    .done(response => {
+      checkLocalStorage()
+      Swal.fire(
+        'Delete Success!',
+        'You clicked the button!',
+        'success'
+      )
     })
-  })
+    .fail(err => {
+      let message = err.responseJSON.message.map(el => el)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+    })
 }
 
 
