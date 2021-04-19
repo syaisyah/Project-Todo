@@ -46,9 +46,12 @@ th {
 /* tr:nth-child(even) {
   background-color: #dddddd;
 } */
-th,
-td {
+th {
   text-align: center;
+}
+
+td {
+  text-align: left;
 }
 
 th {

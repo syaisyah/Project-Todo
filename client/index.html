@@ -10,10 +10,10 @@
   </head>
   <body class="bg-light">
     <!--Login register page-->
-    <!-- style="background-color: burlywood;"-->
+    
     <section id="login-register-page">
       <div class="container-fluid"></div>
-        <div class="d-flex justify-content-center" style="padding: 150px 0px">
+        <div class="d-flex justify-content-center" style="padding: 150px 0px; height: 100%">
           <div class="d-flex p-0" style="height: 100%; width: 60%; border-radius: 50px; box-shadow: 7px 7px 8px 7px rgb(209, 179, 194)">
             <div class="col-6 w-50 " style="border-radius: 50px 0px 0px 50px;">
               <div class="container">
@@ -62,7 +62,7 @@
     </section>
     <!--End login register page-->
     <!--After Login-->
-    <section id="home-page">
+    <section id="home-page" style="height: 100%">
       <div class="container-fluid p-0 m-0 w-100">
         <div class="row w-100">
           <!-- kiri-->
@@ -70,9 +70,7 @@
               <div class="d-flex align-content-between flex-wrap">
                 <div class="col-12 p-2">
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-todo"  onclick="showFormCreate()"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
-                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project"><i class="fas fa-folder-plus"></i></button> Create Project<br />
-                  <!-- <button type="button" class="btn btn"  id="get-all-project"><i class="far fa-folder-open"></i></button> Project<br /> -->
-                  <!-- <button type="button" class="btn btn"  id="get-all-project"><i class="far fa-folder-open"></i></button> Detail Projects<br /> -->
+                  <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#add-project" ><i class="fas fa-folder-plus"></i></button> Create Project<br />
                 </div>
                 <div class="col-12 p-2">
                   <button id="btn-logout" type="button" class="btn btn trans"><i class="fas fa-sign-out-alt"></i></button>Log out<br />
@@ -111,6 +109,7 @@
                         <div class="row text-center mb-3 justify-content-end">
                           <div id="select-todo " class="rounded w-25">
                             <select class="form-select border" aria-label="Default select example">
+                              <option >Filter Todo</option>
                               <option id="all-todos">All</option>
                               <option id="uncompleted-filter" value="Uncompleted">Uncompleted</option>
                               <option id="completed-filter" value="Completed">Completed</option>
@@ -118,11 +117,10 @@
                             </select>
                           </div>
                         </div>
-                        <div id="list-filter-todo" class="row shadow-lg border">  -->
+                        <div id="list-filter-todo" class="row ">
                           <!-- append data todos by filter -->
                         </div>
                       </div>
-
                     </div>
 
                   </div>
@@ -132,76 +130,11 @@
                   <div class="col-6 text-center p-3 shadow-lg" style="width: 60%; margin-bottom: 200px">
                    <h5 class="mt-2">MY PROJECTS</h5>
                     <div id="my-project" class="row justify-content-start w-100 p-0 m-0">
-                      <!-- <div class="col-4">
-                        <div class="card w-100 my-3" style="width: 18rem;">
-                          <div class="card-body">
-                            <h5 class="card-title">Isi Name</h5>
-                            <div class="d-flex justify-content-center w-100">
-                              <button type="button" class=" btn btn-warning m-2" style="width: 30%"> Add </button>
-                              <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Edit Project"  style="width: 30%"> Edit </button>
-                              <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 30%"> Delete </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>-->
                     </div> 
                   </div>
                   <!-- detail board-->
                   <div id="detail-project" class="col-6 text-center" style="width: 40%;">
-                    <!-- <div class="d-flex justify-content-center m-0 p-0">
-                     <div id="card-detail-project" class="card w-100 mx-5 p-4  mb-5">
-                      <h5 class="mt-0 pt-0">DETAIL PROJECT</h5>
-                      <div class="card-body text-start">
-                        <h5 class="card-title">Project name</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Project Id :</h6>
-                       <div class="my-3">
-                        <p class="card-text">Owner : </p>
-                        <p class="card-text">Total Members : </p> -->
-                        <!--todos in project-->
-                        <!-- <h6 class="card-text text-center pb-2" >Todo List</h6>
-                        <table class="mb-3" >
-                          <tr>
-                            <th>Title</th>
-                            <th>Deadline</th>
-                            <th>Status</th>
-                          </tr>
-                          <tr id="row-table-todo-list"> -->
-                            <!-- <td>1</td>
-                            <td>dinda@mail.com</td>
-                            <td class="d-flex justify-content-end"> 
-                              <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
-                            </td> -->
-                          <!-- </tr>
-                        </table> -->
-                        <!--end todos in projects-->
-                        <!--Members-->
-                        <!-- <h6 class="card-text text-center pb-2" >Members</h6>
-                        <table>
-                          <tr>
-                            <th>Id</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                          </tr>
-                          <tr id="row-table-members"> -->
-                            <!-- <td>1</td>
-                            <td>dinda@mail.com</td>
-                            <td class="d-flex justify-content-end"> 
-                              <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
-                            </td> -->
-                          <!-- </tr>
-                        </table> -->
-                        <!--end Members-->
-                       <!-- </div>
-                         <div class="d-flex justify-content-center">
-                          <button type="button" class=" btn btn-warning w-100"> Add User </button>
-
-                        </div>
-                    </div> -->
-                     <!---->
-                    <!-- </div> -->
-                   <!-- </div> -->
                   </div>
-                  
                   <!--end detail board -->
                 </div>
                 <!-- end all projects-->
@@ -281,7 +214,7 @@
     </section>
     <!-- End detail todo modal -->
     <!-- modal add project -->
-     <section>
+    <section>
       <div class="modal fade" id="add-project" tabindex="-1" aria-labelledby="add-project" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -310,7 +243,45 @@
         </div>
       </div>
      </section>
-<!--End modal add project -->
+    <!-- <button id="btn-edit-project" type="button" class="btn btn-light">Edit</button> -->
+    <!--End modal add project -->
+    <!-- modal add User -->
+    <section>
+      <div class="modal fade" id="add-user" tabindex="-1" aria-labelledby="add-user" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" >Add User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="form-add-user">
+                <div class="row mb-3">
+                  <label for="id-project" class="col-sm-2 col-form-label">Project Id</label>
+                  <div class="col-sm-10">
+                    <input id="id-project" type="input" class="form-control" id="id-project" disabled>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="add-user-email" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input id="add-user-email" type="input" class="form-control" id="add-user-email">
+                  </div>
+                </div>
+              </form>
+              <div class="d-flex justify-content-center">
+                <div class="error-message w-50 text-center"></div>
+               </div>
+            </div>
+            <div class="modal-footer">
+              <button id="btn-close-add-user" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="btn-add-user" type="button" class="btn btn-light">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     </section>
+     <!-- End modal add User -->
     <!-- End After Login-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

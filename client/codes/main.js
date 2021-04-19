@@ -1,6 +1,7 @@
 
 const baseUrl = `http://localhost:3001`
 let idTodo;
+let idProject;
 
 $(document).ready(function () {
   checkLocalStorage()
@@ -40,6 +41,7 @@ $(document).ready(function () {
     $("#completed").attr('checked', false)
     $("#uncompleted").attr('checked', false)
     $("#form-add-project").trigger('reset')
+    $("#form-add-user").trigger('reset')
   })
 
   $("#btn-close-end").on('click', (e) => {
@@ -69,7 +71,22 @@ $(document).ready(function () {
     getFilterTodos()
   })
 
- 
+  // $("#btn-close-detail-project").on('click', (e) => {
+  //   e.preventDefault();
+  //   console.log('masuk end ')
+  //   $("#detail-project").hide()
+  // })
+
+  $("#btn-close-add-user").on('click', (e) => {
+    e.preventDefault()
+    $("#form-add-user").trigger('reset')
+  })
+
+  $("#btn-add-user").on('click', (e) => {
+    e.preventDefault()
+    addUser(idProject)
+  })
+
 });
 
 function checkLocalStorage() {
@@ -221,6 +238,8 @@ function findAllTodo() {
             `)
           }
         });
+      } else {
+        $("#list-todo-today").append(`<p class="text-center">You dont have any task for today</p>`)
       }
     })
     .catch(err => {
@@ -285,7 +304,6 @@ function updateTodo(id) {
     headers: { access_token: localStorage.getItem('access_token') },
   })
     .done(response => {
-      console.log(response, 'response updateTodo >>>>>>>')
       findAllTodo()
       getFilterTodos()
     })
@@ -362,6 +380,12 @@ function createTodo() {
     })
 }
 
+// function formAddProject() {
+//   $("#btn-add-project").show()
+//   $("#btn-edit-project").hide()
+//   $("#modal-title").val('Create Project')
+// }
+
 function createProject() {
   console.log('masuk cretaeProject')
   $.ajax({
@@ -387,6 +411,8 @@ function createProject() {
 
 function getFilterTodos() {
   $("#list-filter-todo").empty()
+
+
   let str = $("select option:selected").text();
   let url;
   if (str.toLowerCase() === 'completed' || str.toLowerCase() === 'uncompleted') {
@@ -405,6 +431,7 @@ function getFilterTodos() {
     .done(todos => {
       if (todos.length && str.toLowerCase() !== 'filter todo') {
         todos.forEach(el => {
+          $("#list-filter-todo").addClass('shadow-lg border')
           if (el.status.toLowerCase() === 'uncompleted') {
             $("#list-filter-todo").append(`
           <div class="col-6  py-2 w-75 align-baseline">
@@ -429,6 +456,8 @@ function getFilterTodos() {
           `)
           }
         })
+      } else {
+        $("#list-filter-todo").removeClass('shadow-lg border')
       }
 
     })
@@ -445,7 +474,6 @@ function findAllProjects() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(projects => {
-      // console.log(projects, '>>>>>>>>projects')
       $("#my-project").empty()
       projects.forEach(el => {
         $("#my-project").append(
@@ -472,7 +500,6 @@ function findAllProjects() {
 }
 
 function detailProject(idProject) {
-  //  $("#detail-project").empty()
   $("#detail-project").show()
   $.ajax({
     url: baseUrl + '/projects/' + idProject,
@@ -480,81 +507,146 @@ function detailProject(idProject) {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(project => {
-      // let dataTodos = project.dataTodos;
+      let dataTodos = project.dataTodos;
       let dataProjects = project.dataProjects;;
       let projectName = dataProjects[0].Project.name;
-      let ownerEmail = project.ownerProject.email
-      console.log(idProject, ownerEmail, 'idProject>>>>>>>>>')
-  
+      let ownerEmail = project.ownerProject.email;
+      $("#detail-project").empty()
       $("#detail-project").append(
         `
         <div class="d-flex justify-content-center m-0 p-0">
-        <!---->
-        <div id="card-detail-project" class="card w-100 mx-5 p-4  mb-5">
+        <div id="card-detail-project" class="card w-100 mx-5 p-4  mb-5 shadow">
          <h5 class="mt-0 pt-0">DETAIL PROJECT</h5>
          <div class="card-body text-start">
            <h5 class="card-title">${projectName}</h5>
            <h6 class="card-subtitle mb-2 text-muted">Id : ${idProject}</h6>
            <h6 class="card-subtitle mb-2 text-muted">Owner: ${ownerEmail}</h6>
-           
           <div class="my-3">
-           <!--todos in project-->
            <h6 class="card-text text-center pb-2" >Todo List</h6>
-           <table class="mb-3" >
-             <tr>
+           <table class="mb-3"  >
+             <thead>
                <th>Title</th>
                <th>Deadline</th>
                <th>Status</th>
-             </tr>
-             <tr id="row-table-todo-list">
-               <!-- <td>1</td>
-               <td>dinda@mail.com</td>
-               <td class="d-flex justify-content-end"> 
-                 <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
-               </td> -->
-             </tr>
+             </thead>
+             <tbody id="detail-todo-project">
+             </tbody>
            </table>
-           <!--end todos in projects-->
            <!--Members-->
            <h6 class="card-text text-center pb-2" >Members</h6>
-           <table>
-             <tr>
+           <table >
+             <thead>
                <th>Id</th>
                <th>Email</th>
                <th>Action</th>
-             </tr>
-             <tr id="row-table-members">
-               <!-- <td>1</td>
-               <td>dinda@mail.com</td>
-               <td class="d-flex justify-content-end"> 
-                 <a href="#" data-bs-toggle="tooltip" title="Delete User"><i class="fas fa-trash px-3"></i></a>
-               </td> -->
-             </tr>
+             </thead>
+             <tbody id="detail-members-project" >
+             </tbody>
            </table>
            <!--end Members-->
           </div>
             <div class="d-flex justify-content-center">
-            
-             <button type="button" class=" btn btn-light w-25 m-3"> Add User </button>
+             <button type="button" class=" btn btn-light w-25 m-3" data-bs-toggle="modal" data-bs-target="#add-user" onclick="showFormAddUser(${idProject})"> Add User </button>
              <button id="btn-close-detail-project" type="button" class=" btn btn-light border w-25 m-3">Close</button>
            </div>
        </div>
         `
       )
 
-      $("#row-table-todo-list").empty()
-      // console.log(dataTodos, 'dataTodos>>>>>>')
-      let dataTodos = project.dataTodos;
       dataTodos.forEach(el => {
-        console.log('masuk')
+        let due_date = new Date(el.due_date)
+        let date = due_date.getDate()
+        let month = due_date.getMonth() + 1
+        let year = due_date.getFullYear()
+        if (month < 10) {
+          month = `0${month}`
+        }
+        let deadline = `${year}-${month}-${date}`
+
+        $("#detail-todo-project").append(
+          `
+          <tr>
+            <td>${el.title}</td>
+            <td>${deadline}</td>
+            <td>${el.status}</td>
+          </tr>
+         `)
       })
 
-
+      dataProjects.forEach(el => {
+        $("#detail-members-project").append(
+          `
+           <tr>
+             <td>${el.User.id}</td>
+             <td>${el.User.email}</td>
+             <td class="d-flex justify-content-end"> 
+               <a href="#" data-bs-toggle="tooltip" title="Delete User" onclick="destroyUser(${idProject}, ${el.User.id})"><i class="fas fa-trash px-3"></i></a>
+             </td> 
+           </tr>
+          `
+        )
+      })
     })
     .fail(err => {
       console.log(err)
     })
 }
+
+
+function showFormAddUser(id) {
+  idProject = id
+  $("#id-project").val(idProject)
+}
+
+function addUser(idProject) {
+  $.ajax({
+    url: baseUrl + '/projects/' + idProject + '/addUser',
+    method: "PATCH",
+    data: { email: $("#add-user-email").val() },
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(response => {
+      Swal.fire(
+        'Add User Success!',
+        'You clicked the button!',
+        'success'
+      )
+      detailProject(idProject)
+    })
+    .fail(err => {
+      err.responseJSON.message.forEach(el => {
+        $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+      })
+      setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
+}
+
+
+function destroyUser(idProject, idUser) {
+  $.ajax({
+    url: baseUrl + '/projects/' + idProject + '/deleteUser/' + idUser,
+    method: "PATCH",
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(response => {
+      Swal.fire(
+        'Delete User Success',
+        'You clicked the button!',
+        'success'
+      )
+      detailProject(idProject)
+    })
+    .fail(err => {
+      let message = err.responseJSON.message.map(el => el)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+    })
+}
+
+
 
 
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/

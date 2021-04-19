@@ -72,9 +72,11 @@ class ProjectController {
       .then(data => {
         let idOwner = data.UserId
         console.log(idOwner, 'idOwner>>')
-        return User.findByPk(idOwner, {attributes: {
-          exclude: ['password']
-        }})
+        return User.findByPk(idOwner, {
+          attributes: {
+            exclude: ['password']
+          }
+        })
       })
       .then(user => {
         ownerProject = user
@@ -100,22 +102,31 @@ class ProjectController {
 
   static addUser(req, res, next) {
     let idProject = +req.params.id;
+    let idUser;
     User.findOne({
       where: { email: req.body.email }
     }).then(user => {
       if (!user) {
         next({ msg: 'User not found' })
+      } else {
+        idUser = user.id
+        return UserProject.findAll({
+          where: { ProjectId: idProject, UserId: idUser }
+        })
       }
-      let newData = { ProjectId: idProject, UserId: user.id }
-      return UserProject.create(newData)
     })
       .then(data => {
-        res.status(200).json({ message: 'Success add user as member of project' })
+        if (data.length) {
+          next({ msg: 'User is already registered in project' })
+        } else {
+          res.status(200).json({ message: 'Success add user as member of project' })
+          return UserProject.create({ ProjectId: idProject, UserId: idUser })
+        }
       })
       .catch(err => next(err))
   }
 
-  static destroy(req, res, next) {
+  static destroyProject(req, res, next) {
     //kalo delete project/update di table junction juga auto (beda sama create)
     Project.destroy({ where: { id: +req.params.id } })
       .then(() => res.status(200).json({ message: 'Success delete project' }))
@@ -123,6 +134,7 @@ class ProjectController {
   }
 
   static destroyUser(req, res, next) {
+    console.log('masuk conroller destroy User')
     User.findOne({
       where: { id: +req.params.idUser }
     })

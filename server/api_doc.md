@@ -842,3 +842,15 @@ Response Body:
   message: ['UnAuthorized']
 }
 ```
+
+10. Status 400 Bad Request - User already registered in project
+
+- Response Body:
+
+```
+{
+  status: 400,
+  message: ['User is already registered in project']
+}
+```
+

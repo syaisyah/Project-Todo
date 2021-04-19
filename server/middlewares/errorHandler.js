@@ -47,7 +47,10 @@ function errorHandler(err, req, res, next) {
       statusCode = 404
       message = [`${err.msg}`]
       break;
-      
+    case 'User is already registered in project':
+      statusCode = 400
+      message = [`${err.msg}`]
+      break;
   }
   
 

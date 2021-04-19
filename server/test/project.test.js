@@ -456,7 +456,7 @@ describe('Projects route test', () => {
           .patch(`/projects/${idProjectNotFound}/addUser`)
           .set('access_token', ownerToken)
           .send({
-            UserId: idMember
+            email: user1.email
           })
           .end(function (err, res) {
             if (err) done(err)
@@ -464,6 +464,23 @@ describe('Projects route test', () => {
               expect(res.status).toBe(404)
               expect(typeof res.body).toEqual('object')
               expect(res.body.message[0]).toEqual('Project not found')
+              done()
+            }
+          })
+      })
+      it('400 Bad Request - error because new user is already registered in project', (done) => {
+        request(app)
+          .patch(`/projects/${idProject}/addUser`)
+          .set('access_token', ownerToken)
+          .send({
+           email: user3.email
+          })
+          .end(function (err, res) {
+            if (err) done(err)
+            else {
+              expect(res.status).toBe(400)
+              expect(typeof res.body).toEqual('object')
+              expect(res.body.message[0]).toEqual('User is already registered in project')
               done()
             }
           })

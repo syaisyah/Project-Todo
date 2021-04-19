@@ -59,7 +59,9 @@ const authOwnerTodo = (req, res, next) => {
 
 
 const authProject = (req, res, next) => {
+  console.log('masuk authProject')
   let idProject = +req.params.id
+  console.log(idProject, 'authProject >>')
   Project.findByPk(idProject)
     .then(project => {
       if (project) {
