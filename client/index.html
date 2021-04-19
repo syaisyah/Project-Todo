@@ -10,7 +10,6 @@
   </head>
   <body class="bg-light">
     <!--Login register page-->
-    
     <section id="login-register-page">
       <div class="container-fluid"></div>
         <div class="d-flex justify-content-center" style="padding: 150px 0px; height: 100%">
@@ -63,10 +62,10 @@
     <!--End login register page-->
     <!--After Login-->
     <section id="home-page" style="height: 100%">
-      <div class="container-fluid p-0 m-0 w-100">
+      <div class="container-fluid p-0 m-0 w-100 border border-primary">
         <div class="row w-100">
           <!-- kiri-->
-          <div class="col-2 p-5 border border-primary" style="width: 15%; background-color: rgb(190, 223, 229)">
+          <div class="col-2 p-5 border border-danger" style="width: 15%; background-color: rgb(190, 223, 229)">
               <div class="d-flex align-content-between flex-wrap">
                 <div class="col-12 p-2">
                   <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#modal-todo"  onclick="showFormCreate()"><i class="fas fa-folder-plus"></i></button> Create Todo<br />
@@ -79,10 +78,10 @@
             </div>
           <!--end kiri-->
           <!--kanan-->
-          <div class="col-10 m-0 p-0 border border-danger" style="width: 85%; height: 100%">
+          <div class="col-10 m-0 p-0" style="width: 85%; height: 100%">
             <div class="d-flex align-content-between flex-wrap" >
-              <div class="col-12" style="height: 10%">
-                <div class="d-flex align-content-between flex-wrap bg-light p-4 m-0 border border-primary" >
+              <div id="schedule-board" class="col-12" style="height: 10%">
+                <div class="d-flex align-content-between flex-wrap bg-light p-4 m-0" >
                   <div class="col-6" style="height: 20%">
                     <h3>My Schedule Board</h3>
                   </div>
@@ -126,8 +125,8 @@
                   </div>
                 </div>
                 <!--all projects-->
-                <div class="d-flex align-content-between px-3" style="width: 100%;; margin-bottom: 200px" >
-                  <div class="col-6 text-center p-3 shadow-lg" style="width: 60%; margin-bottom: 200px">
+                <div class="d-flex align-content-between px-3" style="width: 100%;; margin-bottom: 300px" >
+                  <div class="col-6 text-center p-3 shadow-lg" style="width: 60%; margin-bottom: 300px">
                    <h5 class="mt-2">MY PROJECTS</h5>
                     <div id="my-project" class="row justify-content-start w-100 p-0 m-0">
                     </div> 

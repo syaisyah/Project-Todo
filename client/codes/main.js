@@ -497,25 +497,29 @@ function findAllProjects() {
   })
     .done(projects => {
       $("#my-project").empty()
-      projects.forEach(el => {
 
-        $("#my-project").append(
-          `
-          <div class="col-4">
-            <div class="card w-100 my-3" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">${el.Project.name}</h5>
-                <div class="d-flex justify-content-center w-100">
-                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
-                  <button type="button" class=" btn btn-warning m-2"  data-bs-toggle="modal" data-bs-target="#modal-project" data-bs-toggle="tooltip" title="Edit Project" style="width: 30%" onclick="showFormEditProject(${el.ProjectId}, '${el.Project.name}')"> Edit </button>
-                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%" onclick="destroyProject(${el.ProjectId})"> Delete </button>
+      if (projects.length) {
+        projects.forEach(el => {
+          $("#my-project").append(
+            `
+            <div class="col-4">
+              <div class="card w-100 my-3" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">${el.Project.name}</h5>
+                  <div class="d-flex justify-content-center w-100">
+                    <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
+                    <button type="button" class=" btn btn-warning m-2"  data-bs-toggle="modal" data-bs-target="#modal-project" data-bs-toggle="tooltip" title="Edit Project" style="width: 30%" onclick="showFormEditProject(${el.ProjectId}, '${el.Project.name}')"> Edit </button>
+                    <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%" onclick="destroyProject(${el.ProjectId})"> Delete </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        `
-        )
-      })
+          `
+          )
+        })
+      } else {
+        $("#my-project").append(`<p class="text-center">You dont have any project yet</p>`)
+      }
     })
     .fail(err => {
       console.log(err)
@@ -568,7 +572,6 @@ function detailProject(idProject) {
           </div>
             <div class="d-flex justify-content-center">
              <button type="button" class=" btn btn-light w-25 m-3" data-bs-toggle="modal" data-bs-target="#add-user" onclick="showFormAddUser(${idProject})"> Add User </button>
-             <button id="btn-close-detail-project" type="button" class=" btn btn-light border w-25 m-3">Close</button>
            </div>
        </div>
         `

@@ -71,7 +71,6 @@ class ProjectController {
       })
       .then(data => {
         let idOwner = data.UserId
-        console.log(idOwner, 'idOwner>>')
         return User.findByPk(idOwner, {
           attributes: {
             exclude: ['password']
@@ -134,7 +133,6 @@ class ProjectController {
   }
 
   static destroyUser(req, res, next) {
-    console.log('masuk conroller destroy User')
     User.findOne({
       where: { id: +req.params.idUser }
     })

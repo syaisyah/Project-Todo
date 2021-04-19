@@ -92,7 +92,6 @@ class TodoController {
         res.status(200).json(todo[1][0])
 
       }).catch(err => {
-        console.log(err)
         next(err)
       })
   }

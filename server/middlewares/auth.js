@@ -26,7 +26,6 @@ const authentication = (req, res, next) => {
 
 const authOwnerMemberProject = (req, res, next) => {
   if (!req.body.ProjectId) {
-    console.log('masuk !req.body.ProjectId')
     next()
   } else {
     UserProject.findAll({ where: { ProjectId: +req.body.ProjectId } })
@@ -59,9 +58,7 @@ const authOwnerTodo = (req, res, next) => {
 
 
 const authProject = (req, res, next) => {
-  console.log('masuk authProject')
   let idProject = +req.params.id
-  console.log(idProject, 'authProject >>')
   Project.findByPk(idProject)
     .then(project => {
       if (project) {
