@@ -1,4 +1,5 @@
 
+
 const baseUrl = `http://localhost:3001`
 let idTodo;
 let idProject;
@@ -309,8 +310,7 @@ function updateTodo(id) {
     headers: { access_token: localStorage.getItem('access_token') },
   })
     .done(response => {
-      findAllTodo()
-      getFilterTodos()
+      checkLocalStorage()
     })
     .fail(err => {
       err.responseJSON.message.forEach(el => {
@@ -330,8 +330,7 @@ function destroyByIdTodo(id) {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(response => {
-      findAllTodo()
-      getFilterTodos()
+      checkLocalStorage()
       Swal.fire(
         'Delete Success!',
         'You clicked the button!',
@@ -374,8 +373,7 @@ function createTodo() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(response => {
-      findAllTodo()
-      getFilterTodos()
+      checkLocalStorage()
     })
     .fail(err => {
       err.responseJSON.message.forEach(el => {
@@ -404,9 +402,7 @@ function createProject() {
   })
     .done(response => {
       console.log(response)
-      findAllTodo()
-      getFilterTodos()
-      findAllProjects()
+     checkLocalStorage()
     }).fail(err => {
       err.responseJSON.message.forEach(el => {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
@@ -491,7 +487,7 @@ function findAllProjects() {
                 <div class="d-flex justify-content-center w-100">
                   <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
                   <button type="button" class=" btn btn-warning m-2"  data-bs-toggle="modal" data-bs-target="#modal-project" data-bs-toggle="tooltip" title="Edit Project" style="width: 30%" onclick="showFormEditProject(${el.ProjectId}, '${el.Project.name}')"> Edit </button>
-                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%"> Delete </button>
+                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%" onclick="destroyProject(${el.ProjectId})"> Delete </button>
                 </div>
               </div>
             </div>
@@ -681,6 +677,31 @@ function updateProject(idProject) {
     })
 }
 
+
+function destroyProject(idProject) {
+   console.log(idProject, 'delete')
+   $.ajax({
+     url: baseUrl + '/projects/' + idProject,
+     method: 'DELETE',
+     headers: { access_token: localStorage.getItem('access_token') }
+   })
+   .done(response => {
+    checkLocalStorage()
+    Swal.fire(
+      'Delete Success!',
+      'You clicked the button!',
+      'success'
+    )
+  })
+  .fail(err => {
+    let message = err.responseJSON.message.map(el => el)
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: message
+    })
+  })
+}
 
 
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/
