@@ -85,7 +85,7 @@ class ProjectController {
       .catch(err => next(err))
   }
 
-  static update(req, res, next) {
+  static updateProject(req, res, next) {
     let idProject = +req.params.id;
     Project.update({ name: req.body.name }, {
       where: { id: idProject },

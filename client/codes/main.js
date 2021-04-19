@@ -87,6 +87,11 @@ $(document).ready(function () {
     addUser(idProject)
   })
 
+  $("#btn-edit-project").on('click', (e) => {
+    e.preventDefault()
+    updateProject(idProject)
+  })
+
 });
 
 function checkLocalStorage() {
@@ -476,6 +481,7 @@ function findAllProjects() {
     .done(projects => {
       $("#my-project").empty()
       projects.forEach(el => {
+
         $("#my-project").append(
           `
           <div class="col-4">
@@ -483,8 +489,8 @@ function findAllProjects() {
               <div class="card-body">
                 <h5 class="card-title">${el.Project.name}</h5>
                 <div class="d-flex justify-content-center w-100">
-                  <button type="button" class=" btn btn-warning m-2"data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
-                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Edit Project"  style="width: 30%" data-bs-toggle="modal" data-bs-target="#modal-project" onclick="showFormEditProject(${el.ProjectId}, ${el.Project.name})"> Edit </button>
+                  <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Detail Project" style="width: 30%" onclick="detailProject(${el.ProjectId})"> Detail </button>
+                  <button type="button" class=" btn btn-warning m-2"  data-bs-toggle="modal" data-bs-target="#modal-project" data-bs-toggle="tooltip" title="Edit Project" style="width: 30%" onclick="showFormEditProject(${el.ProjectId}, '${el.Project.name}')"> Edit </button>
                   <button type="button" class=" btn btn-warning m-2" data-bs-toggle="tooltip" title="Delete Project"  style="width: 31%"> Delete </button>
                 </div>
               </div>
@@ -648,10 +654,31 @@ function destroyUser(idProject, idUser) {
 
 
 function showFormEditProject(id, name) {
-  console.log(id, name,'masuk showFormEditProject')
+  idProject = id
   $("#btn-add-project").hide()
   $("#btn-edit-project").show()
   $("#modal-title-project").text('Edit Project')
+  $("#project-name").val(name)
+
+}
+
+function updateProject(idProject) {
+  $.ajax({
+    url: baseUrl + '/projects/' + idProject,
+    method: "PATCH",
+    data: { name: $("#project-name").val() },
+    headers: { access_token: localStorage.getItem('access_token') }
+  })
+    .done(response => {
+      console.log(response)
+      checkLocalStorage()
+    })
+    .fail(err => {
+      err.responseJSON.message.forEach(el => {
+        $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+      })
+      setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
 }
 
 
