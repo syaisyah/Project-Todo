@@ -116,7 +116,7 @@ function login() {
     .done(response => {
       Swal.fire(
         'Login Success!',
-        'You clicked the button!',
+        'Welcome to Todo App!',
         'success'
       )
       localStorage.setItem('access_token', response.access_token)
@@ -345,27 +345,37 @@ function updateTodo(id) {
 
 
 function destroyByIdTodo(id) {
-  $.ajax({
-    url: baseUrl + '/todos/' + id,
-    method: "DELETE",
-    headers: { access_token: localStorage.getItem('access_token') }
-  })
-    .done(response => {
-      checkLocalStorage()
-      Swal.fire(
-        'Delete Success!',
-        'You clicked the button!',
-        'success'
-      )
-    })
-    .fail(err => {
-      let message = err.responseJSON.message.map(el => el)
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message
+  Swal.fire({
+    title: 'Are you sure to delete this todo?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes !!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: baseUrl + '/todos/' + id,
+        method: "DELETE",
+        headers: { access_token: localStorage.getItem('access_token') }
       })
-    })
+        .done(response => {
+          Swal.fire(
+            'Success Deleted Todo!',
+            'success'
+          )
+          checkLocalStorage()
+        })
+        .fail(err => {
+          let message = err.responseJSON.message.map(el => el)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: message
+          })
+        })
+    }
+  })
 }
 
 
@@ -405,14 +415,12 @@ function createTodo() {
 }
 
 function showFormCreateProject() {
-  console.log('masuk form')
   $("#btn-add-project").show()
   $("#btn-edit-project").hide()
   $("#modal-title-project").text('Create Project')
 }
 
 function createProject() {
-  console.log('masuk cretaeProject')
   $.ajax({
     url: baseUrl + '/projects',
     method: "POST",
@@ -422,7 +430,6 @@ function createProject() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(response => {
-      console.log(response)
       checkLocalStorage()
     }).fail(err => {
       err.responseJSON.message.forEach(el => {
@@ -522,7 +529,7 @@ function findAllProjects() {
       }
     })
     .fail(err => {
-      console.log(err)
+      console.log(err.responseJSON)
     })
 }
 
@@ -613,7 +620,7 @@ function detailProject(idProject) {
       })
     })
     .fail(err => {
-      console.log(err)
+      console.log(err.responseJSON)
     })
 }
 
@@ -648,27 +655,38 @@ function addUser(idProject) {
 
 
 function destroyUser(idProject, idUser) {
-  $.ajax({
-    url: baseUrl + '/projects/' + idProject + '/deleteUser/' + idUser,
-    method: "PATCH",
-    headers: { access_token: localStorage.getItem('access_token') }
-  })
-    .done(response => {
-      Swal.fire(
-        'Delete User Success',
-        'You clicked the button!',
-        'success'
-      )
-      detailProject(idProject)
-    })
-    .fail(err => {
-      let message = err.responseJSON.message.map(el => el)
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message
+  Swal.fire({
+    title: 'Are you sure to delete this user?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes !!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: baseUrl + '/projects/' + idProject + '/deleteUser/' + idUser,
+        method: "PATCH",
+        headers: { access_token: localStorage.getItem('access_token') }
       })
-    })
+        .done(response => {
+          Swal.fire(
+            'Deleted!',
+            'User has been deleted.',
+            'success'
+          )
+          detailProject(idProject)
+        })
+        .fail(err => {
+          let message = err.responseJSON.message.map(el => el)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: message
+          })
+        })
+    }
+  })
 }
 
 
@@ -689,7 +707,6 @@ function updateProject(idProject) {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(response => {
-      console.log(response)
       checkLocalStorage()
     })
     .fail(err => {
@@ -702,28 +719,38 @@ function updateProject(idProject) {
 
 
 function destroyProject(idProject) {
-  console.log(idProject, 'delete')
-  $.ajax({
-    url: baseUrl + '/projects/' + idProject,
-    method: 'DELETE',
-    headers: { access_token: localStorage.getItem('access_token') }
-  })
-    .done(response => {
-      checkLocalStorage()
-      Swal.fire(
-        'Delete Success!',
-        'You clicked the button!',
-        'success'
-      )
-    })
-    .fail(err => {
-      let message = err.responseJSON.message.map(el => el)
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message
+  Swal.fire({
+    title: 'Are you sure to delete this project?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes !!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: baseUrl + '/projects/' + idProject,
+        method: 'DELETE',
+        headers: { access_token: localStorage.getItem('access_token') }
       })
-    })
+        .done(response => {
+          Swal.fire(
+            'Delete Success!',
+            'Your project has been delete',
+            'success'
+          )
+          checkLocalStorage()
+        })
+        .fail(err => {
+          let message = err.responseJSON.message.map(el => el)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: message
+          })
+        })
+    }
+  })
 }
 
 
