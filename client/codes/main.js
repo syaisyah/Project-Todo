@@ -572,6 +572,7 @@ function detailProject(idProject) {
           </div>
             <div class="d-flex justify-content-center">
              <button type="button" class=" btn btn-light w-25 m-3" data-bs-toggle="modal" data-bs-target="#add-user" onclick="showFormAddUser(${idProject})"> Add User </button>
+             <button type="button" class=" btn btn-light w-25 m-3" onclick="closeDetailProject()"> Close </button>
            </div>
        </div>
         `
@@ -725,5 +726,9 @@ function destroyProject(idProject) {
     })
 }
 
+
+function closeDetailProject() {
+  $("#detail-project").hide()
+}
 
 //https://www.geeksforgeeks.org/jquery-ui-switchclass-method/
