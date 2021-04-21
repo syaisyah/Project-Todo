@@ -3,6 +3,7 @@ const app = require('../app.js')
 const { User } = require('../models')
 
 
+
 describe('User Routes Test', () => {
   const user = {
     email: "edwin@mail.com",

@@ -2,6 +2,7 @@ const baseUrl = `http://localhost:3000`
 let idTodo;
 let idProject;
 
+
 $(document).ready(function () {
   checkLocalStorage()
   $("#btn-login").on("click", (e) => {
@@ -756,4 +757,3 @@ function closeDetailProject() {
   $("#detail-project").hide()
 }
 
-//https://www.geeksforgeeks.org/jquery-ui-switchclass-method/

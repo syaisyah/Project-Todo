@@ -5,6 +5,7 @@ const { generateToken } = require('../helpers/token-helper')
 const { hashPassword } = require('../helpers/password-helper')
 
 
+
 let token;
 let ownerToken;
 let memberToken;
