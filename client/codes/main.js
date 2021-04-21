@@ -1,6 +1,6 @@
 
 
-const baseUrl = `http://localhost:3001`
+const baseUrl = `http://localhost:3000`
 let idTodo;
 let idProject;
 
@@ -503,8 +503,8 @@ function findAllProjects() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(projects => {
+      
       $("#my-project").empty()
-
       if (projects.length) {
         projects.forEach(el => {
           $("#my-project").append(
