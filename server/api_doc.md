@@ -7,6 +7,8 @@ Project Todo
 
 ```
 http://localhost:3000
+heroku: https://project-todo-application.herokuapp.com
+firebase: https://project-todo-client.web.app
 ```
 
 ### Methods:
