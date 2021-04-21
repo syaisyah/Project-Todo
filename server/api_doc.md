@@ -1,12 +1,13 @@
 ### Title:
-
-- Project Todo
+```
+Project Todo
+```
 
 ### URL:
 
-- server : http://localhost:3001
-
-
+```
+http://localhost:3001
+```
 
 ### Methods:
 
@@ -41,9 +42,9 @@
 - DELETE /projects/:id
 ```
 
-### Endpoints
+# Endpoints
 
-# USERS
+### USERS
 
 1. Register
 
@@ -128,7 +129,7 @@ Response Body:
 }
 ```
 
-# TODOS
+### TODOS
 
 1. Create Todo
 
@@ -477,7 +478,7 @@ Response Body:
 
 ```
 
-# PROJECTS
+### PROJECTS
 
 1. Create Project
 
