@@ -1,4 +1,5 @@
 ### Title:
+
 ```
 Project Todo
 ```
@@ -105,7 +106,7 @@ Status: 200 OK
 Response Body:
 
 {
-  "<user email>",
+  email: "<user email>",
   access_token: "<user access_token>"
 }
 ```
@@ -326,7 +327,7 @@ OR
 
 ```
 
-4. UPDATE Todo
+4. UpdateTodo
 
 ```
 Update todo by specific id
@@ -445,7 +446,7 @@ OR
 }
 ```
 
-6. DELETE Todo
+6. Delete Todo
 
 ```
 Delete todo by specific id
@@ -709,7 +710,6 @@ Response Body:
 }
 ```
 
-
 7. DELETE Project
 
 ```
@@ -744,7 +744,6 @@ Response Body:
 }
 ```
 
-
 # RESTful Error Message
 
 1. Response Error (400) Bad Request - SequelizeValidationError
@@ -758,7 +757,29 @@ Response Body:
 }
 ```
 
-2. Response Error (400) Bad Request - Invalid email or password
+2. Status 400 Bad Request - SequelizeDatabaseError
+
+- Response Body:
+
+```
+{
+  status: 400,
+  message: "<array of error message>"
+}
+```
+
+3. Status 400 Bad Request - SequelizeUniqueConstraintError
+
+- Response Body:
+
+```
+{
+  status: 400,
+  message: "<array of error message>"
+}
+```
+
+4. Response Error (400) Bad Request - Invalid email or password
 
 - Response Body:
 
@@ -769,18 +790,7 @@ Response Body:
 }
 ```
 
-3. Status 400 Bad Request - SequelizeDatabaseError
-
-- Response Body:
-
-```
-{
-  status: 400,
-  message: "<array of error message>"
-}
-```
-
-4. Status 401 UnAuthenticated
+5. Status 401 UnAuthenticated
 
 - Response Body:
 
@@ -791,7 +801,18 @@ Response Body:
 }
 ```
 
-5. Status 404 User Not Found
+6. Status 403 UnAuthorized
+
+- Response Body:
+
+```
+{
+  status: 401,
+  message: ['UnAuthorized']
+}
+```
+
+7. Status 404 User Not Found
 
 - Response Body:
 
@@ -802,47 +823,25 @@ Response Body:
 }
 ```
 
-6. Status 404 Data Not Found
+8. Status 404 Project Not Found
 
 - Response Body:
 
 ```
 {
   status: 404,
-  message: ['Data not found']
+  message: ['Project not found']
 }
 ```
 
-7. Status 500 Internal server errors
+9. Status 404 Todo Not Found
 
 - Response Body:
 
 ```
 {
-  status: 500,
-  message: ['Internal server errors']
-}
-```
-
-8. Status 400 Bad Request - SequelizeUniqueConstraintError
-
-- Response Body:
-
-```
-{
-  status: 400,
-  message: "<array of error message>"
-}
-```
-
-9. Status 403 UnAuthorized
-
-- Response Body:
-
-```
-{
-  status: 401,
-  message: ['UnAuthorized']
+  status: 404,
+  message: ['Todo not found']
 }
 ```
 
@@ -857,3 +856,13 @@ Response Body:
 }
 ```
 
+11. Status 500 Internal server errors
+
+- Response Body:
+
+```
+{
+  status: 500,
+  message: ['Internal server errors']
+}
+```

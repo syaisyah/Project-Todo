@@ -4,7 +4,6 @@ const errorHandler = require('../middlewares/errorHandler');
 
 
 class TodoController {
-
   static createTodo(req, res, next) {
     let { title, status, due_date, ProjectId } = req.body;
     if (!ProjectId) {
