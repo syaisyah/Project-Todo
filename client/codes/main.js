@@ -1,4 +1,5 @@
-const baseUrl = `https://project-todo-application.herokuapp.com`
+// const baseUrl = `https://project-todo-application.herokuapp.com`
+const baseUrl = `http://localhost:3000`
 let idTodo;
 let idProject;
 
@@ -92,6 +93,7 @@ function checkLocalStorage() {
   if (!localStorage.access_token) {
     $("#home-page").hide()
     $("#login-register-page").show()
+    $("#detail-project").hide()
 
   } else {
     $("#email-user").text(localStorage.email)
@@ -411,6 +413,9 @@ function createTodo() {
       })
       setTimeout(() => { $(".error-message").empty() }, 3000)
     })
+    .always(_ => {
+      $("#form-todo").trigger('reset')
+    })
 }
 
 function showFormCreateProject() {
@@ -435,6 +440,9 @@ function createProject() {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
       })
       setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
+    .always(_ => {
+      $("#form-project").trigger('reset')
     })
 }
 
@@ -618,6 +626,7 @@ function detailProject(idProject) {
         )
       })
     })
+
     .fail(err => {
       console.log(err.responseJSON)
     })
@@ -649,6 +658,9 @@ function addUser(idProject) {
         $(".error-message").append(`<div class="alert alert-danger" role="alert">${el}</div>`)
       })
       setTimeout(() => { $(".error-message").empty() }, 3000)
+    })
+    .always(_ => {
+      $("#add-user-email").val("");
     })
 }
 

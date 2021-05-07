@@ -8,8 +8,6 @@ Project Todo
 
 ```
 http://localhost:3000
-heroku: https://project-todo-application.herokuapp.com
-firebase: https://project-todo-client.web.app
 ```
 
 ### Methods:
@@ -790,25 +788,25 @@ Response Body:
 }
 ```
 
-5. Status 401 UnAuthenticated
+5. Status 401 JsonWebTokenError
 
 - Response Body:
 
 ```
 {
   status: 401,
-  message: ['UnAuthenticated']
+  message: ['UnAuthenticated - You are not logged in']
 }
 ```
 
-6. Status 403 UnAuthorized
+6. Status 403 Forbidden UnAuthorized - Access is denied
 
 - Response Body:
 
 ```
 {
   status: 401,
-  message: ['UnAuthorized']
+  message: ['Forbidden UnAuthorized - Access is denied']
 }
 ```
 

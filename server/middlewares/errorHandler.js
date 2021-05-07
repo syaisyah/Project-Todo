@@ -21,7 +21,7 @@ function errorHandler(err, req, res, next) {
       break;
     case 'JsonWebTokenError':
       statusCode = 401
-      message = [`UnAuthenticated`]
+      message = [`UnAuthenticated - You are not logged in`]
       break;
   }
 
@@ -31,7 +31,7 @@ function errorHandler(err, req, res, next) {
       statusCode = 400
       message = [`${err.msg}`]
       break;
-    case 'UnAuthorized':
+    case 'Forbidden UnAuthorized - Access is denied':
       statusCode = 403
       message = [`${err.msg}`]
       break;

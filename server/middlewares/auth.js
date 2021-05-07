@@ -32,7 +32,7 @@ const authOwnerMemberProject = (req, res, next) => {
       .then(projects => {
         if (projects.length) {
           let isAuthorized = projects.find(el => el.UserId === +req.logginUser.id)
-          isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+          isAuthorized ? next() : next({ msg: 'Forbidden UnAuthorized - Access is denied' })
         } else {
           next({ msg: 'Project not found' })
         }
@@ -48,7 +48,7 @@ const authOwnerTodo = (req, res, next) => {
     .then(todo => {
       if (todo) {
         let isAuthorized = todo.UserId === +req.logginUser.id
-        isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+        isAuthorized ? next() : next({ msg: 'Forbidden UnAuthorized - Access is denied' })
       } else {
         next({ msg: 'Todo not found' })
       }
@@ -63,7 +63,7 @@ const authProject = (req, res, next) => {
     .then(project => {
       if (project) {
         let isAuthorized = project.UserId === +req.logginUser.id
-        isAuthorized ? next() : next({ msg: 'UnAuthorized' })
+        isAuthorized ? next() : next({ msg: 'Forbidden UnAuthorized - Access is denied' })
       } else {
         next({ msg: 'Project not found' })
       }
@@ -87,10 +87,7 @@ const isMemberOrOwner = (req, res, next) => {
     },
   })
     .then(data => {
-
       if (data.length) {
-        // let isAuthorized = project.UserId === +req.logginUser.id
-        // isAuthorized ? next() : next({ msg: 'UnAuthorized' })
         let users = data.map(el => el.User)
         let isExist = false;
         for (let el of users) {
@@ -98,8 +95,7 @@ const isMemberOrOwner = (req, res, next) => {
             isExist = true
           }
         }
-     
-        (isExist) ? next() :  next({ msg: 'UnAuthorized' })
+        (isExist) ? next() :  next({ msg: 'Forbidden UnAuthorized - Access is denied' })
       } else {
         next({ msg: 'Project not found' })
       }
