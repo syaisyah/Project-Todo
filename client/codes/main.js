@@ -1,5 +1,5 @@
-// const baseUrl = `http://localhost:3000`
-const baseUrl = `https://project-todo-application.herokuapp.com`
+const baseUrl = `http://localhost:3000`
+// const baseUrl = `https://project-todo-application.herokuapp.com`
 let idTodo;
 let idProject;
 
@@ -510,7 +510,7 @@ function findAllProjects() {
     headers: { access_token: localStorage.getItem('access_token') }
   })
     .done(projects => {
-      
+
       $("#my-project").empty()
       if (projects.length) {
         projects.forEach(el => {
