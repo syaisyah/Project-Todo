@@ -1,5 +1,5 @@
 const baseUrl = `http://localhost:3000`
-// const baseUrl = `https://project-todo-application.herokuapp.com`
+//const baseUrl = `https://project-todo-application.herokuapp.com`
 let idTodo;
 let idProject;
 
@@ -184,6 +184,7 @@ function logout() {
 
 function onSignIn(googleUser) {
   const id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token, 'id token >>>>>>')
   $.ajax({
     url: baseUrl + '/users/googleLogin',
     method: "POST",
@@ -192,6 +193,7 @@ function onSignIn(googleUser) {
     }
   })
     .done(response => {
+      console.log(response, 'response sign goole')
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem('email', response.email)
       $("#email-user").text(response.email)
