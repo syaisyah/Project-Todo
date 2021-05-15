@@ -1,5 +1,4 @@
-const baseUrl = `http://localhost:3000`
-//const baseUrl = `https://project-todo-application.herokuapp.com`
+const baseUrl = 'http://localhost:3000'
 let idTodo;
 let idProject;
 
@@ -89,6 +88,7 @@ $(document).ready(function () {
 
 });
 
+
 function checkLocalStorage() {
   if (!localStorage.access_token) {
     $("#home-page").hide()
@@ -105,6 +105,35 @@ function checkLocalStorage() {
   }
 }
 
+function register() {
+  const email = $("#email").val()
+  const password = $("#password").val()
+  $.ajax({
+    url: baseUrl + `/users/register`,
+    method: "POST",
+    data: { email, password }
+  })
+    .done(response => {
+      Swal.fire(
+        'Register Success, Login to continue!',
+        'You clicked the button!',
+        'success'
+      )
+
+    })
+    .fail(err => {
+      let message = err.responseJSON.message.map(el => el.toLowerCase())
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+      })
+    })
+    .always(el => {
+      $("#email").val("")
+      $("#password").val("")
+    })
+}
 
 function login() {
   const email = $("#email").val()
@@ -140,37 +169,25 @@ function login() {
     })
 }
 
-
-function register() {
-  const email = $("#email").val()
-  const password = $("#password").val()
+function onSignIn(googleUser) {
+  let id_token = googleUser.getAuthResponse().id_token;
   $.ajax({
-    url: baseUrl + `/users/register`,
+    url: baseUrl + '/users/googleLogin',
     method: "POST",
-    data: { email, password }
+    data: {
+      googleToken: id_token
+    }
   })
     .done(response => {
-      Swal.fire(
-        'Register Success, Login to continue!',
-        'You clicked the button!',
-        'success'
-      )
-
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem('email', response.email)
+      $("#email-user").text(response.email)
+      checkLocalStorage();
     })
     .fail(err => {
-      let message = err.responseJSON.message.map(el => el.toLowerCase())
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message
-      })
-    })
-    .always(el => {
-      $("#email").val("")
-      $("#password").val("")
+      console.log(err.responseJSON)
     })
 }
-
 
 function logout() {
   localStorage.clear()
@@ -180,28 +197,6 @@ function logout() {
   });
 
   checkLocalStorage()
-}
-
-function onSignIn(googleUser) {
-  const id_token = googleUser.getAuthResponse().id_token;
-  console.log(id_token, 'id token >>>>>>')
-  $.ajax({
-    url: baseUrl + '/users/googleLogin',
-    method: "POST",
-    data: {
-      googleToken: id_token
-    }
-  })
-    .done(response => {
-      console.log(response, 'response sign goole')
-      localStorage.setItem("access_token", response.access_token);
-      localStorage.setItem('email', response.email)
-      $("#email-user").text(response.email)
-      checkLocalStorage();
-    })
-    .fail(err => {
-      console.log(err.responseJSON)
-    })
 }
 
 function findAllTodo() {

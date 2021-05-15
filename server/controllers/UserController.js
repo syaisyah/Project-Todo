@@ -34,14 +34,12 @@ class UserController {
 
   static googleLogin(req, res, next) {
     const client = new OAuth2Client(process.env.CLIENT_ID);
-    console.log(client, '>>>>>>>>>. client ')
     async function verify() {
       const ticket = await client.verifyIdToken({
         idToken: req.body.googleToken,
         audience: process.env.CLIENT_ID,
       });
       const payload = ticket.getPayload();
-      console.log(payload, 'payload >>>>')
       User.findOrCreate({
         where: { email: payload.email },
         defaults: {

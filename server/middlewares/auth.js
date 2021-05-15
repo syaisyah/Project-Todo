@@ -95,7 +95,8 @@ const isMemberOrOwner = (req, res, next) => {
             isExist = true
           }
         }
-        (isExist) ? next() :  next({ msg: 'Forbidden UnAuthorized - Access is denied' })
+        (isExist) ? next() : next({ msg: 'Forbidden UnAuthorized - Access is denied' })
+
       } else {
         next({ msg: 'Project not found' })
       }
@@ -106,4 +107,4 @@ const isMemberOrOwner = (req, res, next) => {
 
 
 
-module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject, isMemberOrOwner}
+module.exports = { authentication, authOwnerMemberProject, authOwnerTodo, authProject, isMemberOrOwner }
