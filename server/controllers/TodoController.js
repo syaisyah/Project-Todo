@@ -2,7 +2,7 @@ const { Todo, Project } = require('../models')
 const { Op } = require("sequelize");
 const errorHandler = require('../middlewares/errorHandler');
 
-
+console.log('masuk controller')
 class TodoController {
   static createTodo(req, res, next) {
     let { title, status, due_date, ProjectId } = req.body;
@@ -20,8 +20,9 @@ class TodoController {
   }
 
   static findAll(req, res, next) {
+    console.log('masuk>>>>>')
     let where = { UserId: +req.logginUser.id }
-
+    console.log(where, 'before where')
     let today = new Date();
     let startDay = new Date(today);
     startDay.setDate(startDay.getDate());
@@ -29,7 +30,7 @@ class TodoController {
 
     let endDay = new Date(today)
     endDay.setHours(23, 59, 59, 999);
-    
+
     if (req.query.status) {
       let queryStatus = req.query.status[0].toUpperCase() + req.query.status.slice(1).toLowerCase()
       where.status = queryStatus
@@ -41,12 +42,13 @@ class TodoController {
         [Op.lt]: endDay
       }
     }
-   
+    console.log(where, 'ini where after >>>>>>')
     Todo.findAll({
       where,
       order: [['status', 'DESC']]
     })
       .then(todos => {
+        console.log(todos)
         res.status(200).json(todos)
       })
       .catch(err => next(err))
