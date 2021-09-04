@@ -16,5 +16,5 @@ https://project-todo-4ad0d.web.app/
 
 # Note:
 ```
-Running in localhost if you want to see the functionality of application is running perfectly 
+Running in localhost if you want to see the functionality of application is running perfectly, but don't forget to change the baseURL in main.js (folder client) to localhost first 
 ```
