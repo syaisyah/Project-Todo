@@ -1,5 +1,5 @@
-// const baseUrl = 'http://localhost:3000'
-const baseUrl = 'https://project-todo-application.herokuapp.com'
+const baseUrl = 'http://localhost:3000'
+// const baseUrl = 'https://project-todo-application.herokuapp.com'
 let idTodo;
 let idProject;
 
@@ -156,7 +156,6 @@ function login() {
 
     })
     .fail(err => {
-      console.log(err, 'err>>')
       let message = err.responseJSON.message.map(el => el)
       Swal.fire({
         icon: 'error',
@@ -209,7 +208,6 @@ function findAllTodo() {
     }
   })
     .done(todos => {
-      console.log(todos, '>>>')
       $("#list-todo-today").empty();
       if (todos.length) {
         todos.forEach((el, i) => {

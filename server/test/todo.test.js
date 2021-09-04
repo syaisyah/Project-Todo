@@ -194,7 +194,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -348,7 +348,6 @@ describe('Todos Route Tests', () => {
           .end(function (err, res) {
             if (err) done(err)
             else {
-              // console.log(JSON.stringify(res.body, null, 3))
               expect(res.status).toBe(200)
               expect(typeof res.body).toEqual('object')
               expect(res.body[0]).toHaveProperty('id', expect.any(Number))
@@ -372,7 +371,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -411,7 +410,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -425,7 +424,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(403)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthorized')
+              expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
               done()
             }
           })
@@ -439,7 +438,7 @@ describe('Todos Route Tests', () => {
             else {
               expect(res.status).toBe(403)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthorized')
+              expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
               done()
             }
           })
@@ -530,7 +529,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthenticated')
+            expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
             done()
           })
       })
@@ -548,7 +547,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -566,7 +565,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -688,7 +687,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthenticated')
+            expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
             done()
           })
       })
@@ -703,7 +702,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -768,7 +767,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthenticated')
+            expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
             done()
           })
       })
@@ -781,7 +780,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -793,7 +792,7 @@ describe('Todos Route Tests', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })

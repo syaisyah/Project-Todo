@@ -100,7 +100,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -179,7 +179,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -217,7 +217,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -232,7 +232,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(403)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthorized')
+              expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
               done()
             }
           })
@@ -287,7 +287,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -303,7 +303,7 @@ describe('Projects route test', () => {
               else {
                 expect(res.status).toBe(403)
                 expect(typeof res.body).toEqual('object')
-                expect(res.body.message[0]).toEqual('UnAuthorized')
+                expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
                 done()
               }
             })
@@ -318,7 +318,7 @@ describe('Projects route test', () => {
               else {
                 expect(res.status).toBe(403)
                 expect(typeof res.body).toEqual('object')
-                expect(res.body.message[0]).toEqual('UnAuthorized')
+                expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
                 done()
               }
             })
@@ -392,7 +392,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(401)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthenticated')
+              expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
               done()
             }
           })
@@ -410,7 +410,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(403)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthorized')
+              expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
               done()
             }
           })
@@ -428,7 +428,7 @@ describe('Projects route test', () => {
             else {
               expect(res.status).toBe(403)
               expect(typeof res.body).toEqual('object')
-              expect(res.body.message[0]).toEqual('UnAuthorized')
+              expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
               done()
             }
           })
@@ -498,7 +498,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthenticated')
+            expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
             done()
           })
       })
@@ -511,7 +511,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -558,7 +558,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthenticated')
+            expect(res.body.message[0]).toEqual('UnAuthenticated - You are not logged in')
             done()
           })
       })
@@ -571,7 +571,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
@@ -584,7 +584,7 @@ describe('Projects route test', () => {
             if (err) done(err)
             expect(res.status).toBe(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body.message[0]).toEqual('UnAuthorized')
+            expect(res.body.message[0]).toEqual('Forbidden UnAuthorized - Access is denied')
             done()
           })
       })
